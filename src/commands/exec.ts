@@ -16,7 +16,7 @@ import { escapeMarkdown } from "../utils/helpers.ts";
 import { createCommand } from "./mod.ts";
 
 createCommand({
-  name: "exec",
+  name: "Run this as code",
   description: "Execute code.",
   type: ApplicationCommandTypes.Message,
   scope: "Global",
