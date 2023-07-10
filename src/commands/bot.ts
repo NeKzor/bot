@@ -13,6 +13,8 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { CVars } from "../services/cvars.ts";
+import { Piston } from "../services/piston.ts";
+import { SpeedrunCom } from "../services/speedruncom.ts";
 import { createCommand } from "./mod.ts";
 
 const startTime = Date.now();
@@ -68,30 +70,52 @@ createCommand({
             break;
           }
           case "reload": {
-            try {
-              await CVars.fetch();
+            await bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  content: `🤖️ Reloading bot data...`,
+                },
+              },
+            );
 
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
+            try {
+              const tryFetch = (fetchFunc: () => Promise<void>) => async () => {
+                try {
+                  await fetchFunc();
+                  return true;
+                } catch (err) {
+                  console.error(err);
+                }
+                return false;
+              };
+
+              const [cvars, speedrunCom, piston] = await Promise.all([
+                tryFetch(CVars.fetch)(),
+                tryFetch(SpeedrunCom.fetch)(),
+                tryFetch(Piston.fetch)(),
+              ]);
+
+              await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `🤖️ Reloaded bot data.`,
-                  },
+                  content: [
+                    `🤖️ Reloaded bot data.`,
+                    `Cvars: ${cvars ? "success" : "failed"}`,
+                    `Bhop: ${speedrunCom ? "success" : "failed"}`,
+                    `Piston: ${piston ? "success" : "failed"}`,
+                  ].join("\n"),
                 },
               );
             } catch (err) {
               console.error(err);
 
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
+              await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `❌️ Failed to reload bot data.`,
-                  },
+                  content: `❌️ Failed to reload bot data.`,
                 },
               );
             }

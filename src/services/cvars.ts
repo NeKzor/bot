@@ -97,13 +97,13 @@ export const CVars = {
     const portal2 = await Deno.readTextFile("./data/cvars/portal-2.json");
     const sar = await Deno.readTextFile("./data/cvars/sar.json");
 
-    this.Portal2 = JSON.parse(portal2).map((cvar: CVar) => {
+    CVars.Portal2 = JSON.parse(portal2).map((cvar: CVar) => {
       cvar.id = id;
       id += 1;
       return cvar;
     });
 
-    this.Portal2.push(
+    CVars.Portal2.push(
       ...JSON.parse(sar).map((cvar: CVar) => {
         cvar.id = id;
         id += 1;
@@ -111,7 +111,7 @@ export const CVars = {
       }),
     );
 
-    this.Portal2.sort((a, b) => {
+    CVars.Portal2.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
   },
@@ -159,7 +159,7 @@ export const CVars = {
 
     console.log(`Fetched SAR cvars`);
 
-    await this.load();
+    await CVars.load();
   },
 
   *getFlags(cvar: CVar) {

@@ -19,6 +19,8 @@ import { logger } from "./utils/logger.ts";
 import { events } from "./events/mod.ts";
 import { updateCommands } from "./utils/helpers.ts";
 import { CVars } from "./services/cvars.ts";
+import { SpeedrunCom } from "./services/speedruncom.ts";
+import { Piston } from "./services/piston.ts";
 
 // TODO: file logging
 const log = logger({ name: "Main" });
@@ -69,6 +71,8 @@ bot.gateway.manager.createShardOptions.makePresence = (shardId: number) => {
 // };
 
 await CVars.load();
+await SpeedrunCom.load();
+await Piston.load();
 
 await startBot(bot);
 await updateCommands(bot);
