@@ -30,7 +30,7 @@ createCommand({
     },
     {
       name: "reload",
-      description: "Reload bot data! Admin only.",
+      description: "Reload bot data! This only includes cvars data for now.",
       type: ApplicationCommandOptionTypes.SubCommand,
     },
   ],
