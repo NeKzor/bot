@@ -96,32 +96,37 @@ createCommand({
 
         switch (subCommand) {
           case "bug": {
-            const title = interaction.data?.components?.at(0)?.components?.at(0)
-              ?.value;
-            const body = interaction.data?.components?.at(1)?.components?.at(0)
-              ?.value;
-
-            console.log({ repository, title, body });
-
-            if (
-              !repositories.find((repo) => repo.value === repository) ||
-              !title ||
-              !body
-            ) {
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
-                interaction.token,
-                {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `❌️ Failed to send bug report.`,
-                  },
+            await bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  content: `🪲️ Reporting new bug...`,
                 },
-              );
-              return;
-            }
+              },
+            );
 
             try {
+              const modal = interaction.data?.components;
+
+              const title = modal?.at(0)?.components?.at(0)?.value;
+              const body = modal?.at(1)?.components?.at(0)?.value;
+
+              if (
+                !repositories.find((repo) => repo.value === repository) ||
+                !title ||
+                !body
+              ) {
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content: `❌️ Failed to send bug report.`,
+                  },
+                );
+                return;
+              }
+
               const [owner, repo] = repository.split("/");
 
               const issue = await GitHub.createIssue({
@@ -140,29 +145,21 @@ createCommand({
 
               //const issue = { number: 1, html_url: "https://github.com/NeKzor/bot/issues/1" };
 
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
+              await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `🪲️ Reported new bug: [${
-                      escapeMaskedLink(`${repo}#${issue.number}`)
-                    }](${issue.html_url})`,
-                  },
+                  content: `🪲️ Reported new bug: [${
+                    escapeMaskedLink(`${repo}#${issue.number}`)
+                  }](${issue.html_url})`,
                 },
               );
             } catch (err) {
               console.error(err);
 
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
+              await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `❌️ Failed to send bug report.`,
-                  },
+                  content: `❌️ Failed to send bug report.`,
                 },
               );
             }
