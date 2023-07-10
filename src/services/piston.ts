@@ -2,9 +2,6 @@
  * Copyright (c) 2023, NeKz
  *
  * SPDX-License-Identifier: MIT
- *
- * GET
- * POST https://emkc.org/api/v2/piston/execute
  */
 
 export interface Runtime {
@@ -17,6 +14,13 @@ export interface ExecutionResult {
   language: string;
   version: string;
   run: {
+    stdout: string;
+    stderr: string;
+    code: number;
+    signal: unknown | null;
+    output: string;
+  };
+  compile?: {
     stdout: string;
     stderr: string;
     code: number;
@@ -48,7 +52,8 @@ export const Piston = {
   },
   findRuntime(language: string) {
     return Piston.Runtimes.find((runtime) => {
-      return runtime.language === language;
+      return runtime.language === language ||
+        runtime.aliases.includes(language);
     });
   },
   async execute(runtime: Runtime, content: string) {

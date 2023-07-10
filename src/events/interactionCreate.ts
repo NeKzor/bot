@@ -61,7 +61,10 @@ events.interactionCreate = async (rawBot, interaction) => {
 
     let command: Command | undefined = undefined;
 
-    if (interaction.type === InteractionTypes.ModalSubmit) {
+    if (
+      interaction.type === InteractionTypes.ModalSubmit ||
+      interaction.type === InteractionTypes.MessageComponent
+    ) {
       if (!interaction.data.customId) {
         log.warn(
           `[Modal - ${
