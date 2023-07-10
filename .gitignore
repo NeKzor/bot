@@ -1,4 +1,5 @@
 .vscode/
+docs/book/
 log/
 scripts/
 src/fileloader.ts

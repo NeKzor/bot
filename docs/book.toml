@@ -1,0 +1,10 @@
+[book]
+authors = ["NeKz"]
+language = "en"
+multilingual = false
+src = "src"
+title = "NeKzBot"
+
+[output.html]
+additional-css = ["doc.css"]
+cname = "bot.nekz.me"
