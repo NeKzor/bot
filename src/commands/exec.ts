@@ -5,7 +5,6 @@
  */
 
 import {
-  ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   Bot,
   Interaction,
@@ -22,10 +21,6 @@ createCommand({
   type: ApplicationCommandTypes.Message,
   scope: "Global",
   execute: async (bot: Bot, interaction: Interaction) => {
-    console.dir({ interaction }, { depth: 10 });
-    const options = [...(interaction.data?.options?.values() ?? [])]
-      .at(0)!;
-
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommand: {
         const content = interaction.data?.resolved?.messages?.first()?.content;

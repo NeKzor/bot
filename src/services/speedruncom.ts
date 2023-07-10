@@ -36,7 +36,7 @@ export const SpeedrunCom = {
       JSON.stringify((await res.json()).data),
     );
 
-    console.log('Fetched speedrun.com data');
+    console.log("Fetched speedrun.com data");
 
     await SpeedrunCom.load();
   },
