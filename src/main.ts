@@ -18,6 +18,7 @@ import {
 import { logger } from "./utils/logger.ts";
 import { events } from "./events/mod.ts";
 import { updateCommands } from "./utils/helpers.ts";
+import { CVars } from "./services/cvars.ts";
 
 // TODO: file logging
 const log = logger({ name: "Main" });
@@ -66,6 +67,8 @@ bot.gateway.manager.createShardOptions.makePresence = (shardId: number) => {
 //     console.log("response:", await res.text());
 //   }
 // };
+
+await CVars.load();
 
 await startBot(bot);
 await updateCommands(bot);

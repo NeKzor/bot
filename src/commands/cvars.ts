@@ -14,31 +14,29 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
-import { escapeMaskedLink } from "../utils/helpers.ts";
-import Portal2Exploits from "../data/portal2_exploits.json" assert {
-  type: "json",
-};
+import { escapeMarkdown } from "../utils/helpers.ts";
+import { CVars } from "../services/cvars.ts";
 
 const maximumAutocompleteResults = 5;
 
-Portal2Exploits.forEach((exploit) => {
-  // Search optimization
-  exploit.aliases = exploit.aliases.map((alias) => alias.toLowerCase());
-});
+const findCvar = ({ query, byId }: { query: string; byId: boolean }) => {
+    console.log({ query });
+  if (query.length === 0) {
+    return CVars.Portal2.slice(0, maximumAutocompleteResults);
+  }
 
-const findGlitch = (query: string) => {
   const results = [];
 
-  for (const exploit of Portal2Exploits) {
+  for (const cvar of CVars.Portal2) {
+    if (byId && cvar.id.toString() === query) {
+      return [cvar];
+    }
+
     if (
-      exploit.name.startsWith(query) ||
-      exploit.name.split(" ").includes(query) ||
-      exploit.aliases.some((alias) => {
-        return alias.startsWith(query) ||
-          alias.split(" ").includes(query);
-      })
+      cvar.name.startsWith(query) ||
+      cvar.name.split("_").includes(query)
     ) {
-      results.push(exploit);
+      results.push(cvar);
     }
 
     if (results.length === maximumAutocompleteResults) {
@@ -50,8 +48,8 @@ const findGlitch = (query: string) => {
 };
 
 createCommand({
-  name: "glitch",
-  description: "Find a glitch on wiki.portal2.sr or nekz.me/glitches.",
+  name: "cvars",
+  description: "Find a console command or variable.",
   type: ApplicationCommandTypes.ChatInput,
   scope: "Global",
   options: [
@@ -79,11 +77,12 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findGlitch(query)
-                .map((map) => {
+              choices: findCvar({ query, byId: false })
+                .map((cvar) => {
+                  console.log(cvar);
                   return {
-                    name: map.name,
-                    value: map.name,
+                    name: cvar.name,
+                    value: cvar.id.toString(),
                   } as ApplicationCommandOptionChoice;
                 }),
             },
@@ -93,28 +92,29 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
+        console.log({ args });
         const query = args.find((arg) =>
           arg.name === "query"
         )?.value?.toString() ?? "";
 
-        const exploits = findGlitch(query);
-        const exploit = exploits.at(0);
+        const cvars = findCvar({ query, byId: true });
+        const cvar = cvars.at(0);
 
-        if (!exploit) {
+        if (!cvar) {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `❌️ Glitch not found.`,
+                content: `❌️ Console command not found.`,
               },
             },
           );
           return;
         }
 
-        if (exploits.length > 1) {
+        if (cvars.length > 1) {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
@@ -129,15 +129,7 @@ createCommand({
           return;
         }
 
-        const name = exploit.wiki
-          ? `[${escapeMaskedLink(exploit.name)}](<${exploit.wiki}>)`
-          : exploit.name;
-
-        const video = exploit.wiki
-          ? `[Watch Showcase](<${exploit.showcase}>)`
-          : `[Showcase](<${exploit.showcase})`;
-
-        const description = exploit.overview ? `\n${exploit.overview}` : "";
+        const flags = [...CVars.getFlags(cvar)];
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -145,7 +137,15 @@ createCommand({
           {
             type: InteractionResponseTypes.ChannelMessageWithSource,
             data: {
-              content: `${name}${description}\n${video}`,
+              content: [
+                `**${escapeMarkdown(cvar.name)}**`,
+                `Default Value: ${escapeMarkdown(cvar.default ?? "-")}`,
+                `Flags: ${
+                  flags.length ? escapeMarkdown(flags.join(" | ")) : "-"
+                }`,
+                `OS: ${CVars.getOs(cvar)}`,
+                `Description: ${escapeMarkdown(cvar.help)}`,
+              ].join("\n"),
             },
           },
         );

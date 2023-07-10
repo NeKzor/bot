@@ -161,6 +161,24 @@ export function escapeMaskedLink(link: string) {
   );
 }
 
+const specialMdCharacters = [
+  "[",
+  "]",
+  "(",
+  ")",
+  "`",
+  "*",
+  "_",
+  "~",
+];
+
+export function escapeMarkdown(text: string) {
+  return specialMdCharacters.reduce(
+    (title, char) => title.replaceAll(char, `\\${char}`),
+    text,
+  );
+}
+
 export function getPublicUrl(url: string) {
   return new URL(url, Deno.env.get("AUTORENDER_PUBLIC_URI")!).toString();
 }

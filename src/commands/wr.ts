@@ -128,7 +128,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content:
-                  `❌️ Your query matched too many results. Please choose a result from the autocompletion.`,
+                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
               },
             },
           );

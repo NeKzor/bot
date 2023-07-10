@@ -16,7 +16,7 @@ import {
   SelectOption,
   TextStyles,
 } from "../deps.ts";
-import { GitHub } from "../github.ts";
+import { GitHub } from "../services/github.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
 import { createCommand } from "./mod.ts";
 
