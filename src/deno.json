@@ -1,0 +1,16 @@
+{
+  "tasks": {
+    "dev": "deno run --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example,log/bot,./,commands,events,data,fileloader.ts --allow-write=log/bot,fileloader.ts --allow-net=discord.com,gateway.discord.gg,gateway-us-east1-b.discord.gg,gateway-us-east1-c.discord.gg,gateway-us-east1-d.discord.gg,deno.land,cdn.discord.com,cdn.discordapp.com,api.github.com,autorender.portal2.sr --watch main.ts",
+    "prod": "deno run --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example,log/bot,./,commands,events,data,fileloader.ts --allow-write=log/bot,fileloader.ts --allow-net=discord.com,gateway.discord.gg,gateway-us-east1-b.discord.gg,gateway-us-east1-c.discord.gg,gateway-us-east1-d.discord.gg,deno.land,cdn.discord.com,cdn.discordapp.com,api.github.com,autorender.portal2.sr main.ts"
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve"
+  },
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true
+  }
+}
