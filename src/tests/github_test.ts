@@ -5,7 +5,7 @@
  */
 
 import "https://deno.land/std@0.190.0/dotenv/load.ts";
-import { GitHub } from "../github.ts";
+import { GitHub } from "../services/github.ts";
 
 const issue = await GitHub.createIssue({
   owner: "NeKzBot",
