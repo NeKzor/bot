@@ -1,7 +1,12 @@
 {
-    "fmt": {
-        "exclude": [
-            "docs/book"
-        ]
-    }
+  "lint": {
+    "exclude": [
+      "docs"
+    ]
+  },
+  "fmt": {
+    "exclude": [
+      "docs/book"
+    ]
+  }
 }
