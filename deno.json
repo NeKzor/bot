@@ -6,7 +6,9 @@
   },
   "fmt": {
     "exclude": [
-      "docs/book"
+      "docs/book",
+      "src/data",
+      "src/fileloader.ts"
     ]
   }
 }
