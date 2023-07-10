@@ -20,7 +20,6 @@ import { CVars } from "../services/cvars.ts";
 const maximumAutocompleteResults = 5;
 
 const findCvar = ({ query, byId }: { query: string; byId: boolean }) => {
-    console.log({ query });
   if (query.length === 0) {
     return CVars.Portal2.slice(0, maximumAutocompleteResults);
   }
@@ -79,7 +78,6 @@ createCommand({
             data: {
               choices: findCvar({ query, byId: false })
                 .map((cvar) => {
-                  console.log(cvar);
                   return {
                     name: cvar.name,
                     value: cvar.id.toString(),
@@ -92,7 +90,7 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
-        console.log({ args });
+
         const query = args.find((arg) =>
           arg.name === "query"
         )?.value?.toString() ?? "";

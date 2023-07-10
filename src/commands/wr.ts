@@ -68,8 +68,6 @@ createCommand({
           arg.name === "query"
         )?.value?.toString()?.toLowerCase() ?? "";
 
-        console.log({ query });
-
         await bot.helpers.sendInteractionResponse(
           interaction.id,
           interaction.token,
