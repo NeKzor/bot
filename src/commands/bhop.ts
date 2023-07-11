@@ -91,57 +91,103 @@ createCommand({
         break;
       }
       case InteractionTypes.ApplicationCommand: {
-        const args = [...(command.options?.values() ?? [])];
-
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString() ?? "";
-
-        const levels = findLevel({ query, byId: true });
-        const level = levels.at(0);
-
-        if (!level) {
+        try {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `❌️ Level not found.`,
+                content: `🐇️ Searching for bhop level...`,
               },
             },
           );
-          return;
-        }
 
-        if (levels.length > 1) {
-          await bot.helpers.sendInteractionResponse(
-            interaction.id,
-            interaction.token,
-            {
-              type: InteractionResponseTypes.ChannelMessageWithSource,
-              data: {
+          const args = [...(command.options?.values() ?? [])];
+
+          const query = args.find((arg) =>
+            arg.name === "query"
+          )?.value?.toString() ?? "";
+
+          const levels = findLevel({ query, byId: true });
+          const level = levels.at(0);
+
+          if (!level) {
+            await bot.helpers.editOriginalInteractionResponse(
+              interaction.token,
+              {
+                content: `❌️ Level not found.`,
+              },
+            );
+            return;
+          }
+
+          if (levels.length > 1) {
+            await bot.helpers.editOriginalInteractionResponse(
+              interaction.token,
+              {
                 content:
                   `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
               },
-            },
-          );
-          return;
-        }
+            );
+            return;
+          }
 
-        await bot.helpers.sendInteractionResponse(
-          interaction.id,
-          interaction.token,
-          {
-            type: InteractionResponseTypes.ChannelMessageWithSource,
-            data: {
+          const records = await SpeedrunCom.getRecords(level);
+          const formatted: string[] = [];
+
+          for (const record of records) {
+            const url = new URL(record.weblink);
+
+            const wr = record.runs.at(0);
+            if (!wr) {
+              continue;
+            }
+
+            const wrHolders = record.runs
+              .filter((run) => run.place === 1);
+
+            const wrHoldersFormatted = [];
+
+            for (const { run } of wrHolders) {
+              for (const player of run.players) {
+                const user = await SpeedrunCom.getUser(player.id);
+                wrHoldersFormatted.push(
+                  `[${user.names.international}](<${user.weblink}>)`,
+                );
+              }
+            }
+
+            formatted.push(
+              `[${
+                url.hash.slice(1)
+              }](<${record.weblink}>) | ${wr.run.times.primary_t} by ${
+                wrHoldersFormatted.join(", ")
+              }`,
+            );
+          }
+
+          await bot.helpers.editOriginalInteractionResponse(
+            interaction.token,
+            {
               content: [
                 `🐇️ ${escapeMarkdown(level.name)}`,
-                `${escapeMarkdown(level.rules)}`,
+                formatted.join("\n"),
+                ``,
+                `${escapeMarkdown(level.rules.trim())}`,
               ].join("\n"),
             },
-          },
-        );
+          );
+        } catch (err) {
+          console.error(err);
+
+          await bot.helpers.editOriginalInteractionResponse(
+            interaction.token,
+            {
+              content: `❌️ Failed to find bhop level.`,
+            },
+          );
+        }
         break;
       }
       default:

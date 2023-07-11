@@ -15,10 +15,184 @@ export interface Level {
   }[];
 }
 
+export interface Record {
+  weblink: string;
+  game: string;
+  category: string;
+  level: string;
+  platform: null;
+  region: null;
+  emulators: null;
+  "video-only": boolean;
+  timing: null;
+  values: {};
+  runs: [
+    {
+      place: number;
+      run: {
+        id: string;
+        weblink: string;
+        game: string;
+        level: string;
+        category: string;
+        videos: null;
+        comment: string;
+        status: {
+          status: string;
+          examiner: string;
+          "verify-date": string;
+        };
+        players: [
+          {
+            rel: string;
+            id: string;
+            uri: string;
+          },
+        ];
+        date: string;
+        submitted: string;
+        times: {
+          primary: string;
+          primary_t: number;
+          realtime: string;
+          realtime_t: number;
+          realtime_noloads: null;
+          realtime_noloads_t: number;
+          ingame: null;
+          ingame_t: number;
+        };
+        system: {
+          platform: string;
+          emulated: boolean;
+          region: null;
+        };
+        splits: null;
+        values: {};
+      };
+    },
+    {
+      place: 2;
+      run: {
+        id: string;
+        weblink: string;
+        game: string;
+        level: string;
+        category: string;
+        videos: null;
+        comment: string;
+        status: {
+          status: string;
+          examiner: string;
+          "verify-date": string;
+        };
+        players: [
+          {
+            rel: string;
+            id: string;
+            uri: string;
+          },
+        ];
+        date: string;
+        submitted: string;
+        times: {
+          primary: string;
+          primary_t: number;
+          realtime: string;
+          realtime_t: number;
+          realtime_noloads: null;
+          realtime_noloads_t: number;
+          ingame: null;
+          ingame_t: number;
+        };
+        system: {
+          platform: string;
+          emulated: boolean;
+          region: null;
+        };
+        splits: null;
+        values: {};
+      };
+    },
+  ];
+  links: [
+    {
+      rel: string;
+      uri: string;
+    },
+    {
+      rel: string;
+      uri: string;
+    },
+    {
+      rel: string;
+      uri: string;
+    },
+  ];
+}
+
+export interface User {
+  id: string;
+  names: {
+    international: string;
+    japanese: null;
+  };
+  supporterAnimation: false;
+  pronouns: null;
+  weblink: string;
+  "name-style": {
+    style: string;
+    "color-from": {
+      light: string;
+      dark: string;
+    };
+    "color-to": {
+      light: string;
+      dark: string;
+    };
+  };
+  role: string;
+  signup: string;
+  location: null;
+  twitch: {
+    uri: string;
+  };
+  hitbox: null;
+  youtube: null;
+  twitter: null;
+  speedrunslive: null;
+  assets: {
+    icon: {
+      uri: null;
+    };
+    supporterIcon: null;
+    image: {
+      uri: null;
+    };
+  };
+  links: [
+    {
+      rel: string;
+      uri: string;
+    },
+    {
+      rel: string;
+      uri: string;
+    },
+    {
+      rel: string;
+      uri: string;
+    },
+    {
+      rel: string;
+      uri: string;
+    },
+  ];
+}
+
 export const SpeedrunCom = {
   Portal2Bhop: {
     Id: "v1pxk8p6",
-    Levels: [] as Level[],
+    Levels: [] as (Level & { records: Record[] })[],
   },
 
   async load() {
@@ -39,5 +213,22 @@ export const SpeedrunCom = {
     console.log("Fetched speedrun.com data");
 
     await SpeedrunCom.load();
+  },
+  async getRecords(level: Level) {
+    const link = level.links.find((link) => link.rel === "records");
+    if (link) {
+      try {
+        const res = await fetch(link.uri);
+        const records = (await res.json()).data as Record[];
+        return records.filter((record) => record.runs.length > 0);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    return [];
+  },
+  async getUser(userId: string) {
+    const res = await fetch(`https://www.speedrun.com/api/v1/users/${userId}`);
+    return (await res.json()).data as User;
   },
 };
