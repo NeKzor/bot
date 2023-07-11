@@ -14,7 +14,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
-import { escapeMaskedLink } from "../utils/helpers.ts";
+import { escapeMaskedLink, formatCmTime } from "../utils/helpers.ts";
 import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
@@ -180,24 +180,12 @@ createCommand({
             return;
           }
 
-          const formatTime = (time: number) => {
-            const cs = time % 100;
-            const secs = Math.floor(time / 100);
-            const sec = secs % 60;
-            const min = Math.floor(secs / 60);
-            return (min > 0)
-              ? `${min}:${((sec < 10) ? `0${sec}` : `${sec}`)}.${((cs < 10)
-                ? `0${cs}`
-                : `${cs}`)}`
-              : `${sec}.${((cs < 10) ? `0${cs}` : `${cs}`)}`;
-          };
-
           const map = escapeMaskedLink(wr.map);
           const mapLink = escapeMaskedLink(
             `https://board.portal2.sr/chamber/${wr.map_id}`,
           );
 
-          const time = escapeMaskedLink(formatTime(wr.time));
+          const time = escapeMaskedLink(formatCmTime(wr.time));
           const videoLink =
             `https://autorender.portal2.sr/video.html?v=${wr.id}`;
 
