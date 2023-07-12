@@ -1,3 +1,5 @@
+[![docs](https://github.com/NeKzor/bot/actions/workflows/docs.yml/badge.svg)](https://github.com/NeKzor/bot/actions/workflows/docs.yml)
+
 # NeKzBot v3
 
 ## Commands
