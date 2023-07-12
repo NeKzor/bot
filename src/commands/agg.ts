@@ -132,7 +132,7 @@ createCommand({
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content: `❌️ Failed to fetch chamber.`,
+              content: `❌️ Failed to fetch leaderboard.`,
             },
           );
         }
