@@ -9,15 +9,18 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   Bot,
+  ButtonComponent,
   ButtonStyles,
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageComponents,
   MessageComponentTypes,
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
 import {
   escapeMarkdown,
+  escapeMaskedLink,
   formatCmTime,
   getDurationSince,
 } from "../utils/helpers.ts";
@@ -25,6 +28,8 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
 import { Board } from "../services/board.ts";
+import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
+import { SAR } from "../services/sar.ts";
 
 const maximumAutocompleteResults = 5;
 const boardMaps = Portal2Campaign.map_list.filter(({ best_time_id }) =>
@@ -71,8 +76,8 @@ createCommand({
   scope: "Global",
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: "chamber",
+      description: "Search chamber.",
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -90,12 +95,151 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.MessageComponent: {
-        console.log("TODO");
+        const [_command, subcommand, changelogId] =
+          interaction.data?.customId?.split("_") ?? [];
+
+        switch (subcommand) {
+          case "parsedemo": {
+            if (!changelogId) {
+              break;
+            }
+
+            const { value: lbMessage } = await InteractionsDb.find(
+              InteractionKey.Leaderboard,
+              interaction.message!.id,
+            );
+
+            if (!lbMessage) {
+              await bot.helpers.sendInteractionResponse(
+                interaction.id,
+                interaction.token,
+                {
+                  type: InteractionResponseTypes.ChannelMessageWithSource,
+                  data: {
+                    content: `❌️ Unable to parse demo.`,
+                  },
+                },
+              );
+              return;
+            }
+
+            if (lbMessage.user_id !== interaction.user.id) {
+              await bot.helpers.sendInteractionResponse(
+                interaction.id,
+                interaction.token,
+                {
+                  type: InteractionResponseTypes.ChannelMessageWithSource,
+                  data: {
+                    content: `❌️ You are not allowed to parse this demo.`,
+                  },
+                },
+              );
+              return;
+            }
+
+            await bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  content: `⏳️ Downloading demo...`,
+                },
+              },
+            );
+
+            try {
+              const messageToEdit = await bot.helpers.getMessage(
+                lbMessage.channel_id,
+                lbMessage.message_id,
+              );
+
+              const demo = await fetch(
+                `https://board.portal2.sr/getDemo?id=${changelogId}`,
+                {
+                  method: "GET",
+                  headers: {
+                    "User-Agent": "NeKzBot/v3.0",
+                  },
+                },
+              );
+
+              // Holy, the leaderboard is so bad... let's return 200 when NOT FOUND!!!
+
+              if (
+                !demo.ok ||
+                demo.headers.get("Content-Type")?.startsWith("text/html")
+              ) {
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content:
+                      `❌️ Unable to download demo. The file might not exist.`,
+                  },
+                );
+                return;
+              }
+
+              const demoName = new URL(demo.url).pathname.split("/").at(-1);
+
+              await bot.helpers.editOriginalInteractionResponse(
+                interaction.token,
+                {
+                  content: `🛠️ Parsing demo...`,
+                },
+              );
+
+              const parts: BlobPart[] = [];
+              const encoder = new TextEncoder();
+
+              const buffer = new Uint8Array(await demo.arrayBuffer());
+
+              const _data = await SAR.parseDemo(buffer, (...args) => {
+                parts.push(encoder.encode(args.join(" ") + "\n").buffer);
+              });
+
+              // Remove last parse demo button
+              messageToEdit.components?.at(0)?.components?.splice(-1, 1);
+
+              await bot.helpers.editMessage(
+                lbMessage.channel_id,
+                lbMessage.message_id,
+                {
+                  file: {
+                    name: `${demoName}.txt`,
+                    blob: new Blob(parts, { type: "text/plain" }),
+                  },
+                  components: messageToEdit.components as MessageComponents,
+                },
+              );
+
+              await bot.helpers.editOriginalInteractionResponse(
+                interaction.token,
+                {
+                  content: `🛠️ Updated message`,
+                },
+              );
+            } catch (err) {
+              console.error(err);
+
+              await bot.helpers.editOriginalInteractionResponse(
+                interaction.token,
+                {
+                  content:
+                    `❌️ Unable to parse demo. The file might be corrupted.`,
+                },
+              );
+            }
+            break;
+          }
+          default:
+            break;
+        }
         break;
       }
       case InteractionTypes.ApplicationCommandAutocomplete: {
         const query = args.find((arg) =>
-          arg.name === "query"
+          arg.name === "chamber"
         )?.value?.toString()?.toLowerCase() ?? "";
 
         await bot.helpers.sendInteractionResponse(
@@ -119,7 +263,7 @@ createCommand({
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
         const query = args.find((arg) =>
-          arg.name === "query"
+          arg.name === "chamber"
         )?.value?.toString() ?? "";
         const player =
           args.find((arg) => arg.name === "player")?.value?.toString()
@@ -178,6 +322,8 @@ createCommand({
           const values = Object.values(lb);
           const wrTime = parseInt(values.at(0)?.scoreData?.score ?? "0", 10);
 
+          let addParseDemoButton = false;
+
           if (player) {
             const playerEntry = values
               .find(({ userData }) =>
@@ -196,6 +342,23 @@ createCommand({
 
             const { scoreData, userData } = playerEntry;
             const id = scoreData.changelogId;
+
+            const responseMessage = await bot.helpers
+              .getOriginalInteractionResponse(interaction.token);
+
+            const savedResult = await InteractionsDb.insert(
+              InteractionKey.Leaderboard,
+              {
+                interaction_message_id: responseMessage.id,
+                guild_id: responseMessage.guildId,
+                channel_id: responseMessage.channelId,
+                message_id: responseMessage.id,
+                user_id: interaction.user.id,
+              },
+            );
+
+            addParseDemoButton = savedResult.ok;
+
             const playerName = escapeMarkdown(userData.boardname);
 
             const time = parseInt(scoreData.score, 10);
@@ -204,7 +367,7 @@ createCommand({
 
             const date = scoreData.date;
             const durationSince = getDurationSince(date);
-            const g = (value: number) => value === 1 ? '' : 's';
+            const g = (value: number) => value === 1 ? "" : "s";
             const duration = durationSince.days
               ? `${durationSince.days} day${g(durationSince.days)}`
               : durationSince.hours
@@ -219,11 +382,13 @@ createCommand({
               ? `https://www.youtube.com/watch?v=${scoreData.youtubeID}`
               : `https://autorender.portal2.sr/video.html?v=${id}`;
 
+            const demoLink = `https://board.portal2.sr/getDemo?id=${id}`;
+
             const diff = wrTime !== time
               ? ` (+${formatCmTime(time - wrTime)} to WR)`
               : "";
 
-            const title = `${playerName} on ${chamber.cm_name}`;
+            const title = escapeMaskedLink(chamber.cm_name);
 
             const chamberLink =
               `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
@@ -233,11 +398,40 @@ createCommand({
               ? " <:wr:294282175396839426>"
               : "";
 
+            const buttons: [ButtonComponent, ButtonComponent] | [
+              ButtonComponent,
+              ButtonComponent,
+              ButtonComponent,
+            ] = [
+              {
+                type: MessageComponentTypes.Button,
+                label: `Watch on ${onYouTube ? "YouTube" : "autorender"}`,
+                style: ButtonStyles.Link,
+                url: videoLink,
+              },
+              {
+                type: MessageComponentTypes.Button,
+                label: `Download Demo`,
+                style: ButtonStyles.Link,
+                url: demoLink,
+              },
+            ];
+
+            if (addParseDemoButton) {
+              buttons.push({
+                type: MessageComponentTypes.Button,
+                label: `Parse Demo`,
+                style: ButtonStyles.Secondary,
+                customId: `lb_parsedemo_${id}`,
+              });
+            }
+
             await bot.helpers.editOriginalInteractionResponse(
               interaction.token,
               {
                 content: [
                   `[${title}](<${chamberLink}>)`,
+                  `Player: ${playerName}`,
                   `Time: ${score}${diff}`,
                   `Rank: ${rank === "1" ? `WR${wrEmoji}` : rank}`,
                   `Date: ${date} (${duration} ago)`,
@@ -245,28 +439,7 @@ createCommand({
                 components: [
                   {
                     type: MessageComponentTypes.ActionRow,
-                    components: [
-                      {
-                        type: MessageComponentTypes.Button,
-                        label: `Watch on ${
-                          onYouTube ? "YouTube" : "autorender"
-                        }`,
-                        style: ButtonStyles.Link,
-                        url: videoLink,
-                      },
-                      {
-                        type: MessageComponentTypes.Button,
-                        label: `Download Demo`,
-                        style: ButtonStyles.Link,
-                        url: `https://board.portal2.sr/getDemo?id=${id}`,
-                      },
-                      // {
-                      //   type: MessageComponentTypes.Button,
-                      //   label: `Parse Demo`,
-                      //   style: ButtonStyles.Primary,
-                      //   customId: `lb_parsedemo_${id}`,
-                      // },
-                    ],
+                    components: buttons,
                   },
                 ],
               },
