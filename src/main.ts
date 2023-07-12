@@ -53,7 +53,7 @@ bot.gateway.manager.createShardOptions.makePresence = (shardId: number) => {
     status: "online",
     activities: [
       {
-        name: "Portal 2",
+        name: "portal2_linux",
         type: ActivityTypes.Game,
         createdAt: Date.now(),
       },
