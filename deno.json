@@ -1,4 +1,7 @@
 {
+  "tasks": {
+    "docs": "mdbook build docs"
+  },
   "lint": {
     "exclude": [
       "docs"
