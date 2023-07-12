@@ -179,15 +179,11 @@ export function escapeMarkdown(text: string) {
   );
 }
 
-export function getPublicUrl(url: string) {
-  return new URL(url, Deno.env.get("AUTORENDER_PUBLIC_URI")!).toString();
-}
-
 /**
  * Format challenge mode time
  *    e.g. 600 = 6.00
  *         6000 = 1:00.00
- * @param time - Total centiseconds 
+ * @param time - Total centiseconds
  * @returns - Time as string
  */
 export function formatCmTime(time: number) {
