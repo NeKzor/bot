@@ -9,12 +9,18 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   Bot,
+  ButtonStyles,
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageComponentTypes,
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
-import { escapeMarkdown, formatCmTime } from "../utils/helpers.ts";
+import {
+  escapeMarkdown,
+  formatCmTime,
+  getDurationSince,
+} from "../utils/helpers.ts";
 import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
@@ -71,12 +77,22 @@ createCommand({
       autocomplete: true,
       required: true,
     },
+    {
+      name: "player",
+      description: "Get the score of a player by name.",
+      type: ApplicationCommandOptionTypes.String,
+      required: false,
+    },
   ],
   execute: async (bot: Bot, interaction: Interaction) => {
     const command = interaction.data!;
     const args = [...(command.options?.values() ?? [])];
 
     switch (interaction.type) {
+      case InteractionTypes.MessageComponent: {
+        console.log("TODO");
+        break;
+      }
       case InteractionTypes.ApplicationCommandAutocomplete: {
         const query = args.find((arg) =>
           arg.name === "query"
@@ -105,6 +121,9 @@ createCommand({
         const query = args.find((arg) =>
           arg.name === "query"
         )?.value?.toString() ?? "";
+        const player =
+          args.find((arg) => arg.name === "player")?.value?.toString()
+            ?.toLocaleLowerCase() ?? "";
 
         const chambers = findChamber({ query, isAutocomplete: false });
         const chamber = chambers.at(0);
@@ -157,6 +176,103 @@ createCommand({
           // Yes, the API returns an object which is not
           // the right thing to return, thanks iVerb :>
           const values = Object.values(lb);
+          const wrTime = parseInt(values.at(0)?.scoreData?.score ?? "0", 10);
+
+          if (player) {
+            const playerEntry = values
+              .find(({ userData }) =>
+                userData.boardname.toLocaleLowerCase() === player
+              );
+
+            if (!playerEntry) {
+              await bot.helpers.editOriginalInteractionResponse(
+                interaction.token,
+                {
+                  content: `❌️ Player score not found.`,
+                },
+              );
+              return;
+            }
+
+            const { scoreData, userData } = playerEntry;
+            const id = scoreData.changelogId;
+            const playerName = escapeMarkdown(userData.boardname);
+
+            const time = parseInt(scoreData.score, 10);
+            const score = formatCmTime(time);
+            const rank = scoreData.playerRank;
+
+            const date = scoreData.date;
+            const durationSince = getDurationSince(date);
+            const g = (value: number) => value === 1 ? '' : 's';
+            const duration = durationSince.days
+              ? `${durationSince.days} day${g(durationSince.days)}`
+              : durationSince.hours
+              ? `${durationSince.hours} hours${g(durationSince.hours)}`
+              : durationSince.minutes
+              ? `${durationSince.minutes} minute${g(durationSince.minutes)} ago`
+              : `${durationSince.seconds} second${g(durationSince.seconds)}`;
+
+            const onYouTube = !!scoreData.youtubeID;
+
+            const videoLink = onYouTube
+              ? `https://www.youtube.com/watch?v=${scoreData.youtubeID}`
+              : `https://autorender.portal2.sr/video.html?v=${id}`;
+
+            const diff = wrTime !== time
+              ? ` (+${formatCmTime(time - wrTime)} to WR)`
+              : "";
+
+            const title = `${playerName} on ${chamber.cm_name}`;
+
+            const chamberLink =
+              `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
+
+            // FIXME: Do not hard-code these IDs
+            const wrEmoji = interaction.guildId === BigInt("146404426746167296")
+              ? " <:wr:294282175396839426>"
+              : "";
+
+            await bot.helpers.editOriginalInteractionResponse(
+              interaction.token,
+              {
+                content: [
+                  `[${title}](<${chamberLink}>)`,
+                  `Time: ${score}${diff}`,
+                  `Rank: ${rank === "1" ? `WR${wrEmoji}` : rank}`,
+                  `Date: ${date} (${duration} ago)`,
+                ].join("\n"),
+                components: [
+                  {
+                    type: MessageComponentTypes.ActionRow,
+                    components: [
+                      {
+                        type: MessageComponentTypes.Button,
+                        label: `Watch on ${
+                          onYouTube ? "YouTube" : "autorender"
+                        }`,
+                        style: ButtonStyles.Link,
+                        url: videoLink,
+                      },
+                      {
+                        type: MessageComponentTypes.Button,
+                        label: `Download Demo`,
+                        style: ButtonStyles.Link,
+                        url: `https://board.portal2.sr/getDemo?id=${id}`,
+                      },
+                      // {
+                      //   type: MessageComponentTypes.Button,
+                      //   label: `Parse Demo`,
+                      //   style: ButtonStyles.Primary,
+                      //   customId: `lb_parsedemo_${id}`,
+                      // },
+                    ],
+                  },
+                ],
+              },
+            );
+            return;
+          }
 
           const indexLimit = values
             .findIndex(({ scoreData }) =>
@@ -167,8 +283,6 @@ createCommand({
             0,
             indexLimit !== -1 ? Math.min(5, indexLimit + 1) : 5,
           );
-
-          const wrTime = parseInt(entries.at(0)?.scoreData?.score ?? "0", 10);
 
           const leaderboard = entries.map(({ scoreData, userData }) => {
             const rank = scoreData.playerRank;

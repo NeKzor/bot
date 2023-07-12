@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Temporal } from "npm:@js-temporal/polyfill";
 import {
   Bot,
   BotWithCache,
@@ -209,4 +210,9 @@ export function formatBoardPoints(points: number, formatCharacter = ",") {
   return points >= 1_000
     ? `${Math.floor(points / 1_000)}${formatCharacter}${points % 1_000}`
     : points.toString();
+}
+
+export function getDurationSince(date: string) {
+  return Temporal.Now.plainDateISO()
+    .since(Temporal.PlainDateTime.from(date));
 }
