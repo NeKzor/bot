@@ -1,8 +1,6 @@
 # NeKzBot
 
-Current Version: 3.0.0 | Last Update: Jul 2023 | [Repository]
-
-[Repository]: https://github.com/NeKzor/bot
+Current Version: 3.0.0 | Last Update: Jul 2023
 
 ## Introduction
 
@@ -23,6 +21,9 @@ community.
 | `/report bug` | Report a bug to a specific project.                     |
 | `/ris`        | Convert text to regional indicator symbols.             |
 | `/wr`         | Get a video of the current challenge mode world record. |
+
+[Discord]: https://discord.com
+[Portal 2 Speedrunning]: https://discord.gg/p2sr
 
 ## Versions
 
