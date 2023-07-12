@@ -1,23 +1,28 @@
 # NeKzBot
 
-Current Version: 3.0.0 | Last Update: Jul 2023
+Current Version: 3.0.0 | Last Update: Jul 2023 | [Repository]
+
+[Repository]: https://github.com/NeKzor/bot
 
 ## Introduction
 
-[NeKzBot](https://github.com/NeKzor/bot) is a chat bot for
-[Discord](https://discord.com) which finds its application in the Portal 2
-Speedrun Server.
+NeKzBot is a [Discord] chatbot created for the [Portal 2 Speedrunning]
+community.
 
-| Command       | Description                                   |
-| ------------- | --------------------------------------------- |
-| `/bot info`   | Print info about the bot.                     |
-| `/bot reload` | Reload bot data.                              |
-| `/cvar`       | Find a console command.                       |
-| `/glitch`     | Find an entry about a glitch.                 |
-| `/lp`         | Find the current least portals record.        |
-| `/report bug` | Report a bug to a specific project.           |
-| `/ris`        | Convert text to regional indicator symbols.   |
-| `/wr`         | Find the current challenge mode world record. |
+| Command       | Description                                             |
+| ------------- | ------------------------------------------------------- |
+| `/agg`        | Get the aggregated challenge mode leaderboards.         |
+| `/bhop`       | Find a bhop level.                                      |
+| `/bot info`   | Print info about the bot.                               |
+| `/bot reload` | Reload bot data.                                        |
+| `/cvars`      | Find a console command.                                 |
+| `/demo info`  | Get information about a demo.                           |
+| `/glitch`     | Find an entry about a glitch.                           |
+| `/lb`         | Get the challenge mode leaderboard.                     |
+| `/lp`         | Find the current least portals record.                  |
+| `/report bug` | Report a bug to a specific project.                     |
+| `/ris`        | Convert text to regional indicator symbols.             |
+| `/wr`         | Get a video of the current challenge mode world record. |
 
 ## Versions
 
@@ -44,5 +49,7 @@ Speedrun Server.
 ## Dependencies
 
 - [discordeno]
+- [sdp]
 
 [discordeno]: https://github.com/discordeno/discordeno
+[sdp]: https://github.com/NeKzor/sdp
