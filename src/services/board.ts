@@ -35,6 +35,8 @@ export interface AggregatedData {
   };
 }
 
+export type AggregationType = "sp" | "coop" | "overall";
+
 export const Board = {
   BaseApi: "https://board.portal2.sr",
 
@@ -48,7 +50,7 @@ export const Board = {
     return await res.json() as Record<string, ChamberData>;
   },
 
-  async getAggregated(type: "sp" | "coop" | "overall") {
+  async getAggregated(type: AggregationType) {
     const res = await fetch(`${Board.BaseApi}/aggregated/${type}/json`);
 
     if (!res.ok) {

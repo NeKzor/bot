@@ -197,3 +197,16 @@ export function formatCmTime(time: number) {
       : `${cs}`)}`
     : `${sec}.${((cs < 10) ? `0${cs}` : `${cs}`)}`;
 }
+
+/**
+ * Format leaderboard points
+ *    e.g. 1000 = 1,000
+ * @param points - Leaderboard points
+ * @params formatCharacter - Format character to use
+ * @returns - Formatted points
+ */
+export function formatBoardPoints(points: number, formatCharacter = ",") {
+  return points >= 1_000
+    ? `${Math.floor(points / 1_000)}${formatCharacter}${points % 1_000}`
+    : points.toString();
+}
