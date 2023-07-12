@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-export interface Level {
+export interface SpeedrunLevel {
   id: string;
   name: string;
   weblink: string;
@@ -15,7 +15,7 @@ export interface Level {
   }[];
 }
 
-export interface Record {
+export interface SpeedrunRecord {
   weblink: string;
   game: string;
   category: string;
@@ -25,7 +25,7 @@ export interface Record {
   emulators: null;
   "video-only": boolean;
   timing: null;
-  values: {};
+  values: Record<string, unknown>;
   runs: [
     {
       place: number;
@@ -67,7 +67,7 @@ export interface Record {
           region: null;
         };
         splits: null;
-        values: {};
+        values: Record<string, unknown>;
       };
     },
     {
@@ -110,7 +110,7 @@ export interface Record {
           region: null;
         };
         splits: null;
-        values: {};
+        values: Record<string, unknown>;
       };
     },
   ];
@@ -192,7 +192,7 @@ export interface User {
 export const SpeedrunCom = {
   Portal2Bhop: {
     Id: "v1pxk8p6",
-    Levels: [] as (Level & { records: Record[] })[],
+    Levels: [] as (SpeedrunLevel & { records: SpeedrunRecord[] })[],
   },
 
   async load() {
@@ -214,12 +214,12 @@ export const SpeedrunCom = {
 
     await SpeedrunCom.load();
   },
-  async getRecords(level: Level) {
+  async getRecords(level: SpeedrunLevel) {
     const link = level.links.find((link) => link.rel === "records");
     if (link) {
       try {
         const res = await fetch(link.uri);
-        const records = (await res.json()).data as Record[];
+        const records = (await res.json()).data as SpeedrunRecord[];
         return records.filter((record) => record.runs.length > 0);
       } catch (err) {
         console.error(err);
