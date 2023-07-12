@@ -14,7 +14,7 @@ import {
   MessageComponents,
   MessageComponentTypes,
 } from "../deps.ts";
-import { Code } from "../services/code.ts";
+import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
 import { Piston } from "../services/piston.ts";
 import { createCommand } from "./mod.ts";
 
@@ -32,7 +32,8 @@ createCommand({
         const isRerun = interaction.type === InteractionTypes.MessageComponent;
 
         if (isRerun) {
-          const { value: codeMessage } = await Code.getMessage(
+          const { value: codeMessage } = await InteractionsDb.find(
+            InteractionKey.Code,
             interaction.message!.id,
           );
 
@@ -181,13 +182,16 @@ createCommand({
               .getOriginalInteractionResponse(interaction.token);
 
             if (message) {
-              const savedResult = await Code.saveMessage({
-                interaction_message_id: responseMessage.id,
-                guild_id: message.guildId,
-                channel_id: message.channelId,
-                message_id: message.id,
-                user_id: message.authorId,
-              });
+              const savedResult = await InteractionsDb.insert(
+                InteractionKey.Code,
+                {
+                  interaction_message_id: responseMessage.id,
+                  guild_id: message.guildId,
+                  channel_id: message.channelId,
+                  message_id: message.id,
+                  user_id: message.authorId,
+                },
+              );
 
               if (savedResult.ok) {
                 buttons = rerunButtons;
