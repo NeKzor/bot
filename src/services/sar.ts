@@ -775,7 +775,7 @@ export const SAR = {
     //await Deno.writeTextFile(cvarWhitelistFile, "");
     //await Deno.writeTextFile(filesumWhitelistFile, "");
 
-    await this.load();
+    await SAR.load();
   },
 
   async parseDemo(buffer: Uint8Array, output: OutputFunc) {
