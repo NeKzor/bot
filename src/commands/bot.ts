@@ -14,6 +14,7 @@ import {
 } from "../deps.ts";
 import { CVars } from "../services/cvars.ts";
 import { Piston } from "../services/piston.ts";
+import { SAR } from "../services/sar.ts";
 import { SpeedrunCom } from "../services/speedruncom.ts";
 import { createCommand } from "./mod.ts";
 
@@ -92,10 +93,11 @@ createCommand({
                 return false;
               };
 
-              const [cvars, speedrunCom, piston] = await Promise.all([
+              const [cvars, speedrunCom, piston, sar] = await Promise.all([
                 tryFetch(CVars.fetch)(),
                 tryFetch(SpeedrunCom.fetch)(),
                 tryFetch(Piston.fetch)(),
+                tryFetch(SAR.fetch)(),
               ]);
 
               await bot.helpers.editOriginalInteractionResponse(
@@ -106,6 +108,7 @@ createCommand({
                     `Cvars: ${cvars ? "success" : "failed"}`,
                     `Bhop: ${speedrunCom ? "success" : "failed"}`,
                     `Piston: ${piston ? "success" : "failed"}`,
+                    `SAR: ${sar ? "success" : "failed"}`,
                   ].join("\n"),
                 },
               );

@@ -189,6 +189,8 @@ export interface SarWhitelists {
 }
 
 // _parse_sar_data
+// TODO: Fix sdp types
+// deno-lint-ignore no-explicit-any
 const readSarMessageData = (data: any, len: number) => {
   if (len === 0) {
     return new SarMessage(SarDataType.Invalid);
@@ -306,14 +308,20 @@ const readSarMessageData = (data: any, len: number) => {
         splits: [],
       };
       for (let i = 0; i < out.speedrunTime.nsplits; ++i) {
-        const split: any = {
+        type Inner<T> = T extends (infer U)[] ? U : T;
+        type SplitsType = Exclude<
+          Inner<Exclude<SarMessage["speedrunTime"], undefined>["splits"]>,
+          undefined
+        >;
+
+        const split: SplitsType = {
           name: data.readASCIIString(),
           nsegs: data.readUint32(),
           segs: [],
         };
 
         for (let j = 0; j < split.nsegs; ++j) {
-          split.segs.push({
+          split.segs!.push({
             name: data.readASCIIString(),
             ticks: data.readUint32(),
           });
@@ -473,7 +481,7 @@ const allow = (toAllowName: string, toAllowValue: string) => {
   };
 };
 
-const validations = [
+const cvarValidators = [
   allowInt("host_timescale", 1),
   allowInt("sv_alternateticks", 1),
   allowInt("sv_allow_mobile_portals", 0),
@@ -488,7 +496,7 @@ const validations = [
 
 // _allow_initial_cvar
 const allowInitialCvar = (initialCvar: SarMessage["initialCvar"]) => {
-  for (const validation of validations) {
+  for (const validation of cvarValidators) {
     const result = validation(initialCvar);
     if (result !== undefined) {
       return result;
@@ -551,7 +559,7 @@ const validateResult = (
     // config_check_cmd_whitelist
 
     // NOTE: mdp's function seems wrong here...
-    ///      why is only checking for a prefix?
+    ///      why is it only checking for a prefix?
 
     const [command] = message.command!.trim().split(" ", 2);
 
@@ -623,17 +631,17 @@ const validateResult = (
           let ticks = 0;
           for (const seg of split.segs ?? []) {
             output(seg.name, seg.ticks);
-            ticks *= seg.ticks;
+            ticks += seg.ticks;
           }
 
           let total = Math.round((ticks * 1_000) / 60);
 
           const ms = total % 1_000;
-          total /= 1_000;
+          total = Math.floor(total / 1_000);
           const secs = total % 60;
-          total /= 60;
+          total = Math.floor(total / 60);
           const mins = total % 60;
-          total /= 60;
+          total = Math.floor(total / 60);
           const hrs = total;
 
           output(
@@ -705,65 +713,80 @@ const validateResult = (
   }
 };
 
-export const parseSarDemo = async (buffer: Uint8Array, output: OutputFunc) => {
-  const sarWhitelistFile = "./src/data/sar/sar_whitelist.txt";
-  const cmdWhitelistFile = "./src/data/sar/cmd_whitelist.txt";
-  const cvarWhitelistFile = "./src/data/sar/cvar_whitelist.txt";
-  const filesumWhitelistFile = "./src/data/sar/filesum_whitelist.txt";
+const sarWhitelistFile = "./data/sar/sar_whitelist.txt";
+const cmdWhitelistFile = "./data/sar/cmd_whitelist.txt";
+const cvarWhitelistFile = "./data/sar/cvar_whitelist.txt";
+const filesumWhitelistFile = "./data/sar/filesum_whitelist.txt";
 
-  const sarWhitelist = (await Deno.readTextFile(sarWhitelistFile))
-    .trim()
-    .split("\n")
-    .map((sar) => parseInt(sar.trim(), 16));
+export const SAR = {
+  Whitelists: {
+    sarWhitelist: [],
+    cmdWhitelist: [],
+    cvarWhitelist: [],
+    filesumWhitelist: [],
+  } as SarWhitelists,
 
-  const cmdWhitelist = (await Deno.readTextFile(cmdWhitelistFile))
-    .trim()
-    .split("\n")
-    .map((cmd) => cmd.trim());
+  async load() {
+    SAR.Whitelists.sarWhitelist = (await Deno.readTextFile(sarWhitelistFile))
+      .trim()
+      .split("\n")
+      .map((sar) => parseInt(sar.trim(), 16));
 
-  const cvarWhitelist = (await Deno.readTextFile(cvarWhitelistFile))
-    .trim()
-    .split("\n")
-    .map((line) => {
-      const [varName, val] = line.trim().split(" ", 2);
-      return { varName, val };
-    })
-    .filter((cvar) => cvar.varName !== "");
+    SAR.Whitelists.cmdWhitelist = (await Deno.readTextFile(cmdWhitelistFile))
+      .trim()
+      .split("\n")
+      .map((cmd) => cmd.trim());
 
-  const filesumWhitelist = (await Deno.readTextFile(filesumWhitelistFile))
-    .trim()
-    .split("\n")
-    .map((line) => {
-      const [varName, val] = line.trim().split(" ", 2);
-
-      if (varName === "" || varName.startsWith("//")) {
+    SAR.Whitelists.cvarWhitelist = (await Deno.readTextFile(cvarWhitelistFile))
+      .trim()
+      .split("\n")
+      .map((line) => {
+        const [varName, val] = line.trim().split(" ", 2);
         return { varName, val };
-      }
+      })
+      .filter((cvar) => cvar.varName !== "");
 
-      if (val === undefined) {
-        throw new Error(`Missing checksum value for file ${varName}`);
-      }
+    SAR.Whitelists.filesumWhitelist =
+      (await Deno.readTextFile(filesumWhitelistFile))
+        .trim()
+        .split("\n")
+        .map((line) => {
+          const [varName, val] = line.trim().split(" ", 2);
 
-      return { varName, val };
-    })
-    .filter((cvar) => cvar.varName !== "");
+          if (varName === "" || varName.startsWith("//")) {
+            return { varName, val };
+          }
 
-  const result = await readSarData(buffer);
+          if (val === undefined) {
+            throw new Error(`Missing checksum value for file ${varName}`);
+          }
 
-  validateResult(
-    result,
-    {
-      sarWhitelist,
-      cmdWhitelist,
-      cvarWhitelist,
-      filesumWhitelist,
-    },
-    output,
-  );
+          return { varName, val };
+        })
+        .filter((cvar) => cvar.varName !== "");
+  },
 
-  return result;
+  async fetch() {
+    // TODO: It would be great if we could download the official
+    //       whitelists files somewhere...
+
+    //await Deno.writeTextFile(sarWhitelistFile, "");
+    //await Deno.writeTextFile(cmdWhitelistFile, "");
+    //await Deno.writeTextFile(cvarWhitelistFile, "");
+    //await Deno.writeTextFile(filesumWhitelistFile, "");
+
+    await this.load();
+  },
+
+  async parseDemo(buffer: Uint8Array, output: OutputFunc) {
+    const result = await readSarData(buffer);
+
+    validateResult(
+      result,
+      SAR.Whitelists,
+      output,
+    );
+
+    return result;
+  },
 };
-
-await parseSarDemo(await Deno.readFile("demo.dem"), (...args) => {
-  console.log(...args);
-});
