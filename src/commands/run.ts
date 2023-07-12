@@ -124,7 +124,10 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `❌️ Language is not supported.`,
+                content:
+                  `❌️ Language is not supported. List of supported languages:\n` +
+                  Piston.Runtimes.map((runtime) => `\`${runtime.language}\``)
+                    .join(", "),
               },
             },
           );
