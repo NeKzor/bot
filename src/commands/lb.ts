@@ -14,7 +14,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
-import { formatCmTime } from "../utils/helpers.ts";
+import { escapeMarkdown, formatCmTime } from "../utils/helpers.ts";
 import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
@@ -155,7 +155,7 @@ createCommand({
           );
 
           // Yes, the API returns an object which is not
-          // the right thing to return, thanks ncla :>
+          // the right thing to return, thanks iVerb :>
           const values = Object.values(lb);
 
           const indexLimit = values
@@ -168,15 +168,26 @@ createCommand({
             indexLimit !== -1 ? Math.min(5, indexLimit + 1) : 5,
           );
 
+          const wrTime = parseInt(entries.at(0)?.scoreData?.score ?? "0", 10);
+
           const leaderboard = entries.map(({ scoreData, userData }) => {
             const rank = scoreData.playerRank;
-            const player = userData.boardname;
-            const score = formatCmTime(parseInt(scoreData.score, 10));
+            const player = escapeMarkdown(userData.boardname);
+
+            const time = parseInt(scoreData.score, 10);
+            const score = formatCmTime(time);
+
             const videoLink = scoreData.youtubeID
               ? `https://www.youtube.com/watch?v=${scoreData.youtubeID}`
               : `https://autorender.portal2.sr/video.html?v=${scoreData.changelogId}`;
-            return `${rank}\\. ${player} [${score}](<${videoLink}>)`;
+
+            const diff = wrTime !== time
+              ? ` (+${formatCmTime(time - wrTime)})`
+              : "";
+            return `${rank}\\. ${player} [${score}](<${videoLink}>)${diff}`;
           });
+
+          const title = `${chamber.cm_name} Leaderboard`;
 
           const chamberLink =
             `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
@@ -184,7 +195,7 @@ createCommand({
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content: `[${chamber.cm_name}](<${chamberLink}>)\n${
+              content: `[${title}](<${chamberLink}>)\n${
                 leaderboard.join("\n")
               }`,
             },
