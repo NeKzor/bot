@@ -8,7 +8,7 @@ title = "NeKzBot"
 [output.html]
 additional-css = ["doc.css"]
 cname = "bot.nekz.me"
-git-repository-url = "https://github.com/NeKzor/tem"
+git-repository-url = "https://github.com/NeKzor/bot"
 git-repository-icon = "fa-github"
 
 [output.html.search]
