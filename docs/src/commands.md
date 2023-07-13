@@ -78,7 +78,8 @@ Get a video of the current challenge mode world record.
 
 ### `Get demo info`
 
-This is the same as the [`/demo info`](#demo-info) command but it works on messages via the context menu.
+This is the same as the [`/demo info`](#demo-info) command but it works on
+messages via the context menu.
 
 ![get_demo_info.gif](./images/get_demo_info.gif)
 
