@@ -167,6 +167,8 @@ createCommand({
             " and ",
           );
 
+          const g = (value: number) => value === 1 ? '' : 's';
+
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
@@ -175,7 +177,7 @@ createCommand({
               data: {
                 content: `${
                   lpMap!.cm_name
-                } in [${lp.portals} portals](${lp.videoLink}) by ${players}`,
+                } in [${lp.portals} portal${g(lp.portals)}](${lp.videoLink}) by ${players}`,
               },
             },
           );
