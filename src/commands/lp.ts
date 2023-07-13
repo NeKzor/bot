@@ -21,16 +21,27 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
 
 const maximumAutocompleteResults = 5;
 
-const findLp = (query: string) => {
+const findLp = (
+  { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
+) => {
+  if (query.length === 0) {
+    return Portal2Campaign.map_list.slice(0, maximumAutocompleteResults);
+  }
+
   const results = [];
 
   for (const map of Portal2Campaign.map_list) {
+    if (!isAutocomplete && map.sort_index.toString() === query) {
+      return [map];
+    }
+
     const cmName = map.cm_name.toLocaleLowerCase();
     const tlc = map.three_letter_code.toLocaleLowerCase();
 
     if (
       cmName.startsWith(query) ||
-      cmName.replaceAll(" ", "").startsWith(query) ||
+      cmName.replaceAll(" ", "") === query ||
+      cmName.split(" ").includes(query) ||
       tlc === query
     ) {
       results.push(map);
@@ -74,11 +85,11 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findLp(query)
+              choices: findLp({ query, isAutocomplete: true })
                 .map((map) => {
                   return {
                     name: map.cm_name,
-                    value: map.name,
+                    value: map.sort_index.toString(),
                   } as ApplicationCommandOptionChoice;
                 }),
             },
@@ -93,7 +104,7 @@ createCommand({
         )?.value?.toString() ?? "";
 
         try {
-          const lpMaps = findLp(query);
+          const lpMaps = findLp({ query, isAutocomplete: false });
           const lpMap = lpMaps.at(0);
 
           if (!lpMap) {
