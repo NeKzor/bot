@@ -1,2452 +1,1124 @@
 {
-  "map_list": [
-    {
-      "name": "sp_a1_intro1",
-      "cm_name": "Container Ride",
-      "best_time_id": "62761",
-      "best_portals_id": "",
-      "three_letter_code": "CTR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 0,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a1_intro2",
-      "cm_name": "Portal Carousel",
-      "best_time_id": "62758",
-      "best_portals_id": "",
-      "three_letter_code": "PTC",
-      "elevator_timing": "reintegration associate **GO** will revive",
-      "map_filter": 1,
-      "sort_index": 1,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a1_intro3",
-      "cm_name": "Portal Gun",
-      "best_time_id": "47458",
-      "best_portals_id": "47459",
-      "three_letter_code": "PGN",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 2,
-      "lp_record": {
-        "portals": 0,
-        "ties": 1041,
-        "player": {
-          "id": "76561197981001131",
-          "name": "Bananasaurus Rex",
-          "avatar": "https://avatars.steamstatic.com/83194c3df3e75c9addad86ebb261e350962e8908.jpg",
-          "country": "CA"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=VLpHM4iXUsM"
-      }
-    },
-    {
-      "name": "sp_a1_intro4",
-      "cm_name": "Smooth Jazz",
-      "best_time_id": "47455",
-      "best_portals_id": "47454",
-      "three_letter_code": "SJZ",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 3,
-      "lp_record": {
-        "portals": 0,
-        "ties": 138,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=CLbHQJw9G8U"
-      }
-    },
-    {
-      "name": "sp_a1_intro5",
-      "cm_name": "Cube Momentum",
-      "best_time_id": "47452",
-      "best_portals_id": "47451",
-      "three_letter_code": "CBM",
-      "elevator_timing": "Personality constructs **GO** will remain",
-      "map_filter": 1,
-      "sort_index": 4,
-      "lp_record": {
-        "portals": 1,
-        "ties": 70,
-        "player": {
-          "id": "76561198043899549",
-          "name": "Yarby",
-          "avatar": "https://avatars.steamstatic.com/e4b15b25a74d72bb7d93dac7ddcae58984f99b86.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=2D78_4909H0"
-      }
-    },
-    {
-      "name": "sp_a1_intro6",
-      "cm_name": "Future Starter",
-      "best_time_id": "47106",
-      "best_portals_id": "47107",
-      "three_letter_code": "FST",
-      "elevator_timing": "Please return **GO** to your primitive",
-      "map_filter": 1,
-      "sort_index": 5,
-      "lp_record": {
-        "portals": 2,
-        "ties": 54,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=5OOGEp_z1fc"
-      }
-    },
-    {
-      "name": "sp_a1_intro7",
-      "cm_name": "Secret Panel",
-      "best_time_id": "62763",
-      "best_portals_id": "",
-      "three_letter_code": "SPA",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 6,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a1_wakeup",
-      "cm_name": "Wakeup",
-      "best_time_id": "62759",
-      "best_portals_id": "",
-      "three_letter_code": "WAK",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 7,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a2_intro",
-      "cm_name": "Incinerator",
-      "best_time_id": "47735",
-      "best_portals_id": "47734",
-      "three_letter_code": "INC",
-      "elevator_timing": "From testing... **GO** for the rest",
-      "map_filter": 1,
-      "sort_index": 8,
-      "lp_record": {
-        "portals": 0,
-        "ties": 187,
-        "player": {
-          "id": "76561197996355226",
-          "name": "sickle",
-          "avatar": "https://avatars.steamstatic.com/cfb833b3c49ee7f014ea1bf1b44b3aba8aaa5fb3.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=_COAv5JAuTA"
-      }
-    },
-    {
-      "name": "sp_a2_laser_intro",
-      "cm_name": "Laser Intro",
-      "best_time_id": "62765",
-      "best_portals_id": "",
-      "three_letter_code": "LIN",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 9,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a2_laser_stairs",
-      "cm_name": "Laser Stairs",
-      "best_time_id": "47736",
-      "best_portals_id": "47737",
-      "three_letter_code": "LST",
-      "elevator_timing": "It says, a horrible **GO** person",
-      "map_filter": 1,
-      "sort_index": 10,
-      "lp_record": {
-        "portals": 0,
-        "ties": 30,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=X0x1ykrdyhc"
-      }
-    },
-    {
-      "name": "sp_a2_dual_lasers",
-      "cm_name": "Dual Lasers",
-      "best_time_id": "47738",
-      "best_portals_id": "47739",
-      "three_letter_code": "DLS",
-      "elevator_timing": "On beating **GO** the odds",
-      "map_filter": 1,
-      "sort_index": 11,
-      "lp_record": {
-        "portals": 2,
-        "ties": 14540,
-        "player": {
-          "name": "Orsagee"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=k75JC16ASMI"
-      }
-    },
-    {
-      "name": "sp_a2_laser_over_goo",
-      "cm_name": "Laser Over Goo",
-      "best_time_id": "47742",
-      "best_portals_id": "47743",
-      "three_letter_code": "LOG",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 12,
-      "lp_record": {
-        "portals": 0,
-        "ties": 78,
-        "player": {
-          "id": "76561198015995629",
-          "name": "jyjeyz",
-          "avatar": "https://avatars.steamstatic.com/48209ff8a9dcdadb464a023b5a7d9d3525118c63.jpg",
-          "country": "RU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=I6fn_Sh7NI8"
-      }
-    },
-    {
-      "name": "sp_a2_catapult_intro",
-      "cm_name": "Catapult Intro",
-      "best_time_id": "62767",
-      "best_portals_id": "",
-      "three_letter_code": "CAI",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 13,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a2_trust_fling",
-      "cm_name": "Trust Fling",
-      "best_time_id": "47744",
-      "best_portals_id": "47745",
-      "three_letter_code": "TFL",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 14,
-      "lp_record": {
-        "portals": 2,
-        "ties": 4534,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=1qSJdrv19Io"
-      }
-    },
-    {
-      "name": "sp_a2_pit_flings",
-      "cm_name": "Pit Flings",
-      "best_time_id": "47465",
-      "best_portals_id": "47466",
-      "three_letter_code": "PIF",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 15,
-      "lp_record": {
-        "portals": 0,
-        "ties": 311,
-        "player": {
-          "id": "76561198015995629",
-          "name": "jyjeyz",
-          "avatar": "https://avatars.steamstatic.com/48209ff8a9dcdadb464a023b5a7d9d3525118c63.jpg",
-          "country": "RU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=0htANr3C3bo"
-      }
-    },
-    {
-      "name": "sp_a2_fizzler_intro",
-      "cm_name": "Fizzler Intro",
-      "best_time_id": "47746",
-      "best_portals_id": "47747",
-      "three_letter_code": "FZI",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 16,
-      "lp_record": {
-        "portals": 0,
-        "ties": 10,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=Ezke6o9w47w"
-      }
-    },
-    {
-      "name": "sp_a2_sphere_peek",
-      "cm_name": "Ceiling Catapult",
-      "best_time_id": "47748",
-      "best_portals_id": "47749",
-      "three_letter_code": "CEC",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 17,
-      "lp_record": {
-        "portals": 0,
-        "ties": 6,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=dLy-jrNOx90"
-      }
-    },
-    {
-      "name": "sp_a2_ricochet",
-      "cm_name": "Ricochet",
-      "best_time_id": "47751",
-      "best_portals_id": "47750",
-      "three_letter_code": "RIO",
-      "elevator_timing": "See some humans, **GO** but with",
-      "map_filter": 1,
-      "sort_index": 18,
-      "lp_record": {
-        "portals": 2,
-        "ties": 2211,
-        "player": {
-          "name": "spliffs333"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=EDaFLBA3Blk"
-      }
-    },
-    {
-      "name": "sp_a2_bridge_intro",
-      "cm_name": "Bridge Intro",
-      "best_time_id": "47752",
-      "best_portals_id": "47753",
-      "three_letter_code": "BIN",
-      "elevator_timing": "That's wrong, **GO** the correct",
-      "map_filter": 1,
-      "sort_index": 19,
-      "lp_record": {
-        "portals": 2,
-        "ties": 36,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=i6VrTl-Bdlc"
-      }
-    },
-    {
-      "name": "sp_a2_bridge_the_gap",
-      "cm_name": "Bridge the Gap",
-      "best_time_id": "47755",
-      "best_portals_id": "47754",
-      "three_letter_code": "BTG",
-      "elevator_timing": "Of room here. **GO** Did well",
-      "map_filter": 1,
-      "sort_index": 20,
-      "lp_record": {
-        "portals": 0,
-        "ties": 5,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=_be42ksKKbo"
-      }
-    },
-    {
-      "name": "sp_a2_turret_intro",
-      "cm_name": "Turret Intro",
-      "best_time_id": "47756",
-      "best_portals_id": "47757",
-      "three_letter_code": "TIN",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 21,
-      "lp_record": {
-        "portals": 0,
-        "ties": 11091,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=bQkhvIc5Le8"
-      }
-    },
-    {
-      "name": "sp_a2_laser_relays",
-      "cm_name": "Laser Relays",
-      "best_time_id": "47759",
-      "best_portals_id": "47758",
-      "three_letter_code": "LRY",
-      "elevator_timing": "Its a medical, **GO** experiment",
-      "map_filter": 1,
-      "sort_index": 22,
-      "lp_record": {
-        "portals": 0,
-        "ties": 89,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=Jz5wto3P_SQ"
-      }
-    },
-    {
-      "name": "sp_a2_turret_blocker",
-      "cm_name": "Turret Blocker",
-      "best_time_id": "47760",
-      "best_portals_id": "47761",
-      "three_letter_code": "TBL",
-      "elevator_timing": "a man and a **GO** woman.",
-      "map_filter": 1,
-      "sort_index": 23,
-      "lp_record": {
-        "portals": 0,
-        "ties": 5771,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=HMCC9Ir6GKE"
-      }
-    },
-    {
-      "name": "sp_a2_laser_vs_turret",
-      "cm_name": "Laser vs Turret",
-      "best_time_id": "47763",
-      "best_portals_id": "47762",
-      "three_letter_code": "LVT",
-      "elevator_timing": "[After the third \\\"For he\\\" in humming]",
-      "map_filter": 1,
-      "sort_index": 24,
-      "lp_record": {
-        "portals": 0,
-        "ties": 2648,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=9XcUmZrLx2g"
-      }
-    },
-    {
-      "name": "sp_a2_pull_the_rug",
-      "cm_name": "Pull the Rug",
-      "best_time_id": "47764",
-      "best_portals_id": "47765",
-      "three_letter_code": "PTR",
-      "elevator_timing": "After all **GO** these years",
-      "map_filter": 1,
-      "sort_index": 25,
-      "lp_record": {
-        "portals": 0,
-        "ties": 79,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=9LaVluhxHJA"
-      }
-    },
-    {
-      "name": "sp_a2_column_blocker",
-      "cm_name": "Column Blocker",
-      "best_time_id": "47766",
-      "best_portals_id": "47767",
-      "three_letter_code": "COB",
-      "elevator_timing": "Go ASAP",
-      "map_filter": 1,
-      "sort_index": 26,
-      "lp_record": {
-        "portals": 0,
-        "ties": 7,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=INKGIEoVhWk"
-      }
-    },
-    {
-      "name": "sp_a2_laser_chaining",
-      "cm_name": "Laser Chaining",
-      "best_time_id": "47768",
-      "best_portals_id": "47769",
-      "three_letter_code": "LCH",
-      "elevator_timing": "Go ASAP",
-      "map_filter": 1,
-      "sort_index": 27,
-      "lp_record": {
-        "portals": 0,
-        "ties": 30,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=VlAL5ZB1BMI"
-      }
-    },
-    {
-      "name": "sp_a2_triple_laser",
-      "cm_name": "Triple Laser",
-      "best_time_id": "47770",
-      "best_portals_id": "47771",
-      "three_letter_code": "TLS",
-      "elevator_timing": "See what **GO** you don't need",
-      "map_filter": 1,
-      "sort_index": 28,
-      "lp_record": {
-        "portals": 0,
-        "ties": 6378,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=sTZqNJwzzIA"
-      }
-    },
-    {
-      "name": "sp_a2_bts1",
-      "cm_name": "Jail Break",
-      "best_time_id": "47773",
-      "best_portals_id": "47772",
-      "three_letter_code": "JBR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 29,
-      "lp_record": {
-        "portals": 2,
-        "ties": 40960,
-        "player": {
-          "name": "SourceRuns"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=9vn07psVnFo?t=1819"
-      }
-    },
-    {
-      "name": "sp_a2_bts2",
-      "cm_name": "Escape",
-      "best_time_id": "47774",
-      "best_portals_id": "47775",
-      "three_letter_code": "ESC",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 30,
-      "lp_record": {
-        "portals": 0,
-        "ties": 1331,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=WE6ynoROW00"
-      }
-    },
-    {
-      "name": "sp_a2_bts3",
-      "cm_name": "Turret Factory",
-      "best_time_id": "47776",
-      "best_portals_id": "47777",
-      "three_letter_code": "TFA",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 31,
-      "lp_record": {
-        "portals": 5,
-        "ties": 10,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=eDlWEe5dMik"
-      }
-    },
-    {
-      "name": "sp_a2_bts4",
-      "cm_name": "Turret Sabotage",
-      "best_time_id": "47779",
-      "best_portals_id": "47778",
-      "three_letter_code": "TSA",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 32,
-      "lp_record": {
-        "portals": 4,
-        "ties": 18,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=ZAQWTxcUKB8"
-      }
-    },
-    {
-      "name": "sp_a2_bts5",
-      "cm_name": "Neurotoxin Sabotage",
-      "best_time_id": "47780",
-      "best_portals_id": "47781",
-      "three_letter_code": "NXS",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 33,
-      "lp_record": {
-        "portals": 0,
-        "ties": 4,
-        "player": {
-          "id": "76561198096862334",
-          "name": "cinderace",
-          "avatar": "https://avatars.steamstatic.com/7d32e28c1ec99443b1ebd2387ce5f301c37b8a79.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=Or0WPwlntcQ"
-      }
-    },
-    {
-      "name": "sp_a2_bts6",
-      "cm_name": "Tube Ride",
-      "best_time_id": "",
-      "best_portals_id": "",
-      "three_letter_code": "TRI",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 34,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a2_core",
-      "cm_name": "Core",
-      "best_time_id": "62771",
-      "best_portals_id": "",
-      "three_letter_code": "COR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 35,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a3_00",
-      "cm_name": "Long Fall",
-      "best_time_id": "",
-      "best_portals_id": "",
-      "three_letter_code": "LFA",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 36,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a3_01",
-      "cm_name": "Underground",
-      "best_time_id": "47783",
-      "best_portals_id": "47782",
-      "three_letter_code": "UND",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 37,
-      "lp_record": {
-        "portals": 2,
-        "ties": 7,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=C92zQk7rpGM"
-      }
-    },
-    {
-      "name": "sp_a3_03",
-      "cm_name": "Cave Johnson",
-      "best_time_id": "47784",
-      "best_portals_id": "47785",
-      "three_letter_code": "CJO",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 38,
-      "lp_record": {
-        "portals": 4,
-        "ties": 8,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=qayVyToxvsg"
-      }
-    },
-    {
-      "name": "sp_a3_jump_intro",
-      "cm_name": "Repulsion Intro",
-      "best_time_id": "47787",
-      "best_portals_id": "47786",
-      "three_letter_code": "RIN",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 39,
-      "lp_record": {
-        "portals": 0,
-        "ties": 197,
-        "player": {
-          "id": "76561198041107150",
-          "name": "Mayor of Kenja",
-          "avatar": "https://avatars.steamstatic.com/e15d3d3912851067482704cf50d3e692b21fe252.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=NComYq2pkIY"
-      }
-    },
-    {
-      "name": "sp_a3_bomb_flings",
-      "cm_name": "Bomb Flings",
-      "best_time_id": "47468",
-      "best_portals_id": "47467",
-      "three_letter_code": "BOF",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 40,
-      "lp_record": {
-        "portals": 3,
-        "ties": 96,
-        "player": {
-          "id": "76561198018540237",
-          "name": "Kittaye",
-          "avatar": "https://avatars.steamstatic.com/77c62825fb12317b6aa0c79259d01874a44eb807.jpg",
-          "country": "AU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=UUKOVvC4FAk"
-      }
-    },
-    {
-      "name": "sp_a3_crazy_box",
-      "cm_name": "Crazy Box",
-      "best_time_id": "47469",
-      "best_portals_id": "47470",
-      "three_letter_code": "CBO",
-      "elevator_timing": "Safety door **GO** that won't",
-      "map_filter": 1,
-      "sort_index": 41,
-      "lp_record": {
-        "portals": 0,
-        "ties": 24,
-        "player": {
-          "id": "76561198018540237",
-          "name": "Kittaye",
-          "avatar": "https://avatars.steamstatic.com/77c62825fb12317b6aa0c79259d01874a44eb807.jpg",
-          "country": "AU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=ngcY-iLbJYc"
-      }
-    },
-    {
-      "name": "sp_a3_transition01",
-      "cm_name": "PotatOS",
-      "best_time_id": "47472",
-      "best_portals_id": "47471",
-      "three_letter_code": "POS",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 42,
-      "lp_record": {
-        "portals": 5,
-        "ties": 87,
-        "player": {
-          "id": "76561198044394357",
-          "name": "KranK",
-          "avatar": "https://avatars.steamstatic.com/4adacf733ceac099fd425172813d7162723746aa.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=Y4a4XR-Vl-U"
-      }
-    },
-    {
-      "name": "sp_a3_speed_ramp",
-      "cm_name": "Propulsion Intro",
-      "best_time_id": "47791",
-      "best_portals_id": "47792",
-      "three_letter_code": "PIN",
-      "elevator_timing": "Gonna change **GO** the world",
-      "map_filter": 1,
-      "sort_index": 43,
-      "lp_record": {
-        "portals": 2,
-        "ties": 224,
-        "player": {
-          "id": "76561198018586508",
-          "name": "Simmo",
-          "avatar": "https://avatars.steamstatic.com/e12f942704510e129880a683efe61a38f771d5b3.jpg",
-          "country": "AU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=x7MnBv6YpGc"
-      }
-    },
-    {
-      "name": "sp_a3_speed_flings",
-      "cm_name": "Propulsion Flings",
-      "best_time_id": "47793",
-      "best_portals_id": "47794",
-      "three_letter_code": "PRF",
-      "elevator_timing": "Earlier. Again, **GO** all you ",
-      "map_filter": 1,
-      "sort_index": 44,
-      "lp_record": {
-        "portals": 0,
-        "ties": 3,
-        "player": {
-          "id": "76561198084336096",
-          "name": "feliser",
-          "avatar": "https://avatars.steamstatic.com/3506091d3990f015ca605ad68e3ac330db865388.jpg",
-          "country": "CA"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=uE7OWPOBEP0"
-      }
-    },
-    {
-      "name": "sp_a3_portal_intro",
-      "cm_name": "Conversion Intro",
-      "best_time_id": "47795",
-      "best_portals_id": "47796",
-      "three_letter_code": "COI",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 45,
-      "lp_record": {
-        "portals": 9,
-        "ties": 94,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=XtMVyi55eTI"
-      }
-    },
-    {
-      "name": "sp_a3_end",
-      "cm_name": "Three Gels",
-      "best_time_id": "47798",
-      "best_portals_id": "47799",
-      "three_letter_code": "TGE",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 46,
-      "lp_record": {
-        "portals": 4,
-        "ties": 76,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=ms4Zp1lnQu4"
-      }
-    },
-    {
-      "name": "sp_a4_intro",
-      "cm_name": "Test",
-      "best_time_id": "88350",
-      "best_portals_id": "",
-      "three_letter_code": "TES",
-      "elevator_timing": "Didn't work, **GO** and it almost",
-      "map_filter": 1,
-      "sort_index": 47,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a4_tb_intro",
-      "cm_name": "Funnel Intro",
-      "best_time_id": "47800",
-      "best_portals_id": "47801",
-      "three_letter_code": "FUI",
-      "elevator_timing": "Good news is, **GO** well, none so far",
-      "map_filter": 1,
-      "sort_index": 48,
-      "lp_record": {
-        "portals": 0,
-        "ties": 58,
-        "player": {
-          "id": "76561198003513323",
-          "name": "Jesuscatface",
-          "avatar": "https://avatars.steamstatic.com/0308788fa0bc986b938fb0c594646e57d3cc76c7.jpg",
-          "country": "CA"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=Jd66XpWxXog"
-      }
-    },
-    {
-      "name": "sp_a4_tb_trust_drop",
-      "cm_name": "Ceiling Button",
-      "best_time_id": "47802",
-      "best_portals_id": "47803",
-      "three_letter_code": "CBU",
-      "elevator_timing": "In a lot **GO** of trouble",
-      "map_filter": 1,
-      "sort_index": 49,
-      "lp_record": {
-        "portals": 0,
-        "ties": 308,
-        "player": {
-          "id": "76561197969042354",
-          "name": "adzicents",
-          "avatar": "https://avatars.steamstatic.com/5e62c7642ee9822fbe09a17959f25c74208df8c3.jpg",
-          "country": "AU"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=bvWmmYslhOY"
-      }
-    },
-    {
-      "name": "sp_a4_tb_wall_button",
-      "cm_name": "Wall Button",
-      "best_time_id": "47804",
-      "best_portals_id": "47805",
-      "three_letter_code": "WBU",
-      "elevator_timing": "Sooner than **GO** I expected",
-      "map_filter": 1,
-      "sort_index": 50,
-      "lp_record": {
-        "portals": 0,
-        "ties": 15,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=dU7NadD0iNI"
-      }
-    },
-    {
-      "name": "sp_a4_tb_polarity",
-      "cm_name": "Polarity",
-      "best_time_id": "47806",
-      "best_portals_id": "47807",
-      "three_letter_code": "POL",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 51,
-      "lp_record": {
-        "portals": 0,
-        "ties": 88,
-        "player": {
-          "id": "76561197996355226",
-          "name": "sickle",
-          "avatar": "https://avatars.steamstatic.com/cfb833b3c49ee7f014ea1bf1b44b3aba8aaa5fb3.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=OaGZvmh5XUc"
-      }
-    },
-    {
-      "name": "sp_a4_tb_catch",
-      "cm_name": "Funnel Catch",
-      "best_time_id": "47808",
-      "best_portals_id": "47809",
-      "three_letter_code": "FUC",
-      "elevator_timing": "The mental **GO** capacity to push",
-      "map_filter": 1,
-      "sort_index": 52,
-      "lp_record": {
-        "portals": 2,
-        "ties": 881,
-        "player": {
-          "name": "spliffs333"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=mXJ6_1TVH-s"
-      }
-    },
-    {
-      "name": "sp_a4_stop_the_box",
-      "cm_name": "Stop the Box",
-      "best_time_id": "47811",
-      "best_portals_id": "47812",
-      "three_letter_code": "STB",
-      "elevator_timing": "No. No, **GO** that was the",
-      "map_filter": 1,
-      "sort_index": 53,
-      "lp_record": {
-        "portals": 0,
-        "ties": 335,
-        "player": {
-          "id": "76561197970963482",
-          "name": "Iijil",
-          "avatar": "https://avatars.steamstatic.com/2bdb2025ffcf3f0a12a716260c7308a9f7a15c3c.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=wA_r_g5kOIs"
-      }
-    },
-    {
-      "name": "sp_a4_laser_catapult",
-      "cm_name": "Laser Catapult",
-      "best_time_id": "47813",
-      "best_portals_id": "47814",
-      "three_letter_code": "LCA",
-      "elevator_timing": "Any of the **GO** crucial functions",
-      "map_filter": 1,
-      "sort_index": 54,
-      "lp_record": {
-        "portals": 0,
-        "ties": 223,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=cl0nVzBneYU"
-      }
-    },
-    {
-      "name": "sp_a4_laser_platform",
-      "cm_name": "Laser Platform",
-      "best_time_id": "47815",
-      "best_portals_id": "47816",
-      "three_letter_code": "LPL",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 55,
-      "lp_record": {
-        "portals": 3,
-        "ties": 10,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=DBhNMsBMMDI"
-      }
-    },
-    {
-      "name": "sp_a4_speed_tb_catch",
-      "cm_name": "Propulsion Catch",
-      "best_time_id": "47817",
-      "best_portals_id": "47818",
-      "three_letter_code": "PCA",
-      "elevator_timing": "Whether you're, uh, **GO** picking up",
-      "map_filter": 1,
-      "sort_index": 56,
-      "lp_record": {
-        "portals": 0,
-        "ties": 52,
-        "player": {
-          "id": "76561198003223063",
-          "name": "PerOculos",
-          "avatar": "https://avatars.steamstatic.com/7b00906ac356806bc7bdb3815ea7c1c5b13b65a8.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=COTnra695a4"
-      }
-    },
-    {
-      "name": "sp_a4_jump_polarity",
-      "cm_name": "Repulsion Polarity",
-      "best_time_id": "47819",
-      "best_portals_id": "47820",
-      "three_letter_code": "RPO",
-      "elevator_timing": "Got a surprise **GO** for us",
-      "map_filter": 1,
-      "sort_index": 57,
-      "lp_record": {
-        "portals": 2,
-        "ties": 49,
-        "player": {
-          "id": "76561198043899549",
-          "name": "Yarby",
-          "avatar": "https://avatars.steamstatic.com/e4b15b25a74d72bb7d93dac7ddcae58984f99b86.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=53OhbE9DeBs"
-      }
-    },
-    {
-      "name": "sp_a4_finale1",
-      "cm_name": "Finale 1",
-      "best_time_id": "62776",
-      "best_portals_id": "",
-      "three_letter_code": "FN1",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 58,
-      "lp_record": null
-    },
-    {
-      "name": "sp_a4_finale2",
-      "cm_name": "Finale 2",
-      "best_time_id": "47821",
-      "best_portals_id": "47822",
-      "three_letter_code": "FN2",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 59,
-      "lp_record": {
-        "portals": 2,
-        "ties": 332,
-        "player": {
-          "id": "76561197994202252",
-          "name": "Stimich",
-          "avatar": "https://avatars.steamstatic.com/e5a14ad41e89e134a381d7ceb40efc4f92e06a9f.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=_0mPY12TdNc"
-      }
-    },
-    {
-      "name": "sp_a4_finale3",
-      "cm_name": "Finale 3",
-      "best_time_id": "47824",
-      "best_portals_id": "47823",
-      "three_letter_code": "FN3",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 60,
-      "lp_record": {
-        "portals": 6,
-        "ties": 107,
-        "player": {
-          "id": "76561197996355226",
-          "name": "sickle",
-          "avatar": "https://avatars.steamstatic.com/cfb833b3c49ee7f014ea1bf1b44b3aba8aaa5fb3.jpg"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=4kQpyOT0SN0"
-      }
-    },
-    {
-      "name": "sp_a4_finale4",
-      "cm_name": "Finale 4",
-      "best_time_id": "47456",
-      "best_portals_id": "47457",
-      "three_letter_code": "FN4",
-      "elevator_timing": "GO FAST",
-      "map_filter": 1,
-      "sort_index": 61,
-      "lp_record": {
-        "portals": 6,
-        "ties": 197,
-        "player": {
-          "id": "76561198029304443",
-          "name": "Schmidli",
-          "avatar": "https://avatars.steamstatic.com/d2df687bb56e731b0f8223e499c83211ad2f5313.jpg",
-          "country": "US"
-        },
-        "player2": null,
-        "videoLink": "https://www.youtube.com/watch?v=L01L2gCut2w"
-      }
-    },
-    {
-      "name": "mp_coop_start",
-      "cm_name": "Start",
-      "best_time_id": "",
-      "best_portals_id": "",
-      "three_letter_code": "STA",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 62,
-      "lp_record": null
-    },
-    {
-      "name": "mp_coop_lobby_2",
-      "cm_name": "Lobby",
-      "best_time_id": "",
-      "best_portals_id": "",
-      "three_letter_code": "LOB",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 63,
-      "lp_record": null
-    },
-    {
-      "name": "mp_coop_doors",
-      "cm_name": "Doors",
-      "best_time_id": "47741",
-      "best_portals_id": "47740",
-      "three_letter_code": "DOR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 64,
-      "lp_record": {
-        "portals": 0,
-        "ties": 2676,
-        "player": {
-          "id": "76561197994202252",
-          "name": "Stimich",
-          "avatar": "https://avatars.steamstatic.com/e5a14ad41e89e134a381d7ceb40efc4f92e06a9f.jpg"
-        },
-        "player2": {
-          "name": "Pitkakorva"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=rHV8Qk8Ynfw"
-      }
-    },
-    {
-      "name": "mp_coop_race_2",
-      "cm_name": "Buttons",
-      "best_time_id": "47825",
-      "best_portals_id": "47826",
-      "three_letter_code": "BUT",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 65,
-      "lp_record": {
-        "portals": 2,
-        "ties": 557,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=TwUuzXIu0U8"
-      }
-    },
-    {
-      "name": "mp_coop_laser_2",
-      "cm_name": "Lasers",
-      "best_time_id": "47828",
-      "best_portals_id": "47827",
-      "three_letter_code": "LAS",
-      "elevator_timing": "I can tell you that atleast one of you is doing very very **GO** well",
-      "map_filter": 2,
-      "sort_index": 66,
-      "lp_record": {
-        "portals": 3,
-        "ties": 27,
-        "player": {
-          "id": "76561198134041367",
-          "name": "Oryn~",
-          "avatar": "https://avatars.steamstatic.com/cc97e904c6001c3fab3dd585b6cb2961877761ba.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=DBLNgfdoY0c"
-      }
-    },
-    {
-      "name": "mp_coop_rat_maze",
-      "cm_name": "Rat Maze",
-      "best_time_id": "47829",
-      "best_portals_id": "47830",
-      "three_letter_code": "RMZ",
-      "elevator_timing": "...final score **GO**. For instance blue just lost 2 science...",
-      "map_filter": 2,
-      "sort_index": 67,
-      "lp_record": {
-        "portals": 2,
-        "ties": 854,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=brxBWe8A7aE"
-      }
-    },
-    {
-      "name": "mp_coop_laser_crusher",
-      "cm_name": "Laser Crusher",
-      "best_time_id": "45467",
-      "best_portals_id": "45466",
-      "three_letter_code": "LCR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 68,
-      "lp_record": {
-        "portals": 0,
-        "ties": 2931,
-        "player": {
-          "id": "76561197994202252",
-          "name": "Stimich",
-          "avatar": "https://avatars.steamstatic.com/e5a14ad41e89e134a381d7ceb40efc4f92e06a9f.jpg"
-        },
-        "player2": {
-          "name": "Pitkakorva"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=CbgbcxbouRk"
-      }
-    },
-    {
-      "name": "mp_coop_teambts",
-      "cm_name": "Behind The Scenes",
-      "best_time_id": "46362",
-      "best_portals_id": "46361",
-      "three_letter_code": "BTS",
-      "elevator_timing": "...you are great **GO** at science.",
-      "map_filter": 2,
-      "sort_index": 69,
-      "lp_record": {
-        "portals": 0,
-        "ties": 5161,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "name": "gopherdude"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=9SsGzVn8cc0"
-      }
-    },
-    {
-      "name": "mp_coop_fling_3",
-      "cm_name": "Flings",
-      "best_time_id": "47831",
-      "best_portals_id": "47832",
-      "three_letter_code": "FLS",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 70,
-      "lp_record": {
-        "portals": 4,
-        "ties": 1628,
-        "player": {
-          "id": "76561197994202252",
-          "name": "Stimich",
-          "avatar": "https://avatars.steamstatic.com/e5a14ad41e89e134a381d7ceb40efc4f92e06a9f.jpg"
-        },
-        "player2": {
-          "name": "Pitkakorva"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=kD4vFI6fvuU"
-      }
-    },
-    {
-      "name": "mp_coop_infinifling_train",
-      "cm_name": "Infinifling",
-      "best_time_id": "47833",
-      "best_portals_id": "47834",
-      "three_letter_code": "IFF",
-      "elevator_timing": "...designed to exactly fit an edgeless safety **GO** cube...",
-      "map_filter": 2,
-      "sort_index": 71,
-      "lp_record": {
-        "portals": 0,
-        "ties": 137,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "name": "VEGA"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=BUQgo4h_ng8"
-      }
-    },
-    {
-      "name": "mp_coop_come_along",
-      "cm_name": "Team Retrieval",
-      "best_time_id": "47835",
-      "best_portals_id": "47836",
-      "three_letter_code": "TRE",
-      "elevator_timing": "You must be very, very proud **GO**",
-      "map_filter": 2,
-      "sort_index": 72,
-      "lp_record": {
-        "portals": 0,
-        "ties": 1889,
-        "player": {
-          "id": "76561197994202252",
-          "name": "Stimich",
-          "avatar": "https://avatars.steamstatic.com/e5a14ad41e89e134a381d7ceb40efc4f92e06a9f.jpg"
-        },
-        "player2": {
-          "name": "Pitkakorva"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=UoyoRy7eOXo"
-      }
-    },
-    {
-      "name": "mp_coop_fling_1",
-      "cm_name": "Vertical Flings",
-      "best_time_id": "47837",
-      "best_portals_id": "47838",
-      "three_letter_code": "VFL",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 73,
-      "lp_record": {
-        "portals": 2,
-        "ties": 701,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "name": "LongJohnDickWeed"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=6kJE_xwm_Nc"
-      }
-    },
-    {
-      "name": "mp_coop_catapult_1",
-      "cm_name": "Catapults",
-      "best_time_id": "47840",
-      "best_portals_id": "47839",
-      "three_letter_code": "CAT",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 74,
-      "lp_record": {
-        "portals": 4,
-        "ties": 255,
-        "player": {
-          "id": "76561198096446735",
-          "name": "Krzyhau",
-          "avatar": "https://avatars.steamstatic.com/f29de7f41db29526848b52c8942f727b7c70b0db.jpg",
-          "country": "PL"
-        },
-        "player2": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=bROpO6PxP68"
-      }
-    },
-    {
-      "name": "mp_coop_multifling_1",
-      "cm_name": "Multifling",
-      "best_time_id": "47841",
-      "best_portals_id": "47842",
-      "three_letter_code": "MUL",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 75,
-      "lp_record": {
-        "portals": 2,
-        "ties": 448,
-        "player": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "player2": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=NIHewLnPQzk"
-      }
-    },
-    {
-      "name": "mp_coop_fling_crushers",
-      "cm_name": "Fling Crushers",
-      "best_time_id": "47844",
-      "best_portals_id": "47843",
-      "three_letter_code": "FCR",
-      "elevator_timing": "Without the looming consequence of death **GO**",
-      "map_filter": 2,
-      "sort_index": 76,
-      "lp_record": {
-        "portals": 0,
-        "ties": 319,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=hNBXRfNZCUc"
-      }
-    },
-    {
-      "name": "mp_coop_fan",
-      "cm_name": "Industrial Fan",
-      "best_time_id": "47845",
-      "best_portals_id": "47846",
-      "three_letter_code": "IFA",
-      "elevator_timing": "...you have earned a break **GO** from the offical test... (basically GO FAST)",
-      "map_filter": 2,
-      "sort_index": 77,
-      "lp_record": {
-        "portals": 0,
-        "ties": 444,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=Dd3rIqTnPzI"
-      }
-    },
-    {
-      "name": "mp_coop_wall_intro",
-      "cm_name": "Cooperative Bridges",
-      "best_time_id": "47848",
-      "best_portals_id": "47847",
-      "three_letter_code": "CBR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 78,
-      "lp_record": {
-        "portals": 3,
-        "ties": 1002,
-        "player": {
-          "name": "sickamentz1"
-        },
-        "player2": {
-          "name": "Geez"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=tZ-C26pQbJo"
-      }
-    },
-    {
-      "name": "mp_coop_wall_2",
-      "cm_name": "Bridge Swap",
-      "best_time_id": "47849",
-      "best_portals_id": "47850",
-      "three_letter_code": "BSW",
-      "elevator_timing": "End of clue **GO**",
-      "map_filter": 2,
-      "sort_index": 79,
-      "lp_record": {
-        "portals": 2,
-        "ties": 2,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": {
-          "id": "76561198134041367",
-          "name": "Oryn~",
-          "avatar": "https://avatars.steamstatic.com/cc97e904c6001c3fab3dd585b6cb2961877761ba.jpg",
-          "country": "AQ"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=YI8b-1CD5Bg"
-      }
-    },
-    {
-      "name": "mp_coop_catapult_wall_intro",
-      "cm_name": "Fling Block",
-      "best_time_id": "47854",
-      "best_portals_id": "47855",
-      "three_letter_code": "FBL",
-      "elevator_timing": "hall of fame for that **GO**",
-      "map_filter": 2,
-      "sort_index": 80,
-      "lp_record": {
-        "portals": 2,
-        "ties": 240,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=wb_htOqnrdk"
-      }
-    },
-    {
-      "name": "mp_coop_wall_block",
-      "cm_name": "Catapult Block",
-      "best_time_id": "47856",
-      "best_portals_id": "47857",
-      "three_letter_code": "CBL",
-      "elevator_timing": "a reward for testing **GO**",
-      "map_filter": 2,
-      "sort_index": 81,
-      "lp_record": {
-        "portals": 4,
-        "ties": 462,
-        "player": {
-          "name": "DotorChub"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=MmtN4jsgi_E"
-      }
-    },
-    {
-      "name": "mp_coop_catapult_2",
-      "cm_name": "Bridge Fling",
-      "best_time_id": "47858",
-      "best_portals_id": "47859",
-      "three_letter_code": "BRF",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 82,
-      "lp_record": {
-        "portals": 4,
-        "ties": 3,
-        "player": {
-          "id": "76561198337970645",
-          "name": "Nidboj132",
-          "avatar": "https://avatars.steamstatic.com/9ef47a2ce6d6e623f33926de9e3cb56bc56388be.jpg",
-          "country": "PL"
-        },
-        "player2": {
-          "id": "76561198134041367",
-          "name": "Oryn~",
-          "avatar": "https://avatars.steamstatic.com/cc97e904c6001c3fab3dd585b6cb2961877761ba.jpg",
-          "country": "AQ"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=ZikObwurBb0"
-      }
-    },
-    {
-      "name": "mp_coop_turret_walls",
-      "cm_name": "Turret Walls",
-      "best_time_id": "47861",
-      "best_portals_id": "47860",
-      "three_letter_code": "TWA",
-      "elevator_timing": "sss - refuses",
-      "map_filter": 2,
-      "sort_index": 83,
-      "lp_record": {
-        "portals": 4,
-        "ties": 348,
-        "player": {
-          "name": "sickamentz1"
-        },
-        "player2": {
-          "name": "Geez"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=IDqv3LrBqlM"
-      }
-    },
-    {
-      "name": "mp_coop_turret_ball",
-      "cm_name": "Turret Assassin",
-      "best_time_id": "52642",
-      "best_portals_id": "52641",
-      "three_letter_code": "TAS",
-      "elevator_timing": "...Orignal Plans **GO**...",
-      "map_filter": 2,
-      "sort_index": 84,
-      "lp_record": {
-        "portals": 0,
-        "ties": 148,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=xwMVb_YoSWU"
-      }
-    },
-    {
-      "name": "mp_coop_wall_5",
-      "cm_name": "Bridge Testing",
-      "best_time_id": "52660",
-      "best_portals_id": "52659",
-      "three_letter_code": "BTE",
-      "elevator_timing": "...repair these tests",
-      "map_filter": 2,
-      "sort_index": 85,
-      "lp_record": {
-        "portals": 0,
-        "ties": 288,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "name": "wS"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=s0MjSGBrunU"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_redirect",
-      "cm_name": "Cooperative Funnels",
-      "best_time_id": "52662",
-      "best_portals_id": "52661",
-      "three_letter_code": "CFU",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 86,
-      "lp_record": {
-        "portals": 0,
-        "ties": 551,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=BJ0D7LpLEqo"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_drill",
-      "cm_name": "Funnel Drill",
-      "best_time_id": "52663",
-      "best_portals_id": "52664",
-      "three_letter_code": "FDR",
-      "elevator_timing": "The following list **GO** of numbers",
-      "map_filter": 2,
-      "sort_index": 87,
-      "lp_record": {
-        "portals": 0,
-        "ties": 210,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=LvElWMD-Zec"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_catch_grind_1",
-      "cm_name": "Funnel Catch",
-      "best_time_id": "52665",
-      "best_portals_id": "52666",
-      "three_letter_code": "FCA",
-      "elevator_timing": "For Orange: End of experiment **GO**, for Blue: There I've **GO** said it",
-      "map_filter": 2,
-      "sort_index": 88,
-      "lp_record": {
-        "portals": 0,
-        "ties": 98,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=tSgR0FwCEEQ"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_laser_1",
-      "cm_name": "Funnel Laser",
-      "best_time_id": "52667",
-      "best_portals_id": "52668",
-      "three_letter_code": "FLA",
-      "elevator_timing": "I'm not sure **GO** I trust the two of you together",
-      "map_filter": 2,
-      "sort_index": 89,
-      "lp_record": {
-        "portals": 0,
-        "ties": 855,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "name": "gopherdude"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=jExO1JmE8ik"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_polarity",
-      "cm_name": "Cooperative Polarity",
-      "best_time_id": "52671",
-      "best_portals_id": "52672",
-      "three_letter_code": "CPO",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 90,
-      "lp_record": {
-        "portals": 0,
-        "ties": 1649,
-        "player": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "player2": {
-          "name": "Betsruner"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=LsBsh9AYlMc"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_polarity2",
-      "cm_name": "Funnel Hop",
-      "best_time_id": "52687",
-      "best_portals_id": "52688",
-      "three_letter_code": "FHO",
-      "elevator_timing": "...I trust you **GO** (Second you in quote)",
-      "map_filter": 2,
-      "sort_index": 91,
-      "lp_record": {
-        "portals": 0,
-        "ties": 158,
-        "player": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "player2": {
-          "id": "76561198043899549",
-          "name": "Yarby",
-          "avatar": "https://avatars.steamstatic.com/e4b15b25a74d72bb7d93dac7ddcae58984f99b86.jpg",
-          "country": "US"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=V0xSr_GXtsA"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_polarity3",
-      "cm_name": "Advanced Polarity",
-      "best_time_id": "52689",
-      "best_portals_id": "52690",
-      "three_letter_code": "APO",
-      "elevator_timing": "So I can trust you **GO** 100 percent",
-      "map_filter": 2,
-      "sort_index": 92,
-      "lp_record": {
-        "portals": 0,
-        "ties": 354,
-        "player": {
-          "id": "76561198045034733",
-          "name": "RaspeRuben",
-          "avatar": "https://avatars.steamstatic.com/ff8cce6ed65259baf9e43ccb0a19f4eb23ba5151.jpg"
-        },
-        "player2": {
-          "id": "76561198039230536",
-          "name": "Zypeh",
-          "avatar": "https://avatars.steamstatic.com/dc4c1cfa8f0c5b0c85354825c7711f60c3714a41.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=K0Fz7EO0fQ0"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_maze",
-      "cm_name": "Funnel Maze",
-      "best_time_id": "52691",
-      "best_portals_id": "52692",
-      "three_letter_code": "FMZ",
-      "elevator_timing": "Before we go any further **GO**",
-      "map_filter": 2,
-      "sort_index": 93,
-      "lp_record": {
-        "portals": 0,
-        "ties": 477,
-        "player": {
-          "id": "76561198043770492",
-          "name": "ncla",
-          "avatar": "https://avatars.steamstatic.com/ac3e1750e3f753066f18b095f7cba5c18e62d299.jpg"
-        },
-        "player2": {
-          "name": "takz"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=HZbZBXExn3g"
-      }
-    },
-    {
-      "name": "mp_coop_tbeam_end",
-      "cm_name": "Turret Warehouse",
-      "best_time_id": "52777",
-      "best_portals_id": "52778",
-      "three_letter_code": "TWH",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 94,
-      "lp_record": {
-        "portals": 0,
-        "ties": 471,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "name": "gopherdude"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=VVdJW5ISKbY"
-      }
-    },
-    {
-      "name": "mp_coop_paint_come_along",
-      "cm_name": "Repulsion Jumps",
-      "best_time_id": "52694",
-      "best_portals_id": "52693",
-      "three_letter_code": "RJU",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 95,
-      "lp_record": {
-        "portals": 0,
-        "ties": 214,
-        "player": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "player2": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=XPJDH3QYOn4"
-      }
-    },
-    {
-      "name": "mp_coop_paint_redirect",
-      "cm_name": "Double Bounce",
-      "best_time_id": "52711",
-      "best_portals_id": "52712",
-      "three_letter_code": "DBO",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 96,
-      "lp_record": {
-        "portals": 2,
-        "ties": 747,
-        "player": {
-          "id": "76561197981001131",
-          "name": "Bananasaurus Rex",
-          "avatar": "https://avatars.steamstatic.com/83194c3df3e75c9addad86ebb261e350962e8908.jpg",
-          "country": "CA"
-        },
-        "player2": {
-          "id": "76561198043770492",
-          "name": "ncla",
-          "avatar": "https://avatars.steamstatic.com/ac3e1750e3f753066f18b095f7cba5c18e62d299.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=63kOL7VVKRY"
-      }
-    },
-    {
-      "name": "mp_coop_paint_bridge",
-      "cm_name": "Bridge Repulsion",
-      "best_time_id": "52714",
-      "best_portals_id": "52713",
-      "three_letter_code": "BRE",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 97,
-      "lp_record": {
-        "portals": 2,
-        "ties": 252,
-        "player": {
-          "name": "sparkle1princess"
-        },
-        "player2": {
-          "id": "76561198039230536",
-          "name": "Zypeh",
-          "avatar": "https://avatars.steamstatic.com/dc4c1cfa8f0c5b0c85354825c7711f60c3714a41.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=A18ndnmEyf8"
-      }
-    },
-    {
-      "name": "mp_coop_paint_walljumps",
-      "cm_name": "Wall Repulsion",
-      "best_time_id": "52715",
-      "best_portals_id": "52716",
-      "three_letter_code": "WRE",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 98,
-      "lp_record": {
-        "portals": 2,
-        "ties": 10,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "name": "wS"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=K-xwADkZCKA"
-      }
-    },
-    {
-      "name": "mp_coop_paint_speed_fling",
-      "cm_name": "Propulsion Crushers",
-      "best_time_id": "52717",
-      "best_portals_id": "52718",
-      "three_letter_code": "PCR",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 99,
-      "lp_record": {
-        "portals": 0,
-        "ties": 406,
-        "player": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "player2": {
-          "name": "00Svo"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=NFBJYTmjyU8"
-      }
-    },
-    {
-      "name": "mp_coop_paint_red_racer",
-      "cm_name": "Turret Ninja",
-      "best_time_id": "52735",
-      "best_portals_id": "52736",
-      "three_letter_code": "TNJ",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 100,
-      "lp_record": {
-        "portals": 0,
-        "ties": 76,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "name": "wS"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=CQJ6zGF7dKg"
-      }
-    },
-    {
-      "name": "mp_coop_paint_speed_catch",
-      "cm_name": "Propulsion Retrieval",
-      "best_time_id": "52738",
-      "best_portals_id": "52737",
-      "three_letter_code": "PRE",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 101,
-      "lp_record": {
-        "portals": 0,
-        "ties": 212,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "id": "76561197981001131",
-          "name": "Bananasaurus Rex",
-          "avatar": "https://avatars.steamstatic.com/83194c3df3e75c9addad86ebb261e350962e8908.jpg",
-          "country": "CA"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=xmqOQKOeHz0"
-      }
-    },
-    {
-      "name": "mp_coop_paint_longjump_intro",
-      "cm_name": "Vault Entrance",
-      "best_time_id": "52740",
-      "best_portals_id": "52739",
-      "three_letter_code": "VEN",
-      "elevator_timing": "GO FAST",
-      "map_filter": 2,
-      "sort_index": 102,
-      "lp_record": {
-        "portals": 0,
-        "ties": 188,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=70DWCp-ynlA"
-      }
-    },
-    {
-      "name": "mp_coop_separation_1",
-      "cm_name": "Separation",
-      "best_time_id": "49341",
-      "best_portals_id": "49342",
-      "three_letter_code": "SEP",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 103,
-      "lp_record": {
-        "portals": 0,
-        "ties": 123,
-        "player": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "player2": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=ojlBlWnTGpk"
-      }
-    },
-    {
-      "name": "mp_coop_tripleaxis",
-      "cm_name": "Triple Axis",
-      "best_time_id": "49343",
-      "best_portals_id": "49344",
-      "three_letter_code": "TAX",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 104,
-      "lp_record": {
-        "portals": 0,
-        "ties": 617,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "id": "76561198042995537",
-          "name": "Schlay",
-          "avatar": "https://avatars.steamstatic.com/bf9c6b521b2ca52397c2250ff89e93830699fba9.jpg",
-          "country": "US"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=glvtYOxyVi8"
-      }
-    },
-    {
-      "name": "mp_coop_catapult_catch",
-      "cm_name": "Catapult Catch",
-      "best_time_id": "49345",
-      "best_portals_id": "49346",
-      "three_letter_code": "CAC",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 105,
-      "lp_record": {
-        "portals": 0,
-        "ties": 369,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "id": "76561198042995537",
-          "name": "Schlay",
-          "avatar": "https://avatars.steamstatic.com/bf9c6b521b2ca52397c2250ff89e93830699fba9.jpg",
-          "country": "US"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=bLVa8OoXKFk"
-      }
-    },
-    {
-      "name": "mp_coop_2paints_1bridge",
-      "cm_name": "Bridge Gels",
-      "best_time_id": "49347",
-      "best_portals_id": "49348",
-      "three_letter_code": "BGE",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 106,
-      "lp_record": {
-        "portals": 2,
-        "ties": 43,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=JG0ul1jN7VU"
-      }
-    },
-    {
-      "name": "mp_coop_paint_conversion",
-      "cm_name": "Maintenance",
-      "best_time_id": "49349",
-      "best_portals_id": "49350",
-      "three_letter_code": "MAI",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 107,
-      "lp_record": {
-        "portals": 0,
-        "ties": 196,
-        "player": {
-          "id": "76561197974616889",
-          "name": "Imanex",
-          "avatar": "https://avatars.steamstatic.com/82d1ac52aeddb7f08eb0f85d4f7d96160af30bb9.jpg"
-        },
-        "player2": {
-          "id": "76561198015678746",
-          "name": "Klooger",
-          "avatar": "https://avatars.steamstatic.com/5e3a2e97e84c3a6c12cf63ed5c5d22edee6ecec5.jpg",
-          "country": "AU"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=2M3CzBT-hac"
-      }
-    },
-    {
-      "name": "mp_coop_bridge_catch",
-      "cm_name": "Bridge Catch",
-      "best_time_id": "49351",
-      "best_portals_id": "49352",
-      "three_letter_code": "BCA",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 108,
-      "lp_record": {
-        "portals": 0,
-        "ties": 183,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=z_qQh5Rro9M"
-      }
-    },
-    {
-      "name": "mp_coop_laser_tbeam",
-      "cm_name": "Double Lift",
-      "best_time_id": "52757",
-      "best_portals_id": "52758",
-      "three_letter_code": "DLI",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 109,
-      "lp_record": {
-        "portals": 0,
-        "ties": 197,
-        "player": {
-          "id": "76561198021734854",
-          "name": "Schlepian",
-          "avatar": "https://avatars.steamstatic.com/f7be9949784d7864c619a72e0bec1138a14933ff.jpg",
-          "country": "US"
-        },
-        "player2": {
-          "id": "76561198042995537",
-          "name": "Schlay",
-          "avatar": "https://avatars.steamstatic.com/bf9c6b521b2ca52397c2250ff89e93830699fba9.jpg",
-          "country": "US"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=X_gP21fqnA0"
-      }
-    },
-    {
-      "name": "mp_coop_paint_rat_maze",
-      "cm_name": "Gel Maze",
-      "best_time_id": "52759",
-      "best_portals_id": "52760",
-      "three_letter_code": "PMZ",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 110,
-      "lp_record": {
-        "portals": 0,
-        "ties": 191,
-        "player": {
-          "id": "76561197980620221",
-          "name": "Mister Man",
-          "avatar": "https://avatars.steamstatic.com/695d7049640bded587ed3f5a83c26f1a1ad9c879.jpg",
-          "country": "AQ"
-        },
-        "player2": {
-          "id": "76561197978601137",
-          "name": "Hacked Exhale",
-          "avatar": "https://avatars.steamstatic.com/3d5a750f0fb2ac21ff46ceea973ef8b2eee2bff8.jpg",
-          "country": "DK"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=3gHJ2aQ__qU"
-      }
-    },
-    {
-      "name": "mp_coop_paint_crazy_box",
-      "cm_name": "Crazier Box",
-      "best_time_id": "48287",
-      "best_portals_id": "48288",
-      "three_letter_code": "CBX",
-      "elevator_timing": "UNKNOWN",
-      "map_filter": 2,
-      "sort_index": 111,
-      "lp_record": {
-        "portals": 0,
-        "ties": 172,
-        "player": {
-          "id": "76561198003598363",
-          "name": "DM_",
-          "avatar": "https://avatars.steamstatic.com/417410dd471a369af956619daa7579263045bbba.jpg"
-        },
-        "player2": {
-          "id": "76561198024055942",
-          "name": "follon",
-          "avatar": "https://avatars.steamstatic.com/34f5aed96997089fcd0782d756c637a431666965.jpg"
-        },
-        "videoLink": "https://www.youtube.com/watch?v=5iX3LTzKL-8"
-      }
-    }
-  ]
+    "map_list": [
+        {
+            "name": "sp_a1_intro1",
+            "cm_name": "Container Ride",
+            "best_time_id": "62761",
+            "best_portals_id": "",
+            "three_letter_code": "CTR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 0
+        },
+        {
+            "name": "sp_a1_intro2",
+            "cm_name": "Portal Carousel",
+            "best_time_id": "62758",
+            "best_portals_id": "",
+            "three_letter_code": "PTC",
+            "elevator_timing": "reintegration associate **GO** will revive",
+            "map_filter": 1,
+            "sort_index": 1
+        },
+        {
+            "name": "sp_a1_intro3",
+            "cm_name": "Portal Gun",
+            "best_time_id": "47458",
+            "best_portals_id": "47459",
+            "three_letter_code": "PGN",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 2
+        },
+        {
+            "name": "sp_a1_intro4",
+            "cm_name": "Smooth Jazz",
+            "best_time_id": "47455",
+            "best_portals_id": "47454",
+            "three_letter_code": "SJZ",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 3
+        },
+        {
+            "name": "sp_a1_intro5",
+            "cm_name": "Cube Momentum",
+            "best_time_id": "47452",
+            "best_portals_id": "47451",
+            "three_letter_code": "CBM",
+            "elevator_timing": "Personality constructs **GO** will remain",
+            "map_filter": 1,
+            "sort_index": 4
+        },
+        {
+            "name": "sp_a1_intro6",
+            "cm_name": "Future Starter",
+            "best_time_id": "47106",
+            "best_portals_id": "47107",
+            "three_letter_code": "FST",
+            "elevator_timing": "Please return **GO** to your primitive",
+            "map_filter": 1,
+            "sort_index": 5
+        },
+        {
+            "name": "sp_a1_intro7",
+            "cm_name": "Secret Panel",
+            "best_time_id": "62763",
+            "best_portals_id": "",
+            "three_letter_code": "SPA",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 6
+        },
+        {
+            "name": "sp_a1_wakeup",
+            "cm_name": "Wakeup",
+            "best_time_id": "62759",
+            "best_portals_id": "",
+            "three_letter_code": "WAK",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 7
+        },
+        {
+            "name": "sp_a2_intro",
+            "cm_name": "Incinerator",
+            "best_time_id": "47735",
+            "best_portals_id": "47734",
+            "three_letter_code": "INC",
+            "elevator_timing": "From testing... **GO** for the rest",
+            "map_filter": 1,
+            "sort_index": 8
+        },
+        {
+            "name": "sp_a2_laser_intro",
+            "cm_name": "Laser Intro",
+            "best_time_id": "62765",
+            "best_portals_id": "",
+            "three_letter_code": "LIN",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 9
+        },
+        {
+            "name": "sp_a2_laser_stairs",
+            "cm_name": "Laser Stairs",
+            "best_time_id": "47736",
+            "best_portals_id": "47737",
+            "three_letter_code": "LST",
+            "elevator_timing": "It says, a horrible **GO** person",
+            "map_filter": 1,
+            "sort_index": 10
+        },
+        {
+            "name": "sp_a2_dual_lasers",
+            "cm_name": "Dual Lasers",
+            "best_time_id": "47738",
+            "best_portals_id": "47739",
+            "three_letter_code": "DLS",
+            "elevator_timing": "On beating **GO** the odds",
+            "map_filter": 1,
+            "sort_index": 11
+        },
+        {
+            "name": "sp_a2_laser_over_goo",
+            "cm_name": "Laser Over Goo",
+            "best_time_id": "47742",
+            "best_portals_id": "47743",
+            "three_letter_code": "LOG",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 12
+        },
+        {
+            "name": "sp_a2_catapult_intro",
+            "cm_name": "Catapult Intro",
+            "best_time_id": "62767",
+            "best_portals_id": "",
+            "three_letter_code": "CAI",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 13
+        },
+        {
+            "name": "sp_a2_trust_fling",
+            "cm_name": "Trust Fling",
+            "best_time_id": "47744",
+            "best_portals_id": "47745",
+            "three_letter_code": "TFL",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 14
+        },
+        {
+            "name": "sp_a2_pit_flings",
+            "cm_name": "Pit Flings",
+            "best_time_id": "47465",
+            "best_portals_id": "47466",
+            "three_letter_code": "PIF",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 15
+        },
+        {
+            "name": "sp_a2_fizzler_intro",
+            "cm_name": "Fizzler Intro",
+            "best_time_id": "47746",
+            "best_portals_id": "47747",
+            "three_letter_code": "FZI",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 16
+        },
+        {
+            "name": "sp_a2_sphere_peek",
+            "cm_name": "Ceiling Catapult",
+            "best_time_id": "47748",
+            "best_portals_id": "47749",
+            "three_letter_code": "CEC",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 17
+        },
+        {
+            "name": "sp_a2_ricochet",
+            "cm_name": "Ricochet",
+            "best_time_id": "47751",
+            "best_portals_id": "47750",
+            "three_letter_code": "RIO",
+            "elevator_timing": "See some humans, **GO** but with",
+            "map_filter": 1,
+            "sort_index": 18
+        },
+        {
+            "name": "sp_a2_bridge_intro",
+            "cm_name": "Bridge Intro",
+            "best_time_id": "47752",
+            "best_portals_id": "47753",
+            "three_letter_code": "BIN",
+            "elevator_timing": "That's wrong, **GO** the correct",
+            "map_filter": 1,
+            "sort_index": 19
+        },
+        {
+            "name": "sp_a2_bridge_the_gap",
+            "cm_name": "Bridge the Gap",
+            "best_time_id": "47755",
+            "best_portals_id": "47754",
+            "three_letter_code": "BTG",
+            "elevator_timing": "Of room here. **GO** Did well",
+            "map_filter": 1,
+            "sort_index": 20
+        },
+        {
+            "name": "sp_a2_turret_intro",
+            "cm_name": "Turret Intro",
+            "best_time_id": "47756",
+            "best_portals_id": "47757",
+            "three_letter_code": "TIN",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 21
+        },
+        {
+            "name": "sp_a2_laser_relays",
+            "cm_name": "Laser Relays",
+            "best_time_id": "47759",
+            "best_portals_id": "47758",
+            "three_letter_code": "LRY",
+            "elevator_timing": "Its a medical, **GO** experiment",
+            "map_filter": 1,
+            "sort_index": 22
+        },
+        {
+            "name": "sp_a2_turret_blocker",
+            "cm_name": "Turret Blocker",
+            "best_time_id": "47760",
+            "best_portals_id": "47761",
+            "three_letter_code": "TBL",
+            "elevator_timing": "a man and a **GO** woman.",
+            "map_filter": 1,
+            "sort_index": 23
+        },
+        {
+            "name": "sp_a2_laser_vs_turret",
+            "cm_name": "Laser vs Turret",
+            "best_time_id": "47763",
+            "best_portals_id": "47762",
+            "three_letter_code": "LVT",
+            "elevator_timing": "[After the third \\\"For he\\\" in humming]",
+            "map_filter": 1,
+            "sort_index": 24
+        },
+        {
+            "name": "sp_a2_pull_the_rug",
+            "cm_name": "Pull the Rug",
+            "best_time_id": "47764",
+            "best_portals_id": "47765",
+            "three_letter_code": "PTR",
+            "elevator_timing": "After all **GO** these years",
+            "map_filter": 1,
+            "sort_index": 25
+        },
+        {
+            "name": "sp_a2_column_blocker",
+            "cm_name": "Column Blocker",
+            "best_time_id": "47766",
+            "best_portals_id": "47767",
+            "three_letter_code": "COB",
+            "elevator_timing": "Go ASAP",
+            "map_filter": 1,
+            "sort_index": 26
+        },
+        {
+            "name": "sp_a2_laser_chaining",
+            "cm_name": "Laser Chaining",
+            "best_time_id": "47768",
+            "best_portals_id": "47769",
+            "three_letter_code": "LCH",
+            "elevator_timing": "Go ASAP",
+            "map_filter": 1,
+            "sort_index": 27
+        },
+        {
+            "name": "sp_a2_triple_laser",
+            "cm_name": "Triple Laser",
+            "best_time_id": "47770",
+            "best_portals_id": "47771",
+            "three_letter_code": "TLS",
+            "elevator_timing": "See what **GO** you don't need",
+            "map_filter": 1,
+            "sort_index": 28
+        },
+        {
+            "name": "sp_a2_bts1",
+            "cm_name": "Jail Break",
+            "best_time_id": "47773",
+            "best_portals_id": "47772",
+            "three_letter_code": "JBR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 29
+        },
+        {
+            "name": "sp_a2_bts2",
+            "cm_name": "Escape",
+            "best_time_id": "47774",
+            "best_portals_id": "47775",
+            "three_letter_code": "ESC",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 30
+        },
+        {
+            "name": "sp_a2_bts3",
+            "cm_name": "Turret Factory",
+            "best_time_id": "47776",
+            "best_portals_id": "47777",
+            "three_letter_code": "TFA",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 31
+        },
+        {
+            "name": "sp_a2_bts4",
+            "cm_name": "Turret Sabotage",
+            "best_time_id": "47779",
+            "best_portals_id": "47778",
+            "three_letter_code": "TSA",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 32
+        },
+        {
+            "name": "sp_a2_bts5",
+            "cm_name": "Neurotoxin Sabotage",
+            "best_time_id": "47780",
+            "best_portals_id": "47781",
+            "three_letter_code": "NXS",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 33
+        },
+        {
+            "name": "sp_a2_bts6",
+            "cm_name": "Tube Ride",
+            "best_time_id": "",
+            "best_portals_id": "",
+            "three_letter_code": "TRI",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 34
+        },
+        {
+            "name": "sp_a2_core",
+            "cm_name": "Core",
+            "best_time_id": "62771",
+            "best_portals_id": "",
+            "three_letter_code": "COR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 35
+        },
+        {
+            "name": "sp_a3_00",
+            "cm_name": "Long Fall",
+            "best_time_id": "",
+            "best_portals_id": "",
+            "three_letter_code": "LFA",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 36
+        },
+        {
+            "name": "sp_a3_01",
+            "cm_name": "Underground",
+            "best_time_id": "47783",
+            "best_portals_id": "47782",
+            "three_letter_code": "UND",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 37
+        },
+        {
+            "name": "sp_a3_03",
+            "cm_name": "Cave Johnson",
+            "best_time_id": "47784",
+            "best_portals_id": "47785",
+            "three_letter_code": "CJO",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 38
+        },
+        {
+            "name": "sp_a3_jump_intro",
+            "cm_name": "Repulsion Intro",
+            "best_time_id": "47787",
+            "best_portals_id": "47786",
+            "three_letter_code": "RIN",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 39
+        },
+        {
+            "name": "sp_a3_bomb_flings",
+            "cm_name": "Bomb Flings",
+            "best_time_id": "47468",
+            "best_portals_id": "47467",
+            "three_letter_code": "BOF",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 40
+        },
+        {
+            "name": "sp_a3_crazy_box",
+            "cm_name": "Crazy Box",
+            "best_time_id": "47469",
+            "best_portals_id": "47470",
+            "three_letter_code": "CBO",
+            "elevator_timing": "Safety door **GO** that won't",
+            "map_filter": 1,
+            "sort_index": 41
+        },
+        {
+            "name": "sp_a3_transition01",
+            "cm_name": "PotatOS",
+            "best_time_id": "47472",
+            "best_portals_id": "47471",
+            "three_letter_code": "POS",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 42
+        },
+        {
+            "name": "sp_a3_speed_ramp",
+            "cm_name": "Propulsion Intro",
+            "best_time_id": "47791",
+            "best_portals_id": "47792",
+            "three_letter_code": "PIN",
+            "elevator_timing": "Gonna change **GO** the world",
+            "map_filter": 1,
+            "sort_index": 43
+        },
+        {
+            "name": "sp_a3_speed_flings",
+            "cm_name": "Propulsion Flings",
+            "best_time_id": "47793",
+            "best_portals_id": "47794",
+            "three_letter_code": "PRF",
+            "elevator_timing": "Earlier. Again, **GO** all you ",
+            "map_filter": 1,
+            "sort_index": 44
+        },
+        {
+            "name": "sp_a3_portal_intro",
+            "cm_name": "Conversion Intro",
+            "best_time_id": "47795",
+            "best_portals_id": "47796",
+            "three_letter_code": "COI",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 45
+        },
+        {
+            "name": "sp_a3_end",
+            "cm_name": "Three Gels",
+            "best_time_id": "47798",
+            "best_portals_id": "47799",
+            "three_letter_code": "TGE",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 46
+        },
+        {
+            "name": "sp_a4_intro",
+            "cm_name": "Test",
+            "best_time_id": "88350",
+            "best_portals_id": "",
+            "three_letter_code": "TES",
+            "elevator_timing": "Didn't work, **GO** and it almost",
+            "map_filter": 1,
+            "sort_index": 47
+        },
+        {
+            "name": "sp_a4_tb_intro",
+            "cm_name": "Funnel Intro",
+            "best_time_id": "47800",
+            "best_portals_id": "47801",
+            "three_letter_code": "FUI",
+            "elevator_timing": "Good news is, **GO** well, none so far",
+            "map_filter": 1,
+            "sort_index": 48
+        },
+        {
+            "name": "sp_a4_tb_trust_drop",
+            "cm_name": "Ceiling Button",
+            "best_time_id": "47802",
+            "best_portals_id": "47803",
+            "three_letter_code": "CBU",
+            "elevator_timing": "In a lot **GO** of trouble",
+            "map_filter": 1,
+            "sort_index": 49
+        },
+        {
+            "name": "sp_a4_tb_wall_button",
+            "cm_name": "Wall Button",
+            "best_time_id": "47804",
+            "best_portals_id": "47805",
+            "three_letter_code": "WBU",
+            "elevator_timing": "Sooner than **GO** I expected",
+            "map_filter": 1,
+            "sort_index": 50
+        },
+        {
+            "name": "sp_a4_tb_polarity",
+            "cm_name": "Polarity",
+            "best_time_id": "47806",
+            "best_portals_id": "47807",
+            "three_letter_code": "POL",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 51
+        },
+        {
+            "name": "sp_a4_tb_catch",
+            "cm_name": "Funnel Catch",
+            "best_time_id": "47808",
+            "best_portals_id": "47809",
+            "three_letter_code": "FUC",
+            "elevator_timing": "The mental **GO** capacity to push",
+            "map_filter": 1,
+            "sort_index": 52
+        },
+        {
+            "name": "sp_a4_stop_the_box",
+            "cm_name": "Stop the Box",
+            "best_time_id": "47811",
+            "best_portals_id": "47812",
+            "three_letter_code": "STB",
+            "elevator_timing": "No. No, **GO** that was the",
+            "map_filter": 1,
+            "sort_index": 53
+        },
+        {
+            "name": "sp_a4_laser_catapult",
+            "cm_name": "Laser Catapult",
+            "best_time_id": "47813",
+            "best_portals_id": "47814",
+            "three_letter_code": "LCA",
+            "elevator_timing": "Any of the **GO** crucial functions",
+            "map_filter": 1,
+            "sort_index": 54
+        },
+        {
+            "name": "sp_a4_laser_platform",
+            "cm_name": "Laser Platform",
+            "best_time_id": "47815",
+            "best_portals_id": "47816",
+            "three_letter_code": "LPL",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 55
+        },
+        {
+            "name": "sp_a4_speed_tb_catch",
+            "cm_name": "Propulsion Catch",
+            "best_time_id": "47817",
+            "best_portals_id": "47818",
+            "three_letter_code": "PCA",
+            "elevator_timing": "Whether you're, uh, **GO** picking up",
+            "map_filter": 1,
+            "sort_index": 56
+        },
+        {
+            "name": "sp_a4_jump_polarity",
+            "cm_name": "Repulsion Polarity",
+            "best_time_id": "47819",
+            "best_portals_id": "47820",
+            "three_letter_code": "RPO",
+            "elevator_timing": "Got a surprise **GO** for us",
+            "map_filter": 1,
+            "sort_index": 57
+        },
+        {
+            "name": "sp_a4_finale1",
+            "cm_name": "Finale 1",
+            "best_time_id": "62776",
+            "best_portals_id": "",
+            "three_letter_code": "FN1",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 58
+        },
+        {
+            "name": "sp_a4_finale2",
+            "cm_name": "Finale 2",
+            "best_time_id": "47821",
+            "best_portals_id": "47822",
+            "three_letter_code": "FN2",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 59
+        },
+        {
+            "name": "sp_a4_finale3",
+            "cm_name": "Finale 3",
+            "best_time_id": "47824",
+            "best_portals_id": "47823",
+            "three_letter_code": "FN3",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 60
+        },
+        {
+            "name": "sp_a4_finale4",
+            "cm_name": "Finale 4",
+            "best_time_id": "47456",
+            "best_portals_id": "47457",
+            "three_letter_code": "FN4",
+            "elevator_timing": "GO FAST",
+            "map_filter": 1,
+            "sort_index": 61
+        },
+        {
+            "name": "mp_coop_start",
+            "cm_name": "Start",
+            "best_time_id": "",
+            "best_portals_id": "",
+            "three_letter_code": "STA",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 62
+        },
+        {
+            "name": "mp_coop_lobby_2",
+            "cm_name": "Lobby",
+            "best_time_id": "",
+            "best_portals_id": "",
+            "three_letter_code": "LOB",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 63
+        },
+        {
+            "name": "mp_coop_doors",
+            "cm_name": "Doors",
+            "best_time_id": "47741",
+            "best_portals_id": "47740",
+            "three_letter_code": "DOR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 64
+        },
+        {
+            "name": "mp_coop_race_2",
+            "cm_name": "Buttons",
+            "best_time_id": "47825",
+            "best_portals_id": "47826",
+            "three_letter_code": "BUT",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 65
+        },
+        {
+            "name": "mp_coop_laser_2",
+            "cm_name": "Lasers",
+            "best_time_id": "47828",
+            "best_portals_id": "47827",
+            "three_letter_code": "LAS",
+            "elevator_timing": "I can tell you that atleast one of you is doing very very **GO** well",
+            "map_filter": 2,
+            "sort_index": 66
+        },
+        {
+            "name": "mp_coop_rat_maze",
+            "cm_name": "Rat Maze",
+            "best_time_id": "47829",
+            "best_portals_id": "47830",
+            "three_letter_code": "RMZ",
+            "elevator_timing": "...final score **GO**. For instance blue just lost 2 science...",
+            "map_filter": 2,
+            "sort_index": 67
+        },
+        {
+            "name": "mp_coop_laser_crusher",
+            "cm_name": "Laser Crusher",
+            "best_time_id": "45467",
+            "best_portals_id": "45466",
+            "three_letter_code": "LCR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 68
+        },
+        {
+            "name": "mp_coop_teambts",
+            "cm_name": "Behind The Scenes",
+            "best_time_id": "46362",
+            "best_portals_id": "46361",
+            "three_letter_code": "BTS",
+            "elevator_timing": "...you are great **GO** at science.",
+            "map_filter": 2,
+            "sort_index": 69
+        },
+        {
+            "name": "mp_coop_fling_3",
+            "cm_name": "Flings",
+            "best_time_id": "47831",
+            "best_portals_id": "47832",
+            "three_letter_code": "FLS",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 70
+        },
+        {
+            "name": "mp_coop_infinifling_train",
+            "cm_name": "Infinifling",
+            "best_time_id": "47833",
+            "best_portals_id": "47834",
+            "three_letter_code": "IFF",
+            "elevator_timing": "...designed to exactly fit an edgeless safety **GO** cube...",
+            "map_filter": 2,
+            "sort_index": 71
+        },
+        {
+            "name": "mp_coop_come_along",
+            "cm_name": "Team Retrieval",
+            "best_time_id": "47835",
+            "best_portals_id": "47836",
+            "three_letter_code": "TRE",
+            "elevator_timing": "You must be very, very proud **GO**",
+            "map_filter": 2,
+            "sort_index": 72
+        },
+        {
+            "name": "mp_coop_fling_1",
+            "cm_name": "Vertical Flings",
+            "best_time_id": "47837",
+            "best_portals_id": "47838",
+            "three_letter_code": "VFL",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 73
+        },
+        {
+            "name": "mp_coop_catapult_1",
+            "cm_name": "Catapults",
+            "best_time_id": "47840",
+            "best_portals_id": "47839",
+            "three_letter_code": "CAT",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 74
+        },
+        {
+            "name": "mp_coop_multifling_1",
+            "cm_name": "Multifling",
+            "best_time_id": "47841",
+            "best_portals_id": "47842",
+            "three_letter_code": "MUL",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 75
+        },
+        {
+            "name": "mp_coop_fling_crushers",
+            "cm_name": "Fling Crushers",
+            "best_time_id": "47844",
+            "best_portals_id": "47843",
+            "three_letter_code": "FCR",
+            "elevator_timing": "Without the looming consequence of death **GO**",
+            "map_filter": 2,
+            "sort_index": 76
+        },
+        {
+            "name": "mp_coop_fan",
+            "cm_name": "Industrial Fan",
+            "best_time_id": "47845",
+            "best_portals_id": "47846",
+            "three_letter_code": "IFA",
+            "elevator_timing": "...you have earned a break **GO** from the offical test... (basically GO FAST)",
+            "map_filter": 2,
+            "sort_index": 77
+        },
+        {
+            "name": "mp_coop_wall_intro",
+            "cm_name": "Cooperative Bridges",
+            "best_time_id": "47848",
+            "best_portals_id": "47847",
+            "three_letter_code": "CBR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 78
+        },
+        {
+            "name": "mp_coop_wall_2",
+            "cm_name": "Bridge Swap",
+            "best_time_id": "47849",
+            "best_portals_id": "47850",
+            "three_letter_code": "BSW",
+            "elevator_timing": "End of clue **GO**",
+            "map_filter": 2,
+            "sort_index": 79
+        },
+        {
+            "name": "mp_coop_catapult_wall_intro",
+            "cm_name": "Fling Block",
+            "best_time_id": "47854",
+            "best_portals_id": "47855",
+            "three_letter_code": "FBL",
+            "elevator_timing": "hall of fame for that **GO**",
+            "map_filter": 2,
+            "sort_index": 80
+        },
+        {
+            "name": "mp_coop_wall_block",
+            "cm_name": "Catapult Block",
+            "best_time_id": "47856",
+            "best_portals_id": "47857",
+            "three_letter_code": "CBL",
+            "elevator_timing": "a reward for testing **GO**",
+            "map_filter": 2,
+            "sort_index": 81
+        },
+        {
+            "name": "mp_coop_catapult_2",
+            "cm_name": "Bridge Fling",
+            "best_time_id": "47858",
+            "best_portals_id": "47859",
+            "three_letter_code": "BRF",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 82
+        },
+        {
+            "name": "mp_coop_turret_walls",
+            "cm_name": "Turret Walls",
+            "best_time_id": "47861",
+            "best_portals_id": "47860",
+            "three_letter_code": "TWA",
+            "elevator_timing": "sss - refuses",
+            "map_filter": 2,
+            "sort_index": 83
+        },
+        {
+            "name": "mp_coop_turret_ball",
+            "cm_name": "Turret Assassin",
+            "best_time_id": "52642",
+            "best_portals_id": "52641",
+            "three_letter_code": "TAS",
+            "elevator_timing": "...Orignal Plans **GO**...",
+            "map_filter": 2,
+            "sort_index": 84
+        },
+        {
+            "name": "mp_coop_wall_5",
+            "cm_name": "Bridge Testing",
+            "best_time_id": "52660",
+            "best_portals_id": "52659",
+            "three_letter_code": "BTE",
+            "elevator_timing": "...repair these tests",
+            "map_filter": 2,
+            "sort_index": 85
+        },
+        {
+            "name": "mp_coop_tbeam_redirect",
+            "cm_name": "Cooperative Funnels",
+            "best_time_id": "52662",
+            "best_portals_id": "52661",
+            "three_letter_code": "CFU",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 86
+        },
+        {
+            "name": "mp_coop_tbeam_drill",
+            "cm_name": "Funnel Drill",
+            "best_time_id": "52663",
+            "best_portals_id": "52664",
+            "three_letter_code": "FDR",
+            "elevator_timing": "The following list **GO** of numbers",
+            "map_filter": 2,
+            "sort_index": 87
+        },
+        {
+            "name": "mp_coop_tbeam_catch_grind_1",
+            "cm_name": "Funnel Catch",
+            "best_time_id": "52665",
+            "best_portals_id": "52666",
+            "three_letter_code": "FCA",
+            "elevator_timing": "For Orange: End of experiment **GO**, for Blue: There I've **GO** said it",
+            "map_filter": 2,
+            "sort_index": 88
+        },
+        {
+            "name": "mp_coop_tbeam_laser_1",
+            "cm_name": "Funnel Laser",
+            "best_time_id": "52667",
+            "best_portals_id": "52668",
+            "three_letter_code": "FLA",
+            "elevator_timing": "I'm not sure **GO** I trust the two of you together",
+            "map_filter": 2,
+            "sort_index": 89
+        },
+        {
+            "name": "mp_coop_tbeam_polarity",
+            "cm_name": "Cooperative Polarity",
+            "best_time_id": "52671",
+            "best_portals_id": "52672",
+            "three_letter_code": "CPO",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 90
+        },
+        {
+            "name": "mp_coop_tbeam_polarity2",
+            "cm_name": "Funnel Hop",
+            "best_time_id": "52687",
+            "best_portals_id": "52688",
+            "three_letter_code": "FHO",
+            "elevator_timing": "...I trust you **GO** (Second you in quote)",
+            "map_filter": 2,
+            "sort_index": 91
+        },
+        {
+            "name": "mp_coop_tbeam_polarity3",
+            "cm_name": "Advanced Polarity",
+            "best_time_id": "52689",
+            "best_portals_id": "52690",
+            "three_letter_code": "APO",
+            "elevator_timing": "So I can trust you **GO** 100 percent",
+            "map_filter": 2,
+            "sort_index": 92
+        },
+        {
+            "name": "mp_coop_tbeam_maze",
+            "cm_name": "Funnel Maze",
+            "best_time_id": "52691",
+            "best_portals_id": "52692",
+            "three_letter_code": "FMZ",
+            "elevator_timing": "Before we go any further **GO**",
+            "map_filter": 2,
+            "sort_index": 93
+        },
+        {
+            "name": "mp_coop_tbeam_end",
+            "cm_name": "Turret Warehouse",
+            "best_time_id": "52777",
+            "best_portals_id": "52778",
+            "three_letter_code": "TWH",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 94
+        },
+        {
+            "name": "mp_coop_paint_come_along",
+            "cm_name": "Repulsion Jumps",
+            "best_time_id": "52694",
+            "best_portals_id": "52693",
+            "three_letter_code": "RJU",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 95
+        },
+        {
+            "name": "mp_coop_paint_redirect",
+            "cm_name": "Double Bounce",
+            "best_time_id": "52711",
+            "best_portals_id": "52712",
+            "three_letter_code": "DBO",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 96
+        },
+        {
+            "name": "mp_coop_paint_bridge",
+            "cm_name": "Bridge Repulsion",
+            "best_time_id": "52714",
+            "best_portals_id": "52713",
+            "three_letter_code": "BRE",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 97
+        },
+        {
+            "name": "mp_coop_paint_walljumps",
+            "cm_name": "Wall Repulsion",
+            "best_time_id": "52715",
+            "best_portals_id": "52716",
+            "three_letter_code": "WRE",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 98
+        },
+        {
+            "name": "mp_coop_paint_speed_fling",
+            "cm_name": "Propulsion Crushers",
+            "best_time_id": "52717",
+            "best_portals_id": "52718",
+            "three_letter_code": "PCR",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 99
+        },
+        {
+            "name": "mp_coop_paint_red_racer",
+            "cm_name": "Turret Ninja",
+            "best_time_id": "52735",
+            "best_portals_id": "52736",
+            "three_letter_code": "TNJ",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 100
+        },
+        {
+            "name": "mp_coop_paint_speed_catch",
+            "cm_name": "Propulsion Retrieval",
+            "best_time_id": "52738",
+            "best_portals_id": "52737",
+            "three_letter_code": "PRE",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 101
+        },
+        {
+            "name": "mp_coop_paint_longjump_intro",
+            "cm_name": "Vault Entrance",
+            "best_time_id": "52740",
+            "best_portals_id": "52739",
+            "three_letter_code": "VEN",
+            "elevator_timing": "GO FAST",
+            "map_filter": 2,
+            "sort_index": 102
+        },
+        {
+            "name": "mp_coop_separation_1",
+            "cm_name": "Separation",
+            "best_time_id": "49341",
+            "best_portals_id": "49342",
+            "three_letter_code": "SEP",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 103
+        },
+        {
+            "name": "mp_coop_tripleaxis",
+            "cm_name": "Triple Axis",
+            "best_time_id": "49343",
+            "best_portals_id": "49344",
+            "three_letter_code": "TAX",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 104
+        },
+        {
+            "name": "mp_coop_catapult_catch",
+            "cm_name": "Catapult Catch",
+            "best_time_id": "49345",
+            "best_portals_id": "49346",
+            "three_letter_code": "CAC",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 105
+        },
+        {
+            "name": "mp_coop_2paints_1bridge",
+            "cm_name": "Bridge Gels",
+            "best_time_id": "49347",
+            "best_portals_id": "49348",
+            "three_letter_code": "BGE",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 106
+        },
+        {
+            "name": "mp_coop_paint_conversion",
+            "cm_name": "Maintenance",
+            "best_time_id": "49349",
+            "best_portals_id": "49350",
+            "three_letter_code": "MAI",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 107
+        },
+        {
+            "name": "mp_coop_bridge_catch",
+            "cm_name": "Bridge Catch",
+            "best_time_id": "49351",
+            "best_portals_id": "49352",
+            "three_letter_code": "BCA",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 108
+        },
+        {
+            "name": "mp_coop_laser_tbeam",
+            "cm_name": "Double Lift",
+            "best_time_id": "52757",
+            "best_portals_id": "52758",
+            "three_letter_code": "DLI",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 109
+        },
+        {
+            "name": "mp_coop_paint_rat_maze",
+            "cm_name": "Gel Maze",
+            "best_time_id": "52759",
+            "best_portals_id": "52760",
+            "three_letter_code": "PMZ",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 110
+        },
+        {
+            "name": "mp_coop_paint_crazy_box",
+            "cm_name": "Crazier Box",
+            "best_time_id": "48287",
+            "best_portals_id": "48288",
+            "three_letter_code": "CBX",
+            "elevator_timing": "UNKNOWN",
+            "map_filter": 2,
+            "sort_index": 111
+        }
+    ]
 }

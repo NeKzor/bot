@@ -18,6 +18,7 @@ import { escapeMaskedLink } from "../utils/helpers.ts";
 import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
+import { LP } from "../services/lp.ts";
 
 const maximumAutocompleteResults = 5;
 
@@ -138,15 +139,19 @@ createCommand({
             return;
           }
 
-          const lp = lpMap?.lp_record;
-          if (!lp?.videoLink) {
+          const { value: lp } = await LP.find(
+            parseInt(lpMap.best_portals_id, 10),
+          );
+
+          const lpRecord = lp?.showcases?.at(0);
+          if (!lp || !lpRecord) {
             await bot.helpers.sendInteractionResponse(
               interaction.id,
               interaction.token,
               {
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
-                  content: `❌️ Video not found.`,
+                  content: `❌️ LP record not found.`,
                   flags: 1 << 6,
                 },
               },
@@ -154,23 +159,24 @@ createCommand({
             return;
           }
 
-          const player1 = lp.player.id
+          const player1 = lpRecord.player.id
             ? `[${
-              escapeMaskedLink(lp.player.name)
-            }](<https://lp.nekz.me/@/${lp.player.id}>)`
-            : lp.player?.name ?? null;
+              escapeMaskedLink(lpRecord.player.name)
+            }](<https://lp.nekz.me/@/${lpRecord.player.id}>)`
+            : lpRecord.player?.name ?? null;
 
-          const player2 = lp.player2?.id
+          const player2 = lpRecord.player2?.id
             ? `[${
-              escapeMaskedLink(lp.player2.name)
-            }](<https://lp.nekz.me/@/${lp.player2.id}>)`
-            : lp.player2?.name ?? null;
+              escapeMaskedLink(lpRecord.player2.name)
+            }](<https://lp.nekz.me/@/${lpRecord.player2.id}>)`
+            : lpRecord.player2?.name ?? null;
 
           const players = [player1, player2].filter((player) => player).join(
             " and ",
           );
 
           const g = (value: number) => value === 1 ? "" : "s";
+          const videoLink = `https://www.youtube.com/watch?v=${lpRecord.media}`;
 
           await bot.helpers.sendInteractionResponse(
             interaction.id,
@@ -178,9 +184,9 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `${lpMap!.cm_name} in [${lp.portals} portal${
-                  g(lp.portals)
-                }](${lp.videoLink}) by ${players}`,
+                content: `${lpMap!.cm_name} in [${lp.wr} portal${
+                  g(lp.wr)
+                }](${videoLink}) by ${players}`,
               },
             },
           );
@@ -193,7 +199,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `❌️ Failed to fetch videos.`,
+                content: `❌️ Failed to find LP record.`,
               },
             },
           );

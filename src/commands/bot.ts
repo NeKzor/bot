@@ -13,6 +13,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { CVars } from "../services/cvars.ts";
+import { LP } from "../services/lp.ts";
 import { Piston } from "../services/piston.ts";
 import { SAR } from "../services/sar.ts";
 import { SpeedrunCom } from "../services/speedruncom.ts";
@@ -93,11 +94,12 @@ createCommand({
                 return false;
               };
 
-              const [cvars, speedrunCom, piston, sar] = await Promise.all([
+              const [cvars, speedrunCom, piston, sar, lp] = await Promise.all([
                 tryFetch(CVars.fetch)(),
                 tryFetch(SpeedrunCom.fetch)(),
                 tryFetch(Piston.fetch)(),
                 tryFetch(SAR.fetch)(),
+                tryFetch(LP.fetch)(),
               ]);
 
               await bot.helpers.editOriginalInteractionResponse(
@@ -109,6 +111,7 @@ createCommand({
                     `Bhop: ${speedrunCom ? "success" : "failed"}`,
                     `Piston: ${piston ? "success" : "failed"}`,
                     `SAR: ${sar ? "success" : "failed"}`,
+                    `LP: ${lp ? "success" : "failed"}`,
                   ].join("\n"),
                 },
               );
