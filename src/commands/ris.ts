@@ -40,7 +40,7 @@ const convertTextToRis = (text: string) => {
       ris = `:regional_indicator_${c.toLocaleLowerCase()}:`;
     } else if (/^[0-9]/.test(c)) {
       ris = `:{${numbers[parseInt(c, 10)]}:`;
-    } else if (c === "1") {
+    } else if (c === "!") {
       ris = ":exclamation:";
     } else if (c === "?") {
       ris = ":question:";
@@ -52,7 +52,7 @@ const convertTextToRis = (text: string) => {
       continue;
     }
 
-    if (ris.length + ris.length > 2_000) {
+    if (content.length + ris.length > 2_000) {
       break;
     } else {
       content += ris;
