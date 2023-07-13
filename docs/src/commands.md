@@ -78,12 +78,14 @@ Get a video of the current challenge mode world record.
 
 ### `Get demo info`
 
-Getting demo info works on messages too.
+This is the same as the [`/demo info`](#demo-info) command but it works on messages via the context menu.
 
 ![get_demo_info.gif](./images/get_demo_info.gif)
 
 ### `Run this as code`
 
-It is possible to run code which is formatted in blockquotes.
+This will run formatted code via the [piston engine].
 
 ![run_this_as_code.gif](./images/run_this_as_code.gif)
+
+[piston engine]: https://github.com/engineer-man/piston
