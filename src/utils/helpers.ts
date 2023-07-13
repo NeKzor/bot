@@ -6,6 +6,11 @@
 
 import { Temporal } from "npm:@js-temporal/polyfill";
 import {
+  DOMParser,
+  Node,
+  NodeType,
+} from "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts";
+import {
   Bot,
   BotWithCache,
   CreateApplicationCommand,
@@ -215,4 +220,91 @@ export function formatBoardPoints(points: number, formatCharacter = ",") {
 export function getDurationSince(date: string) {
   return Temporal.Now.plainDateISO()
     .since(Temporal.PlainDateTime.from(date));
+}
+
+export function parseHtmlDocument(html: string) {
+  return new DOMParser().parseFromString(html, "text/html");
+}
+
+export function htmlToDiscordMarkdown(rawHtml: string) {
+  const result: string[] = [];
+
+  const parseNode = (node: Node, depth: number) => {
+    const nodeName = node.nodeName.toLowerCase();
+
+    switch (nodeName) {
+      case "li":
+        result.push("*".padStart(depth, " ") + " ");
+        break;
+      case "b":
+        result.push("**");
+        break;
+      case "br":
+        result.push("\n");
+        break;
+      case "#text":
+        result.push(node.textContent);
+        break;
+      case "ul":
+        result.push("\n");
+        break;
+      case "img":
+        result.push(
+          [...node.parentElement?.children ?? []].find((child) =>
+            child.nodeType === NodeType.ELEMENT_NODE &&
+            !!child.getAttribute("src")
+          )?.getAttribute("src") ?? "",
+        );
+        break;
+      case "i":
+        result.push("_");
+        break;
+      case "a":
+        result.push("[");
+        break;
+      case "html":
+      case "head":
+      case "body":
+        break;
+      default:
+        console.warn(`Unhandled node ${nodeName}`);
+        break;
+    }
+
+    node.childNodes
+      .forEach((child) => parseNode(child, depth + 1));
+
+    switch (nodeName) {
+      case "b":
+        result.push("**");
+        break;
+      case "ul":
+        result.push("\n");
+        break;
+      case "i":
+        result.push("_");
+        break;
+      case "a":
+        result.push(
+          `](${
+            [...node.parentElement?.children ?? []]
+              .find((child) =>
+                child.nodeType === NodeType.ELEMENT_NODE &&
+                !!child.getAttribute("href")
+              )?.getAttribute("href") ?? ""
+          })`,
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const html = parseHtmlDocument(rawHtml)?.textContent;
+  const doc = parseHtmlDocument(html ?? "");
+
+  doc?.childNodes
+    .forEach((node) => parseNode(node, -1));
+
+  return result.join("");
 }
