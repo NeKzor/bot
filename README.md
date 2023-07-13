@@ -4,6 +4,8 @@
 
 ## Commands
 
+A preview of each command can be seen on [bot.nekz.me/commands].
+
 | Command       | Description                                             |
 | ------------- | ------------------------------------------------------- |
 | `/agg`        | Get the aggregated challenge mode leaderboards.         |
@@ -18,6 +20,8 @@
 | `/report bug` | Report a bug to a specific project.                     |
 | `/ris`        | Convert text to regional indicator symbols.             |
 | `/wr`         | Get a video of the current challenge mode world record. |
+
+[bot.nekz.me/commands]: https://bot.nekz.me/commands
 
 ## Dependencies
 

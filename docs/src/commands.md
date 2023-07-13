@@ -1,49 +1,89 @@
 # Commands
 
-## `/agg`
+## Slash Commands
+
+### `/agg`
 
 Get the aggregated challenge mode leaderboards.
 
-## `/bhop`
+![agg.gif](./images/agg.gif)
+
+### `/bhop`
 
 Find a bhop level.
 
-## `/bot info`
+![bhop.gif](./images/bhop.gif)
+
+### `/bot info`
 
 Print info about the bot.
 
-## `/bot reload`
+![bot_info.gif](./images/bot_info.gif)
+
+### `/bot reload`
 
 Reload bot data.
 
-## `/cvars`
+![bot_reload.gif](./images/bot_reload.gif)
+
+### `/cvars`
 
 Find a console command.
 
-## `/demo info`
+![cvars.gif](./images/cvars.gif)
+
+### `/demo info`
 
 Get information about a demo.
 
-## `/glitch`
+![demo_info.gif](./images/demo_info.gif)
+
+### `/glitch`
 
 Find an entry about a glitch.
 
-## `/lb`
+![glitch.gif](./images/glitch.gif)
+
+### `/lb`
 
 Get the challenge mode leaderboard.
 
-## `/lp`
+![lb.gif](./images/lb.gif)
+
+### `/lp`
 
 Find the current least portals record.
 
-## `/report bug`
+![lp.gif](./images/lp.gif)
+
+### `/report bug`
 
 Report a bug to a specific project.
 
-## `/ris`
+![report_bug.gif](./images/report_bug.gif)
+
+### `/ris`
 
 Convert text to regional indicator symbols.
 
-## `/wr`
+![ris.gif](./images/ris.gif)
+
+### `/wr`
 
 Get a video of the current challenge mode world record.
+
+![wr.gif](./images/wr.gif)
+
+## App Commands
+
+### `Get demo info`
+
+Getting demo info works on messages too.
+
+![get_demo_info.gif](./images/get_demo_info.gif)
+
+### `Run this as code`
+
+It is possible to run code which is formatted in blockquotes.
+
+![run_this_as_code.gif](./images/run_this_as_code.gif)
