@@ -26,6 +26,8 @@ import { SAR } from "./services/sar.ts";
 // TODO: file logging
 const log = logger({ name: "Main" });
 
+log.info("Using User-Agent:", Deno.env.get("USER_AGENT")!);
+
 log.info("Starting Bot, this might take a while...");
 
 const paths = ["./events", "./commands"];

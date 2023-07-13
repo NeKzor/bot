@@ -203,6 +203,11 @@ export const SpeedrunCom = {
   async fetch() {
     const res = await fetch(
       `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`,
+      {
+        headers: {
+          "User-Agent": Deno.env.get("USER_AGENT")!,
+        },
+      },
     );
 
     await Deno.writeTextFile(
@@ -218,7 +223,11 @@ export const SpeedrunCom = {
     const link = level.links.find((link) => link.rel === "records");
     if (link) {
       try {
-        const res = await fetch(link.uri);
+        const res = await fetch(link.uri, {
+          headers: {
+            "User-Agent": Deno.env.get("USER_AGENT")!,
+          },
+        });
         const records = (await res.json()).data as SpeedrunRecord[];
         return records.filter((record) => record.runs.length > 0);
       } catch (err) {
@@ -228,7 +237,11 @@ export const SpeedrunCom = {
     return [];
   },
   async getUser(userId: string) {
-    const res = await fetch(`https://www.speedrun.com/api/v1/users/${userId}`);
+    const res = await fetch(`https://www.speedrun.com/api/v1/users/${userId}`, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
+      },
+    });
     return (await res.json()).data as User;
   },
 };

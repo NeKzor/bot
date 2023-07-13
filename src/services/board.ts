@@ -41,7 +41,11 @@ export const Board = {
   BaseApi: "https://board.portal2.sr",
 
   async getChamber(chamberId: number) {
-    const res = await fetch(`${Board.BaseApi}/chamber/${chamberId}/json`);
+    const res = await fetch(`${Board.BaseApi}/chamber/${chamberId}/json`, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch chamber ${chamberId}`);
@@ -51,7 +55,11 @@ export const Board = {
   },
 
   async getAggregated(type: AggregationType) {
-    const res = await fetch(`${Board.BaseApi}/aggregated/${type}/json`);
+    const res = await fetch(`${Board.BaseApi}/aggregated/${type}/json`, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch aggregated ${type}`);

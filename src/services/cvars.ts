@@ -124,6 +124,11 @@ export const CVars = {
     for (const gameMod of gameMods) {
       const res = await fetch(
         `https://raw.githubusercontent.com/NeKzor/cvars/api/${gameMod}.json`,
+        {
+          headers: {
+            "User-Agent": Deno.env.get("USER_AGENT")!,
+          },
+        },
       );
       const json = await res.json();
 
@@ -137,6 +142,11 @@ export const CVars = {
 
     const sar = await fetch(
       "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md",
+      {
+        headers: {
+          "User-Agent": Deno.env.get("USER_AGENT")!,
+        },
+      },
     );
     const sarMd = (await sar.text()).split("\n").slice(4);
     const sarCvars: Omit<CVar, "id">[] = [];

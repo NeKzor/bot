@@ -188,6 +188,7 @@ export const GitHub = {
           "Accept": "application/vnd.github+json",
           "Authorization": `Bearer ${token}`,
           "X-GitHub-Api-Version": this.ApiVersion,
+          "User-Agent": Deno.env.get("USER_AGENT")!,
         },
         body: JSON.stringify(issue),
       },

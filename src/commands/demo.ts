@@ -52,7 +52,7 @@ const getDemoInfo = async (
     const demo = await fetch(attachment.url, {
       method: "GET",
       headers: {
-        "User-Agent": "NeKzBot/v3.0",
+        "User-Agent": Deno.env.get("USER_AGENT")!,
       },
     });
 

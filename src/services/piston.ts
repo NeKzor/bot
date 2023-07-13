@@ -39,6 +39,11 @@ export const Piston = {
   async fetch() {
     const res = await fetch(
       `https://emkc.org/api/${Piston.Version}/piston/runtimes`,
+      {
+        headers: {
+          "User-Agent": Deno.env.get("USER_AGENT")!,
+        },
+      },
     );
 
     await Deno.writeTextFile(
@@ -61,6 +66,9 @@ export const Piston = {
       `https://emkc.org/api/${Piston.Version}/piston/execute`,
       {
         method: "POST",
+        headers: {
+          "User-Agent": Deno.env.get("USER_AGENT")!,
+        },
         body: JSON.stringify({
           language: runtime.language,
           version: runtime.version,
