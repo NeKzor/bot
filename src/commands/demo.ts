@@ -31,6 +31,7 @@ const getDemoInfo = async (
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
           content: `❌️ File is too big. Parsing is limited to 6 MB.`,
+          flags: 1 << 6,
         },
       },
     );
@@ -110,6 +111,7 @@ createCommand({
           data: {
             content:
               `❌️ Unable to get demo info. This message does not have an attached demo file.`,
+            flags: 1 << 6,
           },
         },
       );

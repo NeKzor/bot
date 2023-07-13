@@ -45,6 +45,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Unable to re-run the original code.`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -59,6 +60,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ You are not allowed to re-run this code.`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -81,6 +83,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Unable to find original message.`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -106,6 +109,7 @@ createCommand({
                   "code",
                   "\\`\\`\\`",
                 ].join("\n"),
+                flags: 1 << 6,
               },
             },
           );
@@ -129,6 +133,7 @@ createCommand({
                   `❌️ Language is not supported. List of supported languages:\n` +
                   Piston.Runtimes.map((runtime) => `\`${runtime.language}\``)
                     .join(", "),
+                flags: 1 << 6,
               },
             },
           );

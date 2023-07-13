@@ -56,6 +56,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Invalid aggregation type.`,
+                flags: 1 << 6,
               },
             },
           );

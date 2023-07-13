@@ -115,6 +115,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Map not found.`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -130,6 +131,7 @@ createCommand({
                 data: {
                   content:
                     `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -145,6 +147,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Video not found.`,
+                  flags: 1 << 6,
                 },
               },
             );

@@ -112,6 +112,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Map not found.`,
+                flags: 1 << 6,
               },
             },
           );
@@ -127,14 +128,27 @@ createCommand({
               data: {
                 content:
                   `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                flags: 1 << 6,
               },
             },
           );
           return;
         }
 
-        const q = encodeURIComponent(`wr ${query}`);
         try {
+          await bot.helpers.sendInteractionResponse(
+            interaction.id,
+            interaction.token,
+            {
+              type: InteractionResponseTypes.ChannelMessageWithSource,
+              data: {
+                content: `Fetching latest wr...`,
+              },
+            },
+          );
+
+          const q = encodeURIComponent(`wr ${query}`);
+
           const res = await fetch(
             `https://autorender.portal2.sr/api/v1/search?q=${q}`,
             {
@@ -172,14 +186,10 @@ createCommand({
 
           const wr = search.results.at(0);
           if (!wr) {
-            await bot.helpers.sendInteractionResponse(
-              interaction.id,
+            await bot.helpers.editOriginalInteractionResponse(
               interaction.token,
               {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  content: `❌️ Video not found.`,
-                },
+                content: `❌️ Video not found.`,
               },
             );
             return;
@@ -197,28 +207,20 @@ createCommand({
           const playerName = escapeMaskedLink(wr.user);
           const profileLink = `https://board.portal2.sr/profile/${wr.user_id}`;
 
-          await bot.helpers.sendInteractionResponse(
-            interaction.id,
+          await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              type: InteractionResponseTypes.ChannelMessageWithSource,
-              data: {
-                content:
-                  `[${map}](<${mapLink}>) in [${time}](${videoLink}) by [${playerName}](<${profileLink}>)`,
-              },
+              content:
+                `[${map}](<${mapLink}>) in [${time}](${videoLink}) by [${playerName}](<${profileLink}>)`,
             },
           );
         } catch (err) {
           console.error(err);
 
-          await bot.helpers.sendInteractionResponse(
-            interaction.id,
+          await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              type: InteractionResponseTypes.ChannelMessageWithSource,
-              data: {
-                content: `❌️ Failed to fetch videos.`,
-              },
+              content: `❌️ Failed to fetch videos.`,
             },
           );
         }

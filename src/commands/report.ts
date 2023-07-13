@@ -191,6 +191,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ Invalid project.`,
+                    flags: 1 << 6,
                   },
                 },
               );
