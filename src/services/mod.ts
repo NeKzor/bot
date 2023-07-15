@@ -12,6 +12,8 @@ import { Piston } from "./piston.ts";
 import { SAR } from "./sar.ts";
 import { SpeedrunCom } from "./speedruncom.ts";
 
+const SERVICE_DATA_UPDATE_INTERVAL = 15 * 60 * 1_000;
+
 export const services = {
   "CVars": () => CVars.fetch,
   "SpeedrunCom": () => SpeedrunCom.fetch,
@@ -22,11 +24,33 @@ export const services = {
 };
 
 export const loadAllServices = async () => {
+  log.info(`Loading all services...`);
+
   await CVars.load();
   await SpeedrunCom.load();
   await Piston.load();
   await SAR.load();
   await Exploits.load();
+
+  setInterval(async () => {
+    log.info(`Reloading all services...`);
+
+    try {
+      const toReload = Object.entries(services);
+      const results = await reloadAllServices();
+
+      log.info(
+        `Reloaded all services\n` + results.map((result, index) => {
+          return `${toReload[index].at(0)}: ${result ? "success" : "failed"}`;
+        }).join("\n"),
+      );
+    } catch (err) {
+      log.error(err);
+      log.warn(`Failed to reload all services`);
+    }
+  }, SERVICE_DATA_UPDATE_INTERVAL);
+
+  log.info(`Loaded services and started update interval.`);
 };
 
 export const getService = (service: string) => {
