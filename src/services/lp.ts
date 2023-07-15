@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
 import { db } from "./db.ts";
 
 export interface LpShowcasePlayer {
@@ -57,7 +58,7 @@ export const LP = {
 
   async fetch() {
     const url = `${LP.BaseApi}/records`;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {

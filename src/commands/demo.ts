@@ -14,6 +14,7 @@ import {
 } from "../deps.ts";
 import { SAR } from "../services/sar.ts";
 import { escapeMarkdown } from "../utils/helpers.ts";
+import { log } from "../utils/logger.ts";
 import { createCommand } from "./mod.ts";
 
 const MAX_DEMO_FILE_SIZE = 6_000_000;
@@ -51,7 +52,7 @@ const getDemoInfo = async (
 
   try {
     const url = attachment.url;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const demo = await fetch(url, {
       headers: {
@@ -87,7 +88,7 @@ const getDemoInfo = async (
       },
     });
   } catch (err) {
-    console.error(err);
+    log.error(err);
 
     await bot.helpers.editOriginalInteractionResponse(interaction.token, {
       content: `❌️ Corrupted demo.`,

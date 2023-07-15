@@ -30,6 +30,7 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
 import { Board } from "../services/board.ts";
 import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
 import { SAR } from "../services/sar.ts";
+import { log } from "../utils/logger.ts";
 
 const maximumAutocompleteResults = 5;
 const boardMaps = Portal2Campaign.map_list.filter(({ best_time_id }) =>
@@ -157,7 +158,7 @@ createCommand({
               );
 
               const url = `https://board.portal2.sr/getDemo?id=${changelogId}`;
-              console.log(`[GET] ${url}`);
+              log.info(`[GET] ${url}`);
 
               const demo = await fetch(url, {
                 headers: {
@@ -221,7 +222,7 @@ createCommand({
                 },
               );
             } catch (err) {
-              console.error(err);
+              log.error(err);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
@@ -491,7 +492,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

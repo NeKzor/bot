@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
+
 export interface ChamberData {
   scoreData: {
     note: string;
@@ -42,7 +44,7 @@ export const Board = {
 
   async getChamber(chamberId: number) {
     const url = `${Board.BaseApi}/chamber/${chamberId}/json`;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {
@@ -59,7 +61,7 @@ export const Board = {
 
   async getAggregated(type: AggregationType) {
     const url = `${Board.BaseApi}/aggregated/${type}/json`;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {

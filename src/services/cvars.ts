@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
 import { db } from "./db.ts";
 
 export enum FCVAR {
@@ -116,7 +117,7 @@ export const CVars = {
 
     for (const gameMod of gameMods) {
       const url = `${CVars.Api.Base}/${gameMod}.json`;
-      console.log(`[GET] ${url}`);
+      log.info(`[GET] ${url}`);
 
       const res = await fetch(url, {
         headers: {
@@ -124,7 +125,7 @@ export const CVars = {
         },
       });
 
-      console.log(`Fetched ${gameMod} cvars`);
+      log.info(`Fetched ${gameMod} cvars`);
 
       const json = await res.json() as { Cvars: CVar[] };
 
@@ -134,7 +135,7 @@ export const CVars = {
     }
 
     const url = CVars.Api.SAR;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const sar = await fetch(url, {
       headers: {
@@ -142,7 +143,7 @@ export const CVars = {
       },
     });
 
-    console.log(`Fetched SAR cvars`);
+    log.info(`Fetched SAR cvars`);
 
     const sarMd = (await sar.text()).split("\n").slice(4);
 

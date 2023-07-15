@@ -13,6 +13,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { reloadAllServices, reloadService, services } from "../services/mod.ts";
+import { log } from "../utils/logger.ts";
 import { createCommand } from "./mod.ts";
 
 const startTime = Date.now();
@@ -186,7 +187,7 @@ createCommand({
                 );
               }
             } catch (err) {
-              console.error(err);
+              log.error(err);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,

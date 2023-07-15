@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
+
 interface Issue {
   id: number;
   node_id: string;
@@ -183,7 +185,7 @@ export const GitHub = {
     const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
     const body = JSON.stringify(issue);
 
-    console.log(`[POST] ${url} : ${body}`);
+    log.info(`[POST] ${url} : ${body}`);
 
     const res = await fetch(
       url,

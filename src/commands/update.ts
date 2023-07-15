@@ -15,6 +15,7 @@ import {
 } from "../deps.ts";
 import { Exploit, Exploits } from "../services/exploits.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
+import { log } from "../utils/logger.ts";
 import { findExploit } from "./glitch.ts";
 import { createCommand } from "./mod.ts";
 
@@ -171,8 +172,6 @@ createCommand({
               let exploit = await Exploits.find(name);
               const isUpdate = !!exploit;
 
-              console.log(exploit, name);
-
               if (exploit) {
                 const update: Exploit = {
                   name,
@@ -195,8 +194,6 @@ createCommand({
                     delete update[key as keyof Exploit];
                   }
                 });
-
-                console.log(update);
 
                 const result = await Exploits.update({
                   ...exploit,
@@ -275,7 +272,7 @@ createCommand({
                 },
               );
             } catch (err) {
-              console.error(err);
+              log.error(err);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,

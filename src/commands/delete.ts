@@ -14,6 +14,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { Exploits } from "../services/exploits.ts";
+import { log } from "../utils/logger.ts";
 import { findExploit } from "./glitch.ts";
 import { createCommand } from "./mod.ts";
 
@@ -147,7 +148,7 @@ createCommand({
                 },
               );
             } catch (err) {
-              console.error(err);
+              log.error(err);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,

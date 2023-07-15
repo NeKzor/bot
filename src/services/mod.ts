@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
 import { CVars } from "./cvars.ts";
 import { Exploits } from "./exploits.ts";
 import { LP } from "./lp.ts";
@@ -37,7 +38,7 @@ const tryReload = (reloadFunc: () => Promise<void>) => async () => {
     await reloadFunc();
     return true;
   } catch (err) {
-    console.error(err);
+    log.error(err);
   }
   return false;
 };

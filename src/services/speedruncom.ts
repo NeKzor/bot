@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
 import { db } from "./db.ts";
 
 export interface SpeedrunLevel {
@@ -217,7 +218,7 @@ export const SpeedrunCom = {
     const url =
       `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`;
 
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {
@@ -225,7 +226,7 @@ export const SpeedrunCom = {
       },
     });
 
-    console.log("Fetched speedrun.com data");
+    log.info("Fetched speedrun.com data");
 
     const key = [
       "speedrun_com",
@@ -250,7 +251,7 @@ export const SpeedrunCom = {
     if (link) {
       try {
         const url = link.uri;
-        console.log(`[GET] ${url}`);
+        log.info(`[GET] ${url}`);
 
         const res = await fetch(url, {
           headers: {
@@ -260,14 +261,14 @@ export const SpeedrunCom = {
         const records = (await res.json()).data as SpeedrunRecord[];
         return records.filter((record) => record.runs.length > 0);
       } catch (err) {
-        console.error(err);
+        log.error(err);
       }
     }
     return [];
   },
   async getUser(userId: string) {
     const url = `https://www.speedrun.com/api/v1/users/${userId}`;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {

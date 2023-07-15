@@ -5,6 +5,7 @@
  */
 
 import { parseFeed } from "https://deno.land/x/rss@1.0.0/mod.ts";
+import { log } from "../utils/logger.ts";
 
 export enum SteamAppId {
   Portal2 = 620,
@@ -19,7 +20,7 @@ export const Steam = {
 
   async getNewsFeed(appId: number) {
     const url = `${Steam.BaseApi}/feeds/news/app/${appId}`;
-    console.log(url);
+    log.info(url);
 
     const res = await fetch(url, {
       headers: {

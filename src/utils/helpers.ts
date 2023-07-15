@@ -267,7 +267,7 @@ export function htmlToDiscordMarkdown(rawHtml: string) {
       case "body":
         break;
       default:
-        console.warn(`Unhandled node ${nodeName}`);
+        log.warn(`Unhandled node ${nodeName}`);
         break;
     }
 

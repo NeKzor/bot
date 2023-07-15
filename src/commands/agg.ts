@@ -15,6 +15,7 @@ import {
 import { createCommand } from "./mod.ts";
 import { escapeMarkdown, formatBoardPoints } from "../utils/helpers.ts";
 import { AggregationType, Board } from "../services/board.ts";
+import { log } from "../utils/logger.ts";
 
 createCommand({
   name: "agg",
@@ -128,7 +129,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

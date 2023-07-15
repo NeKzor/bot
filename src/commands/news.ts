@@ -16,6 +16,7 @@ import {
 import { createCommand } from "./mod.ts";
 import { escapeMarkdown, htmlToDiscordMarkdown } from "../utils/helpers.ts";
 import { Steam, SteamAppId } from "../services/steam.ts";
+import { log } from "../utils/logger.ts";
 
 const maximumAutocompleteResults = 5;
 
@@ -199,7 +200,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

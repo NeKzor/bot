@@ -18,6 +18,7 @@ import {
 } from "../deps.ts";
 import { GitHub } from "../services/github.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
+import { log } from "../utils/logger.ts";
 import { createCommand } from "./mod.ts";
 
 const repositories: SelectOption[] = [
@@ -154,7 +155,7 @@ createCommand({
                 },
               );
             } catch (err) {
-              console.error(err);
+              log.error(err);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,

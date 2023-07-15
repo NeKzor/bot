@@ -16,6 +16,7 @@ import {
 import { createCommand } from "./mod.ts";
 import { SpeedrunCom } from "../services/speedruncom.ts";
 import { escapeMarkdown } from "../utils/helpers.ts";
+import { log } from "../utils/logger.ts";
 
 const maximumAutocompleteResults = 5;
 
@@ -179,7 +180,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

@@ -18,6 +18,7 @@ import { escapeMaskedLink, formatCmTime } from "../utils/helpers.ts";
 import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
+import { log } from "../utils/logger.ts";
 
 const maximumAutocompleteResults = 5;
 
@@ -150,7 +151,7 @@ createCommand({
           const q = encodeURIComponent(`wr ${query}`);
 
           const url = `https://autorender.portal2.sr/api/v1/search?q=${q}`;
-          console.log(`[GET] ${url}`);
+          log.info(`[GET] ${url}`);
 
           const res = await fetch(url, {
             headers: {
@@ -215,7 +216,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

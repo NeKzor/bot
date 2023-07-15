@@ -19,6 +19,7 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
 import { LP } from "../services/lp.ts";
+import { log } from "../utils/logger.ts";
 
 const maximumAutocompleteResults = 5;
 
@@ -191,7 +192,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.sendInteractionResponse(
             interaction.id,

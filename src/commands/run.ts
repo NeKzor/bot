@@ -16,6 +16,7 @@ import {
 } from "../deps.ts";
 import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
 import { Piston } from "../services/piston.ts";
+import { log } from "../utils/logger.ts";
 import { createCommand } from "./mod.ts";
 
 createCommand({
@@ -74,7 +75,7 @@ createCommand({
             );
             content = originalMessage.content;
           } catch (err) {
-            console.error(err);
+            log.error(err);
 
             await bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -228,7 +229,7 @@ createCommand({
             },
           );
         } catch (err) {
-          console.error(err);
+          log.error(err);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { log } from "../utils/logger.ts";
 import { db } from "./db.ts";
 
 export interface Runtime {
@@ -40,7 +41,7 @@ export const Piston = {
   },
   async fetch() {
     const url = `https://emkc.org/api/${Piston.Version}/piston/runtimes`;
-    console.log(`[GET] ${url}`);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {
@@ -48,7 +49,7 @@ export const Piston = {
       },
     });
 
-    console.log("Fetched emkc.org data");
+    log.info("Fetched emkc.org data");
 
     await db.set(["piston"], await res.json());
 
@@ -62,7 +63,7 @@ export const Piston = {
   },
   async execute(runtime: Runtime, content: string) {
     const url = `https://emkc.org/api/${Piston.Version}/piston/execute`;
-    console.log(`[POST] ${url}`);
+    log.info(`[POST] ${url}`);
 
     const res = await fetch(url, {
       method: "POST",
@@ -80,7 +81,7 @@ export const Piston = {
       }),
     });
 
-    console.log("Executed code on emkc.org");
+    log.info("Executed code on emkc.org");
 
     return await res.json() as ExecutionResult;
   },
