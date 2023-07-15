@@ -15,32 +15,29 @@ import {
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
-import Portal2Exploits from "../data/portal2_exploits.json" assert {
-  type: "json",
-};
-
-type ExploitWithId = typeof Portal2Exploits["0"] & { id: string };
+import { Exploits } from "../services/exploits.ts";
 
 const maximumAutocompleteResults = 5;
 
-Portal2Exploits.forEach((exploit, idx) => {
-  (exploit as ExploitWithId).id = idx.toString();
-
-  // Search optimization
-  exploit.aliases = exploit.aliases.map((alias) => alias.toLowerCase());
-});
-
-const findExploit = (
+export const findExploit = (
   { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
 ) => {
   if (query.length === 0) {
-    return Portal2Exploits.slice(0, maximumAutocompleteResults);
+    return Exploits.List.slice(0, maximumAutocompleteResults);
+  }
+
+  const exactMatch = Exploits.List.find((app) =>
+    app.name.toLowerCase() === query
+  );
+
+  if (exactMatch) {
+    return [exactMatch];
   }
 
   const results = [];
 
-  for (const exploit of Portal2Exploits) {
-    if (!isAutocomplete && (exploit as ExploitWithId).id === query) {
+  for (const exploit of Exploits.List) {
+    if (!isAutocomplete && exploit.name === query) {
       return [exploit];
     }
 
@@ -98,7 +95,7 @@ createCommand({
                 .map((exploit) => {
                   return {
                     name: exploit.name,
-                    value: (exploit as ExploitWithId).id,
+                    value: exploit.name,
                   } as ApplicationCommandOptionChoice;
                 }),
             },

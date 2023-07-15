@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { db } from "./db.ts";
+
 export interface SpeedrunLevel {
   id: string;
   name: string;
@@ -192,30 +194,54 @@ export interface User {
 export const SpeedrunCom = {
   Portal2Bhop: {
     Id: "v1pxk8p6",
-    Levels: [] as (SpeedrunLevel & { records: SpeedrunRecord[] })[],
+    Levels: [] as SpeedrunLevel[],
   },
 
   async load() {
-    SpeedrunCom.Portal2Bhop.Levels = JSON.parse(
-      await Deno.readTextFile("./data/speedruncom_p2bh.json"),
-    );
+    const key = [
+      "speedrun_com",
+      "games",
+      SpeedrunCom.Portal2Bhop.Id,
+      "level",
+    ];
+
+    const levels = [];
+
+    for await (const level of db.list<SpeedrunLevel>({ prefix: key })) {
+      levels.push(level.value);
+    }
+
+    SpeedrunCom.Portal2Bhop.Levels = levels;
   },
   async fetch() {
-    const res = await fetch(
-      `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`,
-      {
-        headers: {
-          "User-Agent": Deno.env.get("USER_AGENT")!,
-        },
-      },
-    );
+    const url =
+      `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`;
 
-    await Deno.writeTextFile(
-      "./data/speedruncom_p2bh.json",
-      JSON.stringify((await res.json()).data),
-    );
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
+      },
+    });
 
     console.log("Fetched speedrun.com data");
+
+    const key = [
+      "speedrun_com",
+      "games",
+      SpeedrunCom.Portal2Bhop.Id,
+      "level",
+    ];
+
+    const levels = await res.json() as { data: SpeedrunLevel[] };
+
+    // TODO: I think this is wrong...
+    await db.delete(key);
+
+    for (const level of levels.data) {
+      await db.set([...key, level.id], level);
+    }
 
     await SpeedrunCom.load();
   },

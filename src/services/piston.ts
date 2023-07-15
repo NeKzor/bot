@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { db } from "./db.ts";
+
 export interface Runtime {
   language: string;
   version: string;
@@ -34,7 +36,7 @@ export const Piston = {
   Runtimes: [] as Runtime[],
 
   async load() {
-    Piston.Runtimes = JSON.parse(await Deno.readTextFile("./data/piston.json"));
+    Piston.Runtimes = (await db.get<Runtime[]>(["piston"])).value ?? [];
   },
   async fetch() {
     const res = await fetch(
@@ -45,13 +47,10 @@ export const Piston = {
         },
       },
     );
-
-    await Deno.writeTextFile(
-      "./data/piston.json",
-      JSON.stringify(await res.json()),
-    );
-
+    
     console.log("Fetched emkc.org data");
+
+    await db.set(["piston"], await res.json());
 
     await Piston.load();
   },

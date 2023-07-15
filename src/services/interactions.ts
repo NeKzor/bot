@@ -15,8 +15,8 @@ export interface InteractionMessage {
 }
 
 export enum InteractionKey {
-  Code = "code",
-  Leaderboard = "lb",
+  Code = "i_code",
+  Leaderboard = "i_lb",
 }
 
 export const InteractionsDb = {
