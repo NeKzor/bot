@@ -12,24 +12,10 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
 } from "../deps.ts";
-import { CVars } from "../services/cvars.ts";
-import { Exploits } from "../services/exploits.ts";
-import { LP } from "../services/lp.ts";
-import { Piston } from "../services/piston.ts";
-import { SAR } from "../services/sar.ts";
-import { SpeedrunCom } from "../services/speedruncom.ts";
+import { reloadAllServices, reloadService, services } from "../services/mod.ts";
 import { createCommand } from "./mod.ts";
 
 const startTime = Date.now();
-
-const services = {
-  "CVars": () => CVars.fetch,
-  "SpeedrunCom": () => SpeedrunCom.fetch,
-  "Piston": () => Piston.fetch,
-  "SAR": () => SAR.fetch,
-  "LP": () => LP.fetch,
-  "Exploits": () => Exploits.load,
-};
 
 createCommand({
   name: "bot",
@@ -156,16 +142,6 @@ createCommand({
             );
 
             try {
-              const tryFetch = (fetchFunc: () => Promise<void>) => async () => {
-                try {
-                  await fetchFunc();
-                  return true;
-                } catch (err) {
-                  console.error(err);
-                }
-                return false;
-              };
-
               if (service) {
                 const toReload = services[service as keyof typeof services];
                 if (!toReload) {
@@ -179,7 +155,7 @@ createCommand({
                   return;
                 }
 
-                const result = await tryFetch(toReload())();
+                const result = await reloadService(toReload);
 
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
@@ -193,9 +169,7 @@ createCommand({
                 );
               } else {
                 const toReload = Object.entries(services);
-                const results = await Promise.all(
-                  toReload.map(([_, func]) => tryFetch(func())()),
-                );
+                const results = await reloadAllServices();
 
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
