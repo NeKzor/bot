@@ -14,7 +14,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { Exploit, Exploits } from "../services/exploits.ts";
-import { escapeMarkdown } from "../utils/helpers.ts";
+import { escapeMaskedLink } from "../utils/helpers.ts";
 import { findExploit } from "./glitch.ts";
 import { createCommand } from "./mod.ts";
 
@@ -168,12 +168,12 @@ createCommand({
             );
 
             try {
-              const exploit = await Exploits.find(name);
+              let exploit = await Exploits.find(name);
               const isUpdate = !!exploit;
 
               console.log(exploit, name);
 
-              if (isUpdate) {
+              if (exploit) {
                 const update: Exploit = {
                   name,
                   aliases: aliases !== ""
@@ -198,12 +198,22 @@ createCommand({
 
                 console.log(update);
 
-                await Exploits.update({
+                const result = await Exploits.update({
                   ...exploit,
                   ...update,
                 });
+
+                if (!result.ok) {
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `❌️ Failed to update glitch.`,
+                    },
+                  );
+                  return;
+                }
               } else {
-                await Exploits.create({
+                const insert = await Exploits.create({
                   name,
                   aliases: aliases
                     .split(",")
@@ -216,15 +226,51 @@ createCommand({
                   wiki,
                   overview,
                 });
+
+                if (!insert.ok) {
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `❌️ Failed to insert new glitch.`,
+                    },
+                  );
+                  return;
+                }
               }
+
+              exploit = await Exploits.find(name);
+              if (!exploit) {
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content: `❌️ Failed to ${
+                      isUpdate ? "update" : "add"
+                    } new glitch.`,
+                  },
+                );
+                return;
+              }
+
+              const title = exploit.wiki
+                ? `[${escapeMaskedLink(exploit.name)}](<${exploit.wiki}>)`
+                : exploit.name;
+
+              const video = exploit.wiki
+                ? `[Watch Showcase](<${exploit.showcase}>)`
+                : exploit.showcase
+                ? `[Showcase](<${exploit.showcase}>)`
+                : "";
+
+              const description = exploit.overview
+                ? `\n${exploit.overview}`
+                : "";
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
                   content: [
-                    `${isUpdate ? "Updated" : "Added new"} glitch ${
-                      escapeMarkdown(name)
-                    }.`,
+                    `${isUpdate ? "Updated" : "Added"} glitch:`,
+                    `${title}${description}\n${video}`,
                   ].join("\n"),
                 },
               );
