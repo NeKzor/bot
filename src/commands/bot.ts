@@ -13,6 +13,7 @@ import {
   InteractionTypes,
 } from "../deps.ts";
 import { CVars } from "../services/cvars.ts";
+import { Exploits } from "../services/exploits.ts";
 import { LP } from "../services/lp.ts";
 import { Piston } from "../services/piston.ts";
 import { SAR } from "../services/sar.ts";
@@ -20,6 +21,15 @@ import { SpeedrunCom } from "../services/speedruncom.ts";
 import { createCommand } from "./mod.ts";
 
 const startTime = Date.now();
+
+const services = {
+  "CVars": () => CVars.fetch,
+  "SpeedrunCom": () => SpeedrunCom.fetch,
+  "Piston": () => Piston.fetch,
+  "SAR": () => SAR.fetch,
+  "LP": () => LP.fetch,
+  "Exploits": () => Exploits.load,
+};
 
 createCommand({
   name: "bot",
@@ -36,13 +46,71 @@ createCommand({
       name: "reload",
       description: "Reload bot data!",
       type: ApplicationCommandOptionTypes.SubCommand,
+      options: [
+        {
+          name: "service",
+          description: "The service to reload.",
+          type: ApplicationCommandOptionTypes.String,
+          autocomplete: true,
+        },
+      ],
     },
   ],
   execute: async (bot: Bot, interaction: Interaction) => {
     const subCommand = [...(interaction.data?.options?.values() ?? [])]
       .at(0)!;
+    const args = [...(subCommand.options?.values() ?? [])];
+    const getArg = (name: string) => {
+      return args
+        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? "";
+    };
 
     switch (interaction.type) {
+      case InteractionTypes.ApplicationCommandAutocomplete: {
+        switch (subCommand.name) {
+          case "reload": {
+            // TODO: Permissions
+            const hasPermission = [BigInt("84272932246810624")].includes(
+              interaction.user.id,
+            );
+
+            if (!hasPermission) {
+              await bot.helpers.sendInteractionResponse(
+                interaction.id,
+                interaction.token,
+                {
+                  type: InteractionResponseTypes.ChannelMessageWithSource,
+                  data: {
+                    content:
+                      `❌️ You do not have the permissions to use this command.`,
+                    flags: 1 << 6,
+                  },
+                },
+              );
+              return;
+            }
+
+            await bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type:
+                  InteractionResponseTypes.ApplicationCommandAutocompleteResult,
+                data: {
+                  choices: Object.keys(services).map((service) => ({
+                    name: service,
+                    value: service,
+                  })),
+                },
+              },
+            );
+            break;
+          }
+          default:
+            break;
+        }
+        break;
+      }
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
           case "info": {
@@ -66,12 +134,15 @@ createCommand({
                     `:small_red_triangle: ${Deno.build.os} ${Deno.build.arch}`,
                     `:up: ${uptime}`,
                   ].join("\n"),
+                  flags: 1 << 6,
                 },
               },
             );
             break;
           }
           case "reload": {
+            const service = getArg("service");
+
             await bot.helpers.sendInteractionResponse(
               interaction.id,
               interaction.token,
@@ -79,6 +150,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `🤖️ Reloading bot data...`,
+                  flags: 1 << 6,
                 },
               },
             );
@@ -94,27 +166,50 @@ createCommand({
                 return false;
               };
 
-              const [cvars, speedrunCom, piston, sar, lp] = await Promise.all([
-                tryFetch(CVars.fetch)(),
-                tryFetch(SpeedrunCom.fetch)(),
-                tryFetch(Piston.fetch)(),
-                tryFetch(SAR.fetch)(),
-                tryFetch(LP.fetch)(),
-              ]);
+              if (service) {
+                const toReload = services[service as keyof typeof services];
+                if (!toReload) {
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `❌️ Unknown service. Please choose a service from autocompletion.`,
+                    },
+                  );
+                  return;
+                }
 
-              await bot.helpers.editOriginalInteractionResponse(
-                interaction.token,
-                {
-                  content: [
-                    `🤖️ Reloaded bot data.`,
-                    `Cvars: ${cvars ? "success" : "failed"}`,
-                    `Bhop: ${speedrunCom ? "success" : "failed"}`,
-                    `Piston: ${piston ? "success" : "failed"}`,
-                    `SAR: ${sar ? "success" : "failed"}`,
-                    `LP: ${lp ? "success" : "failed"}`,
-                  ].join("\n"),
-                },
-              );
+                const result = await tryFetch(toReload())();
+
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content: [
+                      `🤖️ Reloaded service ${service}: ${
+                        result ? "success" : "failed"
+                      }`,
+                    ].join("\n"),
+                  },
+                );
+              } else {
+                const toReload = Object.entries(services);
+                const results = await Promise.all(
+                  toReload.map(([_, func]) => tryFetch(func())()),
+                );
+
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content: [
+                      `🤖️ Reloaded bot data.`,
+                      results.map((result, index) => {
+                        return `${toReload[index].at(0)}: ${
+                          result ? "success" : "failed"
+                        }`;
+                      }).join("\n"),
+                    ].join("\n"),
+                  },
+                );
+              }
             } catch (err) {
               console.error(err);
 
