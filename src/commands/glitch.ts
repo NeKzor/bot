@@ -26,9 +26,8 @@ export const findExploit = (
     return Exploits.List.slice(0, maximumAutocompleteResults);
   }
 
-  const exactMatch = Exploits.List.find((app) =>
-    app.name.toLowerCase() === query
-  );
+  const exactMatch = Exploits.List
+    .find((app) => app.name.toLowerCase() === query);
 
   if (exactMatch) {
     return [exactMatch];
@@ -37,7 +36,7 @@ export const findExploit = (
   const results = [];
 
   for (const exploit of Exploits.List) {
-    if (!isAutocomplete && exploit.name === query) {
+    if (!isAutocomplete && exploit.name.toLowerCase() === query) {
       return [exploit];
     }
 
