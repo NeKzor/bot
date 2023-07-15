@@ -149,7 +149,9 @@ createCommand({
 
         const video = exploit.wiki
           ? `[Watch Showcase](<${exploit.showcase}>)`
-          : `[Showcase](<${exploit.showcase})`;
+          : exploit.showcase
+          ? `[Showcase](<${exploit.showcase}>)`
+          : "";
 
         const description = exploit.overview ? `\n${exploit.overview}` : "";
 
