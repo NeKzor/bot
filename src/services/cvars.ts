@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { db } from "./db.ts";
+
 export enum FCVAR {
   NONE = 0,
   UNREGISTERED = (1 << 0),
@@ -80,7 +82,6 @@ export enum OperatingSystem {
 }
 
 export interface CVar {
-  id: number;
   name: string;
   default: string;
   flags: number;
@@ -89,29 +90,21 @@ export interface CVar {
 }
 
 export const CVars = {
+  Api: {
+    Base: "https://raw.githubusercontent.com/NeKzor/cvars/api",
+    SAR:
+      "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md",
+  },
   Portal2: [] as CVar[],
 
   async load() {
-    let id = 0;
+    const cvars: CVar[] = [];
 
-    const portal2 = await Deno.readTextFile("./data/cvars/portal-2.json");
-    const sar = await Deno.readTextFile("./data/cvars/sar.json");
+    for await (const cvar of db.list<CVar>({ prefix: ["cvars"] })) {
+      cvars.push(cvar.value);
+    }
 
-    CVars.Portal2 = JSON.parse(portal2).map((cvar: CVar) => {
-      cvar.id = id;
-      id += 1;
-      return cvar;
-    });
-
-    CVars.Portal2.push(
-      ...JSON.parse(sar).map((cvar: CVar) => {
-        cvar.id = id;
-        id += 1;
-        return cvar;
-      }),
-    );
-
-    CVars.Portal2.sort((a, b) => {
+    CVars.Portal2 = cvars.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
   },
@@ -122,9 +115,7 @@ export const CVars = {
     ];
 
     for (const gameMod of gameMods) {
-      const url =
-        `https://raw.githubusercontent.com/NeKzor/cvars/api/${gameMod}.json`;
-
+      const url = `${CVars.Api.Base}/${gameMod}.json`;
       console.log(`[GET] ${url}`);
 
       const res = await fetch(url, {
@@ -132,18 +123,17 @@ export const CVars = {
           "User-Agent": Deno.env.get("USER_AGENT")!,
         },
       });
-      const json = await res.json();
-
-      await Deno.writeTextFile(
-        `./data/cvars/${gameMod}.json`,
-        JSON.stringify(json.Cvars),
-      );
 
       console.log(`Fetched ${gameMod} cvars`);
+
+      const json = await res.json() as { Cvars: CVar[] };
+
+      for (const cvar of json.Cvars) {
+        await db.set(["cvars", cvar.name], cvar);
+      }
     }
 
-    const url =
-      "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md";
+    const url = CVars.Api.SAR;
     console.log(`[GET] ${url}`);
 
     const sar = await fetch(url, {
@@ -151,12 +141,15 @@ export const CVars = {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },
     });
+
+    console.log(`Fetched SAR cvars`);
+
     const sarMd = (await sar.text()).split("\n").slice(4);
-    const sarCvars: Omit<CVar, "id">[] = [];
 
     for (const line of sarMd) {
       const [name, cvarDefault, help] = line.slice(1, -1).split("|");
-      sarCvars.push({
+
+      await db.set(["cvars", name], {
         name,
         default: cvarDefault ?? "",
         flags: 0,
@@ -164,13 +157,6 @@ export const CVars = {
         help: (help?.replaceAll("<br>", " ") ?? "").trim(),
       });
     }
-
-    await Deno.writeTextFile(
-      `./data/cvars/sar.json`,
-      JSON.stringify(sarCvars),
-    );
-
-    console.log(`Fetched SAR cvars`);
 
     await CVars.load();
   },

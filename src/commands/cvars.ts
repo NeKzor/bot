@@ -24,10 +24,17 @@ const findCvar = ({ query, byId }: { query: string; byId: boolean }) => {
     return CVars.Portal2.slice(0, maximumAutocompleteResults);
   }
 
+  const exactMatch = CVars.Portal2
+    .find((cvar) => cvar.name.toLowerCase() === query);
+
+  if (exactMatch) {
+    return [exactMatch];
+  }
+
   const results = [];
 
   for (const cvar of CVars.Portal2) {
-    if (byId && cvar.id.toString() === query) {
+    if (byId && cvar.name.toLowerCase() === query) {
       return [cvar];
     }
 
@@ -80,7 +87,7 @@ createCommand({
                 .map((cvar) => {
                   return {
                     name: cvar.name,
-                    value: cvar.id.toString(),
+                    value: cvar.name,
                   } as ApplicationCommandOptionChoice;
                 }),
             },
