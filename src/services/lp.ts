@@ -56,7 +56,10 @@ export const LP = {
   },
 
   async fetch() {
-    const res = await fetch(`${LP.BaseApi}/records`, {
+    const url = `${LP.BaseApi}/records`;
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },

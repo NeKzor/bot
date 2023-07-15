@@ -50,8 +50,10 @@ const getDemoInfo = async (
   );
 
   try {
-    const demo = await fetch(attachment.url, {
-      method: "GET",
+    const url = attachment.url;
+    console.log(`[GET] ${url}`);
+
+    const demo = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },

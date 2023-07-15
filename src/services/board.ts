@@ -41,7 +41,10 @@ export const Board = {
   BaseApi: "https://board.portal2.sr",
 
   async getChamber(chamberId: number) {
-    const res = await fetch(`${Board.BaseApi}/chamber/${chamberId}/json`, {
+    const url = `${Board.BaseApi}/chamber/${chamberId}/json`;
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },
@@ -55,7 +58,10 @@ export const Board = {
   },
 
   async getAggregated(type: AggregationType) {
-    const res = await fetch(`${Board.BaseApi}/aggregated/${type}/json`, {
+    const url = `${Board.BaseApi}/aggregated/${type}/json`;
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },

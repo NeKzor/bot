@@ -122,14 +122,16 @@ export const CVars = {
     ];
 
     for (const gameMod of gameMods) {
-      const res = await fetch(
-        `https://raw.githubusercontent.com/NeKzor/cvars/api/${gameMod}.json`,
-        {
-          headers: {
-            "User-Agent": Deno.env.get("USER_AGENT")!,
-          },
+      const url =
+        `https://raw.githubusercontent.com/NeKzor/cvars/api/${gameMod}.json`;
+
+      console.log(`[GET] ${url}`);
+
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": Deno.env.get("USER_AGENT")!,
         },
-      );
+      });
       const json = await res.json();
 
       await Deno.writeTextFile(
@@ -140,14 +142,15 @@ export const CVars = {
       console.log(`Fetched ${gameMod} cvars`);
     }
 
-    const sar = await fetch(
-      "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md",
-      {
-        headers: {
-          "User-Agent": Deno.env.get("USER_AGENT")!,
-        },
+    const url =
+      "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md";
+    console.log(`[GET] ${url}`);
+
+    const sar = await fetch(url, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
       },
-    );
+    });
     const sarMd = (await sar.text()).split("\n").slice(4);
     const sarCvars: Omit<CVar, "id">[] = [];
 

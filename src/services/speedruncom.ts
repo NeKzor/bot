@@ -249,7 +249,10 @@ export const SpeedrunCom = {
     const link = level.links.find((link) => link.rel === "records");
     if (link) {
       try {
-        const res = await fetch(link.uri, {
+        const url = link.uri;
+        console.log(`[GET] ${url}`);
+
+        const res = await fetch(url, {
           headers: {
             "User-Agent": Deno.env.get("USER_AGENT")!,
           },
@@ -263,7 +266,10 @@ export const SpeedrunCom = {
     return [];
   },
   async getUser(userId: string) {
-    const res = await fetch(`https://www.speedrun.com/api/v1/users/${userId}`, {
+    const url = `https://www.speedrun.com/api/v1/users/${userId}`;
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },

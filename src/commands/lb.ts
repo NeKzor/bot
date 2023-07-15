@@ -156,15 +156,14 @@ createCommand({
                 lbMessage.message_id,
               );
 
-              const demo = await fetch(
-                `https://board.portal2.sr/getDemo?id=${changelogId}`,
-                {
-                  method: "GET",
-                  headers: {
-                    "User-Agent": Deno.env.get("USER_AGENT")!,
-                  },
+              const url = `https://board.portal2.sr/getDemo?id=${changelogId}`;
+              console.log(`[GET] ${url}`);
+
+              const demo = await fetch(url, {
+                headers: {
+                  "User-Agent": Deno.env.get("USER_AGENT")!,
                 },
-              );
+              });
 
               // Holy, the leaderboard is so bad... let's return 200 when NOT FOUND!!!
 

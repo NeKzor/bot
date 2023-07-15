@@ -39,15 +39,15 @@ export const Piston = {
     Piston.Runtimes = (await db.get<Runtime[]>(["piston"])).value ?? [];
   },
   async fetch() {
-    const res = await fetch(
-      `https://emkc.org/api/${Piston.Version}/piston/runtimes`,
-      {
-        headers: {
-          "User-Agent": Deno.env.get("USER_AGENT")!,
-        },
+    const url = `https://emkc.org/api/${Piston.Version}/piston/runtimes`;
+    console.log(`[GET] ${url}`);
+
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
       },
-    );
-    
+    });
+
     console.log("Fetched emkc.org data");
 
     await db.set(["piston"], await res.json());
@@ -61,24 +61,24 @@ export const Piston = {
     });
   },
   async execute(runtime: Runtime, content: string) {
-    const res = await fetch(
-      `https://emkc.org/api/${Piston.Version}/piston/execute`,
-      {
-        method: "POST",
-        headers: {
-          "User-Agent": Deno.env.get("USER_AGENT")!,
-        },
-        body: JSON.stringify({
-          language: runtime.language,
-          version: runtime.version,
-          files: [
-            {
-              content: content,
-            },
-          ],
-        }),
+    const url = `https://emkc.org/api/${Piston.Version}/piston/execute`;
+    console.log(`[POST] ${url}`);
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "User-Agent": Deno.env.get("USER_AGENT")!,
       },
-    );
+      body: JSON.stringify({
+        language: runtime.language,
+        version: runtime.version,
+        files: [
+          {
+            content: content,
+          },
+        ],
+      }),
+    });
 
     console.log("Executed code on emkc.org");
 

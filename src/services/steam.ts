@@ -18,7 +18,10 @@ export const Steam = {
   BaseApi: "https://store.steampowered.com",
 
   async getNewsFeed(appId: number) {
-    const res = await fetch(`${Steam.BaseApi}/feeds/news/app/${appId}`, {
+    const url = `${Steam.BaseApi}/feeds/news/app/${appId}`;
+    console.log(url);
+
+    const res = await fetch(url, {
       headers: {
         "User-Agent": Deno.env.get("USER_AGENT")!,
       },

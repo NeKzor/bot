@@ -149,9 +149,10 @@ createCommand({
 
           const q = encodeURIComponent(`wr ${query}`);
 
-          const res = await fetch(
-            `https://autorender.portal2.sr/api/v1/search?q=${q}`,
-            {
+          const url = `https://autorender.portal2.sr/api/v1/search?q=${q}`;
+          console.log(`[GET] ${url}`);
+
+          const res = await fetch(url, {
               headers: {
                 "User-Agent": Deno.env.get("USER_AGENT")!,
               },

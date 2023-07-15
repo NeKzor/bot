@@ -180,8 +180,13 @@ export const GitHub = {
   ): Promise<Issue> {
     const { owner, repo, issue, token } = options;
 
+    const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
+    const body = JSON.stringify(issue);
+
+    console.log(`[POST] ${url} : ${body}`);
+
     const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/issues`,
+      url,
       {
         method: "POST",
         headers: {
@@ -190,7 +195,7 @@ export const GitHub = {
           "X-GitHub-Api-Version": this.ApiVersion,
           "User-Agent": Deno.env.get("USER_AGENT")!,
         },
-        body: JSON.stringify(issue),
+        body,
       },
     );
 
