@@ -173,7 +173,7 @@ createCommand({
                     interaction.token,
                     {
                       content:
-                        `❌️ Unknown service. Please choose a service from autocompletion.`,
+                        `❌️ Unknown service. Please choose a result from autocompletion.`,
                     },
                   );
                   return;
