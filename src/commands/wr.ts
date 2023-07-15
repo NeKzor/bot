@@ -153,11 +153,10 @@ createCommand({
           console.log(`[GET] ${url}`);
 
           const res = await fetch(url, {
-              headers: {
-                "User-Agent": Deno.env.get("USER_AGENT")!,
-              },
+            headers: {
+              "User-Agent": Deno.env.get("USER_AGENT")!,
             },
-          );
+          });
 
           if (!res.ok) {
             throw new Error(

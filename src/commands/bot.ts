@@ -172,7 +172,8 @@ createCommand({
                   await bot.helpers.editOriginalInteractionResponse(
                     interaction.token,
                     {
-                      content: `❌️ Unknown service. Please choose a service from autocompletion.`,
+                      content:
+                        `❌️ Unknown service. Please choose a service from autocompletion.`,
                     },
                   );
                   return;
