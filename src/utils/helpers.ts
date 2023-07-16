@@ -7,8 +7,8 @@
 import { Temporal } from "npm:@js-temporal/polyfill";
 import {
   DOMParser,
+  Element,
   Node,
-  NodeType,
 } from "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts";
 import {
   Bot,
@@ -226,8 +226,17 @@ export function parseHtmlDocument(html: string) {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-export function htmlToDiscordMarkdown(rawHtml: string) {
+export type HtmlToDiscordMarkdownOptions = {
+  imageFormatter?: (src: string) => string;
+};
+
+export function htmlToDiscordMarkdown(
+  rawHtml: string,
+  options?: HtmlToDiscordMarkdownOptions,
+) {
   const result: string[] = [];
+
+  const imageFormatter = options?.imageFormatter;
 
   const parseNode = (node: Node, depth: number) => {
     const nodeName = node.nodeName.toLowerCase();
@@ -249,11 +258,16 @@ export function htmlToDiscordMarkdown(rawHtml: string) {
         result.push("\n");
         break;
       case "img":
+        {
+          const src = (node as Element).getAttribute("src") ?? "";
+          result.push(
+            `${imageFormatter ? imageFormatter(src) : src}`,
+          );
+        }
+        break;
+      case "iframe":
         result.push(
-          [...node.parentElement?.children ?? []].find((child) =>
-            child.nodeType === NodeType.ELEMENT_NODE &&
-            !!child.getAttribute("src")
-          )?.getAttribute("src") ?? "",
+          `${(node as Element).getAttribute("src") ?? ""}`,
         );
         break;
       case "i":
@@ -265,8 +279,10 @@ export function htmlToDiscordMarkdown(rawHtml: string) {
       case "html":
       case "head":
       case "body":
+      case "div":
         break;
       default:
+        result.push(`<${nodeName}>`);
         log.warn(`Unhandled node ${nodeName}`);
         break;
     }
@@ -286,13 +302,7 @@ export function htmlToDiscordMarkdown(rawHtml: string) {
         break;
       case "a":
         result.push(
-          `](${
-            [...node.parentElement?.children ?? []]
-              .find((child) =>
-                child.nodeType === NodeType.ELEMENT_NODE &&
-                !!child.getAttribute("href")
-              )?.getAttribute("href") ?? ""
-          })`,
+          `](<${(node as Element).getAttribute("href") ?? ""}>)`,
         );
         break;
       default:

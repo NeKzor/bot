@@ -6,7 +6,11 @@
 
 import { parseFeed } from "https://deno.land/x/rss@1.0.0/mod.ts";
 import { log } from "../utils/logger.ts";
-import { escapeMarkdown, htmlToDiscordMarkdown } from "../utils/helpers.ts";
+import {
+  escapeMarkdown,
+  htmlToDiscordMarkdown,
+  HtmlToDiscordMarkdownOptions,
+} from "../utils/helpers.ts";
 
 export enum SteamAppId {
   Portal2 = 620,
@@ -41,6 +45,23 @@ export const Portal2Apps = [
 
 export const Steam = {
   BaseApi: "https://store.steampowered.com",
+  htmlConvertOptions: {
+    imageFormatter: (src: string) => {
+      if (!src) {
+        return src;
+      }
+
+      // Filter out Steam's responsive YouTube hack
+      if (
+        src ===
+          "https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif"
+      ) {
+        return "";
+      }
+
+      return `<${src}>`;
+    },
+  } as HtmlToDiscordMarkdownOptions,
 
   async getNewsFeed(appId: SteamAppId | number | string) {
     const url = `${Steam.BaseApi}/feeds/news/app/${appId}`;
@@ -68,7 +89,10 @@ export const Steam = {
     const entryTitle = `${appName} News ${date}`;
     const title = escapeMarkdown(entry?.title?.value ?? "");
     const rawDescription = entry?.description?.value ?? "";
-    const description = htmlToDiscordMarkdown(rawDescription);
+    const description = htmlToDiscordMarkdown(
+      rawDescription,
+      Steam.htmlConvertOptions,
+    );
     const link = entry?.links?.at(0)?.href ?? "";
     const author = entry?.author?.name;
 

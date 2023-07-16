@@ -167,18 +167,28 @@ createCommand({
           }
 
           const appName = app?.name ?? `App ID ${appId}`;
-          const newsLink = news.links.at(0);
+          const link = news.links.at(0);
+          const newsLink = entry?.links?.at(0)?.href ?? "";
 
-          const content = Steam.formatFeedEntryToMarkdown(
-            entry,
-            appName,
-            newsLink,
-          );
+          const content = Steam.formatFeedEntryToMarkdown(entry, appName, link);
+
+          const truncated = [];
+          let charactersLeft = 1_900;
+          for (const line of content.split("\n")) {
+            charactersLeft -= line.length + 1;
+            if (charactersLeft < 0) {
+              truncated.push(
+                newsLink ? `[Read more](<${newsLink}>)` : "_truncated_",
+              );
+              break;
+            }
+            truncated.push(line);
+          }
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content,
+              content: content.slice(0, 2_000),
             },
           );
         } catch (err) {
