@@ -16,49 +16,18 @@ import {
 import { createCommand } from "./mod.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
 import { Exploits } from "../services/exploits.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
-
-export const findExploit = (
-  { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
-) => {
-  if (query.length === 0) {
-    return Exploits.List.slice(0, maximumAutocompleteResults);
-  }
-
-  const exactMatch = Exploits.List
-    .find((app) => app.name.toLowerCase() === query);
-
-  if (exactMatch) {
-    return [exactMatch];
-  }
-
-  const results = [];
-
-  for (const exploit of Exploits.List) {
-    if (!isAutocomplete && exploit.name.toLowerCase() === query) {
-      return [exploit];
-    }
-
-    const name = exploit.name.toLowerCase();
-
-    if (
-      name.startsWith(query) ||
-      name.split(" ").includes(query) ||
-      exploit.aliases.some((alias) => {
-        return alias === query;
-      })
-    ) {
-      results.push(exploit);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+export const findExploit = createAutocompletion({
+  items: () => Exploits.List,
+  idKey: "name",
+  nameKey: "name",
+  additionalCheck: (exploit, query) => {
+    return exploit.aliases.some((alias) => {
+      return alias === query;
+    });
+  },
+});
 
 createCommand({
   name: "glitch",

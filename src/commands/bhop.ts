@@ -17,37 +17,13 @@ import { createCommand } from "./mod.ts";
 import { SpeedrunCom } from "../services/speedruncom.ts";
 import { escapeMarkdown } from "../utils/helpers.ts";
 import { log } from "../utils/logger.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
-
-const findLevel = ({ query, byId }: { query: string; byId: boolean }) => {
-  if (query.length === 0) {
-    return SpeedrunCom.Portal2Bhop.Levels.slice(0, maximumAutocompleteResults);
-  }
-
-  const results = [];
-
-  for (const level of SpeedrunCom.Portal2Bhop.Levels) {
-    if (byId && level.id.toString() === query) {
-      return [level];
-    }
-
-    const name = level.name.toLowerCase();
-
-    if (
-      name.startsWith(query) ||
-      name.split(" ").includes(query)
-    ) {
-      results.push(level);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+const findLevel = createAutocompletion({
+  items: () => SpeedrunCom.Portal2Bhop.Levels,
+  idKey: "id",
+  nameKey: "name",
+});
 
 createCommand({
   name: "bhop",
@@ -79,11 +55,11 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findLevel({ query, byId: false })
-                .map((cvar) => {
+              choices: findLevel({ query, isAutocomplete: false })
+                .map((level) => {
                   return {
-                    name: cvar.name,
-                    value: cvar.id,
+                    name: level.name,
+                    value: level.id,
                   } as ApplicationCommandOptionChoice;
                 }),
             },
@@ -110,7 +86,7 @@ createCommand({
             arg.name === "query"
           )?.value?.toString() ?? "";
 
-          const levels = findLevel({ query, byId: true });
+          const levels = findLevel({ query, isAutocomplete: true });
           const level = levels.at(0);
 
           if (!level) {

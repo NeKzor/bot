@@ -16,42 +16,14 @@ import {
 import { createCommand } from "./mod.ts";
 import { escapeMarkdown } from "../utils/helpers.ts";
 import { CVars } from "../services/cvars.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
-
-const findCvar = ({ query, byId }: { query: string; byId: boolean }) => {
-  if (query.length === 0) {
-    return CVars.Portal2.slice(0, maximumAutocompleteResults);
-  }
-
-  const exactMatch = CVars.Portal2
-    .find((cvar) => cvar.name.toLowerCase() === query);
-
-  if (exactMatch) {
-    return [exactMatch];
-  }
-
-  const results = [];
-
-  for (const cvar of CVars.Portal2) {
-    if (byId && cvar.name.toLowerCase() === query) {
-      return [cvar];
-    }
-
-    if (
-      cvar.name.startsWith(query) ||
-      cvar.name.split("_").includes(query)
-    ) {
-      results.push(cvar);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+export const findCvar = createAutocompletion({
+  items: () => CVars.Portal2,
+  idKey: "name",
+  nameKey: "name",
+  splitCharacter: "_",
+});
 
 createCommand({
   name: "cvars",
@@ -83,7 +55,7 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findCvar({ query, byId: false })
+              choices: findCvar({ query, isAutocomplete: false })
                 .map((cvar) => {
                   return {
                     name: cvar.name,
@@ -102,7 +74,7 @@ createCommand({
           arg.name === "query"
         )?.value?.toString() ?? "";
 
-        const cvars = findCvar({ query, byId: true });
+        const cvars = findCvar({ query, isAutocomplete: true });
         const cvar = cvars.at(0);
 
         if (!cvar) {

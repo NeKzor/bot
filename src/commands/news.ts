@@ -16,43 +16,13 @@ import {
 import { createCommand } from "./mod.ts";
 import { Portal2Apps, Steam } from "../services/steam.ts";
 import { log } from "../utils/logger.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
-
-const findApp = (
-  { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
-) => {
-  if (query.length === 0) {
-    return Portal2Apps.slice(0, maximumAutocompleteResults);
-  }
-
-  const exactMatch = Portal2Apps.find((app) =>
-    app.name.toLowerCase() === query
-  );
-  if (exactMatch) {
-    return [exactMatch];
-  }
-
-  const results = [];
-
-  for (const app of Portal2Apps) {
-    if (!isAutocomplete && app.value === query) {
-      return [app];
-    }
-
-    const name = app.name.toLocaleLowerCase();
-
-    if (name.startsWith(query) || name.split(" ").includes(query)) {
-      results.push(app);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+const findApp = createAutocompletion({
+  items: () => Portal2Apps,
+  idKey: "value",
+  nameKey: "name",
+});
 
 createCommand({
   name: "news",

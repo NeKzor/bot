@@ -19,31 +19,19 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
   type: "json",
 };
 import { log } from "../utils/logger.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
+const boardMaps = Portal2Campaign.map_list
+  .filter(({ best_time_id }) => best_time_id);
 
-const findWr = (query: string) => {
-  const results = [];
-
-  for (const map of Portal2Campaign.map_list) {
-    const cmName = map.cm_name.toLocaleLowerCase();
-    const tlc = map.three_letter_code.toLocaleLowerCase();
-
-    if (
-      cmName.startsWith(query) ||
-      cmName.replaceAll(" ", "").startsWith(query) ||
-      tlc === query
-    ) {
-      results.push(map);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+const findWr = createAutocompletion({
+  items: () => boardMaps,
+  additionalCheck: (map, query) => {
+    return map.three_letter_code === query;
+  },
+  idKey: "best_time_id",
+  nameKey: "cm_name",
+});
 
 createCommand({
   name: "wr",
@@ -75,20 +63,11 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: Portal2Campaign.map_list
-                .filter((map) => {
-                  const cmName = map.cm_name.toLocaleLowerCase();
-                  const tlc = map.three_letter_code.toLocaleLowerCase();
-
-                  return cmName.startsWith(query) ||
-                    cmName.replaceAll(" ", "").startsWith(query) ||
-                    tlc === query;
-                })
-                .slice(0, 5)
+              choices: findWr({ query, isAutocomplete: true })
                 .map((map) => {
                   return {
                     name: map.cm_name,
-                    value: map.cm_name,
+                    value: map.best_time_id,
                   } as ApplicationCommandOptionChoice;
                 }),
             },
@@ -102,7 +81,7 @@ createCommand({
           arg.name === "query"
         )?.value?.toString()?.toLowerCase() ?? "";
 
-        const wrMaps = findWr(query);
+        const wrMaps = findWr({ query, isAutocomplete: false });
         const wrMap = wrMaps.at(0);
 
         if (!wrMap) {

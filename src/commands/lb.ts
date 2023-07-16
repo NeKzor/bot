@@ -31,44 +31,19 @@ import { Board } from "../services/board.ts";
 import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
 import { SAR } from "../services/sar.ts";
 import { log } from "../utils/logger.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
-const boardMaps = Portal2Campaign.map_list.filter(({ best_time_id }) =>
-  best_time_id
-);
+const boardMaps = Portal2Campaign.map_list
+  .filter(({ best_time_id }) => best_time_id);
 
-const findChamber = (
-  { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
-) => {
-  if (query.length === 0) {
-    return boardMaps.slice(0, maximumAutocompleteResults);
-  }
-
-  const results = [];
-
-  for (const map of boardMaps) {
-    if (!isAutocomplete && map.best_time_id === query) {
-      return [map];
-    }
-
-    const cmName = map.cm_name.toLocaleLowerCase();
-    const tlc = map.three_letter_code.toLocaleLowerCase();
-
-    if (
-      cmName.startsWith(query) ||
-      cmName.replaceAll(" ", "").startsWith(query) ||
-      tlc === query
-    ) {
-      results.push(map);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+const findChamber = createAutocompletion({
+  items: () => boardMaps,
+  additionalCheck: (exploit, query) => {
+    return exploit.three_letter_code === query;
+  },
+  idKey: "best_time_id",
+  nameKey: "cm_name",
+});
 
 createCommand({
   name: "lb",

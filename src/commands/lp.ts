@@ -20,42 +20,19 @@ import Portal2Campaign from "../data/portal2_campaign.json" assert {
 };
 import { LP } from "../services/lp.ts";
 import { log } from "../utils/logger.ts";
+import { createAutocompletion } from "../utils/autocompletion.ts";
 
-const maximumAutocompleteResults = 5;
+const boardMaps = Portal2Campaign.map_list
+  .filter(({ best_portals_id }) => best_portals_id);
 
-const findLp = (
-  { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
-) => {
-  if (query.length === 0) {
-    return Portal2Campaign.map_list.slice(0, maximumAutocompleteResults);
-  }
-
-  const results = [];
-
-  for (const map of Portal2Campaign.map_list) {
-    if (!isAutocomplete && map.sort_index.toString() === query) {
-      return [map];
-    }
-
-    const cmName = map.cm_name.toLocaleLowerCase();
-    const tlc = map.three_letter_code.toLocaleLowerCase();
-
-    if (
-      cmName.startsWith(query) ||
-      cmName.replaceAll(" ", "") === query ||
-      cmName.split(" ").includes(query) ||
-      tlc === query
-    ) {
-      results.push(map);
-    }
-
-    if (results.length === maximumAutocompleteResults) {
-      break;
-    }
-  }
-
-  return results;
-};
+const findLp = createAutocompletion({
+  items: () => boardMaps,
+  additionalCheck: (map, query) => {
+    return map.three_letter_code === query;
+  },
+  idKey: "best_portals_id",
+  nameKey: "cm_name",
+});
 
 createCommand({
   name: "lp",
@@ -91,7 +68,7 @@ createCommand({
                 .map((map) => {
                   return {
                     name: map.cm_name,
-                    value: map.sort_index.toString(),
+                    value: map.best_portals_id,
                   } as ApplicationCommandOptionChoice;
                 }),
             },
