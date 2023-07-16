@@ -5,6 +5,7 @@
  */
 
 import { log } from "../utils/logger.ts";
+import { Campaign } from "./campaign.ts";
 import { CVars } from "./cvars.ts";
 import { Exploits } from "./exploits.ts";
 import { LP } from "./lp.ts";
@@ -31,6 +32,7 @@ export const loadAllServices = async () => {
   await Piston.load();
   await SAR.load();
   await Exploits.load();
+  await Campaign.load();
 
   setInterval(async () => {
     log.info(`Reloading all services...`);

@@ -24,20 +24,17 @@ import {
   formatCmTime,
   getDurationSince,
 } from "../utils/helpers.ts";
-import Portal2Campaign from "../data/portal2_campaign.json" assert {
-  type: "json",
-};
 import { Board } from "../services/board.ts";
 import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
 import { SAR } from "../services/sar.ts";
 import { log } from "../utils/logger.ts";
 import { createAutocompletion } from "../utils/autocompletion.ts";
-
-const boardMaps = Portal2Campaign.map_list
-  .filter(({ best_time_id }) => best_time_id);
+import { Campaign } from "../services/campaign.ts";
 
 const findChamber = createAutocompletion({
-  items: () => boardMaps,
+  items: () =>
+    Campaign.Portal2.Maps
+      .filter(({ best_time_id }) => best_time_id),
   additionalCheck: (exploit, query) => {
     return exploit.three_letter_code === query;
   },

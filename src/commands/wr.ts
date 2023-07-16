@@ -15,17 +15,14 @@ import {
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
 import { escapeMaskedLink, formatCmTime } from "../utils/helpers.ts";
-import Portal2Campaign from "../data/portal2_campaign.json" assert {
-  type: "json",
-};
 import { log } from "../utils/logger.ts";
 import { createAutocompletion } from "../utils/autocompletion.ts";
-
-const boardMaps = Portal2Campaign.map_list
-  .filter(({ best_time_id }) => best_time_id);
+import { Campaign } from "../services/campaign.ts";
 
 const findWr = createAutocompletion({
-  items: () => boardMaps,
+  items: () =>
+    Campaign.Portal2.Maps
+      .filter(({ best_time_id }) => best_time_id),
   additionalCheck: (map, query) => {
     return map.three_letter_code === query;
   },

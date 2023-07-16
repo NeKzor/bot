@@ -15,18 +15,15 @@ import {
 } from "../deps.ts";
 import { createCommand } from "./mod.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
-import Portal2Campaign from "../data/portal2_campaign.json" assert {
-  type: "json",
-};
 import { LP } from "../services/lp.ts";
 import { log } from "../utils/logger.ts";
 import { createAutocompletion } from "../utils/autocompletion.ts";
-
-const boardMaps = Portal2Campaign.map_list
-  .filter(({ best_portals_id }) => best_portals_id);
+import { Campaign } from "../services/campaign.ts";
 
 const findLp = createAutocompletion({
-  items: () => boardMaps,
+  items: () =>
+    Campaign.Portal2.Maps
+      .filter(({ best_portals_id }) => best_portals_id),
   additionalCheck: (map, query) => {
     return map.three_letter_code === query;
   },
