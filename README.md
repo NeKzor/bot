@@ -23,6 +23,20 @@ A preview of each command can be seen on [bot.nekz.me/commands].
 
 [bot.nekz.me/commands]: https://bot.nekz.me/commands
 
+# TODO
+
+- ~~Migrate all data into Deno kv~~
+- Fix autocomplete search algorithm
+- ~~Add script to auto fetch latest data~~
+- ~~Add script to post latest news~~
+- ~~Add update commands for glitches~~
+- Compare data to mdp
+- Fix sdp + parse CM data
+- Add rate limiter
+- Add permission checks
+- Document new commands
+- Migrate discordeno to v19
+
 ## Dependencies
 
 - [discordeno]
