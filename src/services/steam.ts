@@ -6,6 +6,7 @@
 
 import { parseFeed } from "https://deno.land/x/rss@1.0.0/mod.ts";
 import { log } from "../utils/logger.ts";
+import { escapeMarkdown, htmlToDiscordMarkdown } from "../utils/helpers.ts";
 
 export enum SteamAppId {
   Portal2 = 620,
@@ -15,12 +16,35 @@ export enum SteamAppId {
   PortalReloaded = 1255980,
 }
 
+export const Portal2Apps = [
+  {
+    name: "Portal 2",
+    value: SteamAppId.Portal2.toString(),
+  },
+  {
+    name: "Aperture Tag",
+    value: SteamAppId.ApertureTag.toString(),
+  },
+  {
+    name: "Thinking with Time Machine",
+    value: SteamAppId.ThinkingWithTimeMachine.toString(),
+  },
+  {
+    name: "Portal 2: Community Edition",
+    value: SteamAppId.Portal2CommunityEdition.toString(),
+  },
+  {
+    name: "Portal Reloaded",
+    value: SteamAppId.PortalReloaded.toString(),
+  },
+];
+
 export const Steam = {
   BaseApi: "https://store.steampowered.com",
 
-  async getNewsFeed(appId: number) {
+  async getNewsFeed(appId: SteamAppId | number | string) {
     const url = `${Steam.BaseApi}/feeds/news/app/${appId}`;
-    log.info(url);
+    log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {
@@ -33,5 +57,26 @@ export const Steam = {
     }
 
     return await parseFeed(await res.text());
+  },
+
+  formatFeedEntryToMarkdown(
+    entry: Awaited<ReturnType<typeof parseFeed>>["entries"]["0"],
+    appName: string,
+    newsLink?: string,
+  ) {
+    const date = entry?.published?.toISOString().split("T").at(0);
+    const entryTitle = `${appName} News ${date}`;
+    const title = escapeMarkdown(entry?.title?.value ?? "");
+    const rawDescription = entry?.description?.value ?? "";
+    const description = htmlToDiscordMarkdown(rawDescription);
+    const link = entry?.links?.at(0)?.href ?? "";
+    const author = entry?.author?.name;
+
+    return [
+      newsLink ? `[${entryTitle}](<${newsLink}>)` : entryTitle,
+      `Published by ${author}`,
+      `### [${title}](<${link}>)`,
+      description,
+    ].join("\n");
   },
 };
