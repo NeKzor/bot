@@ -25,7 +25,7 @@ const findLp = createAutocompletion({
     Campaign.Portal2.Maps
       .filter(({ best_portals_id }) => best_portals_id),
   additionalCheck: (map, query) => {
-    return map.three_letter_code === query;
+    return map.three_letter_code.toLowerCase() === query;
   },
   idKey: "best_portals_id",
   nameKey: "cm_name",

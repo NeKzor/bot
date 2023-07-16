@@ -35,8 +35,8 @@ const findChamber = createAutocompletion({
   items: () =>
     Campaign.Portal2.Maps
       .filter(({ best_time_id }) => best_time_id),
-  additionalCheck: (exploit, query) => {
-    return exploit.three_letter_code === query;
+  additionalCheck: (map, query) => {
+    return map.three_letter_code.toLowerCase() === query;
   },
   idKey: "best_time_id",
   nameKey: "cm_name",

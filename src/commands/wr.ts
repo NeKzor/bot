@@ -24,7 +24,7 @@ const findWr = createAutocompletion({
     Campaign.Portal2.Maps
       .filter(({ best_time_id }) => best_time_id),
   additionalCheck: (map, query) => {
-    return map.three_letter_code === query;
+    return map.three_letter_code.toLowerCase() === query;
   },
   idKey: "best_time_id",
   nameKey: "cm_name",

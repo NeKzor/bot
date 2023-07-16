@@ -41,8 +41,9 @@ export const createAutocompletion = <T>(
     const results = [];
 
     for (const item of list) {
-      // TODO: I don't think this is needed anymore?
-      if (isAutocomplete && item[idKey]?.toString() === query) {
+      if (
+        !isAutocomplete && (item[idKey] as string | number).toString() === query
+      ) {
         return [item];
       }
 
