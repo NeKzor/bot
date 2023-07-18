@@ -177,7 +177,7 @@ export enum ChecksumV2State {
 export interface SarResult {
   demo: SourceDemo;
   messages: SarMessage[];
-  checksum: number;
+  checksum?: number;
   v2sumState: ChecksumV2State;
 }
 
@@ -388,61 +388,65 @@ const readSarData = async (buffer: Uint8Array) => {
     messages.push(readSarMessageData(data, len));
   }
 
-  const stopMessage = demo.findMessage(DemoMessages.Stop)!;
-
-  // Treat what comes after the stop message as CustomData
-  const checksumMessage = stopMessage.restData!;
-  checksumMessage.readUint8(); // Type
-  checksumMessage.readUint32(); // Tick
-  checksumMessage.readUint8(); // Slot
-  checksumMessage.readInt32(); // Unk
-
-  const data = checksumMessage.readBitStream(checksumMessage.readInt32() * 8);
-
-  // Same as above: _parse_msg
-  data.readArrayBuffer(8);
-  const len = (data.length / 8) - 8;
-
-  const sarChecksum = readSarMessageData(data, len);
-  messages.push(sarChecksum);
-
-  let checksum = undefined;
+  let checksum: SarResult["checksum"] = undefined;
   let v2sumState = ChecksumV2State.None;
 
-  if (sarChecksum) {
-    if (sarChecksum.type === SarDataType.Checksum) {
-      const f = buffer.slice(0, -31);
-      const size = f.byteLength;
+  const stopMessage = demo.findMessage(DemoMessages.Stop)!;
 
-      let crc = 0xFFFFFFFF;
-      for (let i = 0; i < size; ++i) {
-        const byte = buffer.at(i)!;
-        const lookupIndex = (crc ^ byte) & 0xFF;
-        crc = (crc >> 8) ^ crcTable.at(lookupIndex)!;
+  const hasChecksumMessage = (stopMessage?.restData?.bitsLeft ?? 0) / 8 > 14;
+  if (hasChecksumMessage) {
+    // Treat what comes after the stop message as CustomData
+    const checksumMessage = stopMessage.restData!;
+
+    checksumMessage.readUint8(); // Type
+    checksumMessage.readUint32(); // Tick
+    checksumMessage.readUint8(); // Slot
+    checksumMessage.readInt32(); // Unk
+
+    const data = checksumMessage.readBitStream(checksumMessage.readInt32() * 8);
+
+    // Same as above: _parse_msg
+    data.readArrayBuffer(8);
+    const len = (data.length / 8) - 8;
+
+    const sarChecksum = readSarMessageData(data, len);
+    messages.push(sarChecksum);
+
+    if (sarChecksum) {
+      if (sarChecksum.type === SarDataType.Checksum) {
+        const f = buffer.slice(0, -31);
+        const size = f.byteLength;
+
+        let crc = 0xFFFFFFFF;
+        for (let i = 0; i < size; ++i) {
+          const byte = buffer.at(i)!;
+          const lookupIndex = (crc ^ byte) & 0xFF;
+          crc = (crc >> 8) ^ crcTable.at(lookupIndex)!;
+        }
+
+        checksum = ~crc;
+      } else if (sarChecksum.type === SarDataType.ChecksumV2) {
+        checksum = sarChecksum.checksumV2!.sarSum;
+
+        // _demo_verify_sig
+        const signature = new Uint8Array(sarChecksum.checksumV2!.signature);
+
+        const f = buffer.slice(0, buffer.byteLength - 91);
+        const size = f.byteLength;
+
+        const buf = new Uint8Array(size + 4);
+        buf.set(f, 0);
+
+        const sarSumBuffer = new Uint8Array(4);
+        // NOTE: Little-endian
+        new DataView(sarSumBuffer.buffer).setUint32(0, checksum, true);
+        buf.set(sarSumBuffer, size);
+
+        // ed25519_verify
+        v2sumState = await ed.verifyAsync(signature, buf, demoSignPubkey)
+          ? ChecksumV2State.Valid
+          : ChecksumV2State.Invalid;
       }
-
-      checksum = ~crc;
-    } else if (sarChecksum.type === SarDataType.ChecksumV2) {
-      checksum = sarChecksum.checksumV2!.sarSum;
-
-      // _demo_verify_sig
-      const signature = new Uint8Array(sarChecksum.checksumV2!.signature);
-
-      const f = buffer.slice(0, buffer.byteLength - 91);
-      const size = f.byteLength;
-
-      const buf = new Uint8Array(size + 4);
-      buf.set(f, 0);
-
-      const sarSumBuffer = new Uint8Array(4);
-      // NOTE: Little-endian
-      new DataView(sarSumBuffer.buffer).setUint32(0, checksum, true);
-      buf.set(sarSumBuffer, size);
-
-      // ed25519_verify
-      v2sumState = await ed.verifyAsync(signature, buf, demoSignPubkey)
-        ? ChecksumV2State.Valid
-        : ChecksumV2State.Invalid;
     }
   }
 
@@ -547,23 +551,18 @@ const validateResult = (
     filesumWhitelist,
   } = whitelists;
 
-  const sar = sarWhitelist.includes(checksum);
+  const sar = checksum ? sarWhitelist.includes(checksum) : false;
 
   output(
     "SAR",
-    checksum.toString(16).toUpperCase(),
+    checksum?.toString(16)?.toUpperCase() ?? "no checksum",
     sar ? "" : "(INVALID)",
   );
 
   for (const message of demo.findMessages(DemoMessages.ConsoleCmd)) {
     // config_check_cmd_whitelist
 
-    // NOTE: mdp's function seems wrong here...
-    ///      why is it only checking for a prefix?
-
-    const [command] = message.command!.trim().split(" ", 2);
-
-    const cmd = cmdWhitelist.includes(command);
+    const cmd = cmdWhitelist.some((cmd) => message.command!.startsWith(cmd));
 
     output(
       "Command",
