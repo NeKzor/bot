@@ -26,8 +26,6 @@ const log = logger({ name: "Event: InteractionCreate" });
 events.interactionCreate = async (rawBot, interaction) => {
   const bot = rawBot as BotWithCache;
 
-  log.info(interaction);
-
   if (interaction.data && interaction.id) {
     let guildName = "Direct Message";
     let guild = {} as Guild;
