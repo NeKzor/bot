@@ -17,6 +17,7 @@ import {
   TextStyles,
 } from "../deps.ts";
 import { GitHub } from "../services/github.ts";
+import { RateLimit } from "../services/ratelimit.ts";
 import { escapeMaskedLink } from "../utils/helpers.ts";
 import { log } from "../utils/logger.ts";
 import { createCommand } from "./mod.ts";
@@ -122,7 +123,20 @@ createCommand({
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
-                    content: `❌️ Failed to send bug report.`,
+                    content: `❌️ Invalid project, title or description.`,
+                  },
+                );
+                return;
+              }
+
+              if (
+                !await RateLimit.checkUser("reportBug", interaction.user.id)
+              ) {
+                await bot.helpers.editOriginalInteractionResponse(
+                  interaction.token,
+                  {
+                    content:
+                      `❌️ Too many requests. You are being rate limited.`,
                   },
                 );
                 return;
@@ -136,15 +150,13 @@ createCommand({
                 issue: {
                   title,
                   body: [
-                    body,
+                    body.replaceAll(/@([a-zA-Z0-9\-]+)/g, "@ $1"),
                     "---",
                     `> Reported by Discord user ${interaction.user.username}`,
                   ].join("\n"),
                 },
                 token: Deno.env.get("GITHUB_ACCESS_TOKEN")!,
               });
-
-              //const issue = { number: 1, html_url: "https://github.com/NeKzor/bot/issues/1" };
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
