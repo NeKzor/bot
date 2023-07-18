@@ -6,8 +6,13 @@
  * This is a re-implementation of: https://github.com/p2sr/mdp
  */
 
-import * as ed from "https://deno.land/x/ed25519/mod.ts";
-import { DemoMessages, SourceDemo, SourceDemoParser } from "npm:@nekz/sdp";
+import * as ed from "https://deno.land/x/ed25519@2.0.0/mod.ts";
+import {
+  DemoMessages,
+  SourceDemo,
+  SourceDemoBuffer,
+  SourceDemoParser,
+} from "npm:@nekz/sdp";
 
 // deno-fmt-ignore
 const crcTable = new Uint32Array([
@@ -189,9 +194,7 @@ export interface SarWhitelists {
 }
 
 // _parse_sar_data
-// TODO: Fix sdp types
-// deno-lint-ignore no-explicit-any
-const readSarMessageData = (data: any, len: number) => {
+const readSarMessageData = (data: SourceDemoBuffer, len: number) => {
   if (len === 0) {
     return new SarMessage(SarDataType.Invalid);
   }
