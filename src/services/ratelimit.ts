@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { RateLimiterMemory } from "npm:rate-limiter-flexible";
+import { RateLimiterMemory } from 'npm:rate-limiter-flexible';
 
-export type RateLimitBucketKey = "reportBug";
+export type RateLimitBucketKey = 'reportBug';
 
 export const RateLimit = {
   buckets: {

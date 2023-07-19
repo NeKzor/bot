@@ -12,13 +12,13 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { escapeMaskedLink } from "../utils/helpers.ts";
-import { LP } from "../services/lp.ts";
-import { log } from "../utils/logger.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
-import { Campaign } from "../services/campaign.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { escapeMaskedLink } from '../utils/helpers.ts';
+import { LP } from '../services/lp.ts';
+import { log } from '../utils/logger.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
+import { Campaign } from '../services/campaign.ts';
 
 const findLp = createAutocompletion({
   items: () =>
@@ -27,19 +27,19 @@ const findLp = createAutocompletion({
   additionalCheck: (map, query) => {
     return map.three_letter_code.toLowerCase() === query;
   },
-  idKey: "best_portals_id",
-  nameKey: "cm_name",
+  idKey: 'best_portals_id',
+  nameKey: 'cm_name',
 });
 
 createCommand({
-  name: "lp",
-  description: "Find the latest LP record on lp.nekz.me.",
+  name: 'lp',
+  description: 'Find the latest LP record on lp.nekz.me.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: 'query',
+      description: 'Search query.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -51,9 +51,7 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -75,9 +73,7 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
         try {
           const lpMaps = findLp({ query, isAutocomplete: false });
@@ -105,8 +101,7 @@ createCommand({
               {
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
-                  content:
-                    `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                  content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
                   flags: 1 << 6,
                 },
               },
@@ -135,22 +130,18 @@ createCommand({
           }
 
           const player1 = lpRecord.player.id
-            ? `[${
-              escapeMaskedLink(lpRecord.player.name)
-            }](<https://lp.nekz.me/@/${lpRecord.player.id}>)`
+            ? `[${escapeMaskedLink(lpRecord.player.name)}](<https://lp.nekz.me/@/${lpRecord.player.id}>)`
             : lpRecord.player?.name ?? null;
 
           const player2 = lpRecord.player2?.id
-            ? `[${
-              escapeMaskedLink(lpRecord.player2.name)
-            }](<https://lp.nekz.me/@/${lpRecord.player2.id}>)`
+            ? `[${escapeMaskedLink(lpRecord.player2.name)}](<https://lp.nekz.me/@/${lpRecord.player2.id}>)`
             : lpRecord.player2?.name ?? null;
 
           const players = [player1, player2].filter((player) => player).join(
-            " and ",
+            ' and ',
           );
 
-          const g = (value: number) => value === 1 ? "" : "s";
+          const g = (value: number) => value === 1 ? '' : 's';
           const videoLink = `https://www.youtube.com/watch?v=${lpRecord.media}`;
 
           await bot.helpers.sendInteractionResponse(
@@ -159,9 +150,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content: `${lpMap!.cm_name} in [${lp.wr} portal${
-                  g(lp.wr)
-                }](${videoLink}) by ${players}`,
+                content: `${lpMap!.cm_name} in [${lp.wr} portal${g(lp.wr)}](${videoLink}) by ${players}`,
               },
             },
           );

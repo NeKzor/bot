@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { db } from "./db.ts";
+import { db } from './db.ts';
 
 export interface InteractionMessage {
   interaction_message_id: bigint;
@@ -15,8 +15,8 @@ export interface InteractionMessage {
 }
 
 export enum InteractionKey {
-  Code = "i_code",
-  Leaderboard = "i_lb",
+  Code = 'i_code',
+  Leaderboard = 'i_lb',
 }
 
 export const InteractionsDb = {
@@ -26,7 +26,7 @@ export const InteractionsDb = {
     return await db.atomic()
       .check({ key, versionstamp: null })
       .mutate({
-        type: "set",
+        type: 'set',
         key,
         value: message,
       })
@@ -34,7 +34,7 @@ export const InteractionsDb = {
   },
   async find(
     key: InteractionKey,
-    messageId: InteractionMessage["interaction_message_id"],
+    messageId: InteractionMessage['interaction_message_id'],
   ) {
     return await db.get<InteractionMessage>([key, messageId]);
   },

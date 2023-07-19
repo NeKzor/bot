@@ -15,23 +15,23 @@ import {
   MessageComponentTypes,
   SelectOption,
   TextStyles,
-} from "../deps.ts";
-import { GitHub } from "../services/github.ts";
-import { RateLimit } from "../services/ratelimit.ts";
-import { escapeMaskedLink } from "../utils/helpers.ts";
-import { log } from "../utils/logger.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { GitHub } from '../services/github.ts';
+import { RateLimit } from '../services/ratelimit.ts';
+import { escapeMaskedLink } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
+import { createCommand } from './mod.ts';
 
 const repositories: SelectOption[] = [
   {
-    label: "bot",
-    value: "NeKzBot/bot",
-    description: "The bot project!",
+    label: 'bot',
+    value: 'NeKzBot/bot',
+    description: 'The bot project!',
   },
   {
-    label: "autorender",
-    value: "NeKzor/autorender",
-    description: "The autorender project!",
+    label: 'autorender',
+    value: 'NeKzor/autorender',
+    description: 'The autorender project!',
   },
   // {
   //     label: "sar",
@@ -41,19 +41,19 @@ const repositories: SelectOption[] = [
 ];
 
 createCommand({
-  name: "report",
-  description: "Report a bug.",
+  name: 'report',
+  description: 'Report a bug.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Guild",
+  scope: 'Guild',
   options: [
     {
-      name: "bug",
-      description: "Report a bug!",
+      name: 'bug',
+      description: 'Report a bug!',
       type: ApplicationCommandOptionTypes.SubCommand,
       options: [
         {
-          name: "project",
-          description: "The project in which the bug occurred.",
+          name: 'project',
+          description: 'The project in which the bug occurred.',
           type: ApplicationCommandOptionTypes.String,
           required: true,
           autocomplete: true,
@@ -68,13 +68,12 @@ createCommand({
           .at(0)!;
 
         switch (subCommand.name) {
-          case "bug": {
+          case 'bug': {
             await bot.helpers.sendInteractionResponse(
               interaction.id,
               interaction.token,
               {
-                type:
-                  InteractionResponseTypes.ApplicationCommandAutocompleteResult,
+                type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
                 data: {
                   choices: repositories.map((repo) => {
                     return {
@@ -93,11 +92,10 @@ createCommand({
         break;
       }
       case InteractionTypes.ModalSubmit: {
-        const [_command, subCommand, repository] =
-          interaction.data?.customId?.split("_", 3) ?? [];
+        const [_command, subCommand, repository] = interaction.data?.customId?.split('_', 3) ?? [];
 
         switch (subCommand) {
-          case "bug": {
+          case 'bug': {
             await bot.helpers.sendInteractionResponse(
               interaction.id,
               interaction.token,
@@ -130,19 +128,18 @@ createCommand({
               }
 
               if (
-                !await RateLimit.checkUser("reportBug", interaction.user.id)
+                !await RateLimit.checkUser('reportBug', interaction.user.id)
               ) {
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
-                    content:
-                      `❌️ Too many requests. You are being rate limited.`,
+                    content: `❌️ Too many requests. You are being rate limited.`,
                   },
                 );
                 return;
               }
 
-              const [owner, repo] = repository.split("/");
+              const [owner, repo] = repository.split('/');
 
               const issue = await GitHub.createIssue({
                 owner,
@@ -150,20 +147,18 @@ createCommand({
                 issue: {
                   title,
                   body: [
-                    body.replaceAll(/@([a-zA-Z0-9\-]+)/g, "@ $1"),
-                    "---",
+                    body.replaceAll(/@([a-zA-Z0-9\-]+)/g, '@ $1'),
+                    '---',
                     `> Reported by Discord user ${interaction.user.username}`,
-                  ].join("\n"),
+                  ].join('\n'),
                 },
-                token: Deno.env.get("GITHUB_ACCESS_TOKEN")!,
+                token: Deno.env.get('GITHUB_ACCESS_TOKEN')!,
               });
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  content: `🪲️ Reported new bug: [${
-                    escapeMaskedLink(`${repo}#${issue.number}`)
-                  }](${issue.html_url})`,
+                  content: `🪲️ Reported new bug: [${escapeMaskedLink(`${repo}#${issue.number}`)}](${issue.html_url})`,
                 },
               );
             } catch (err) {
@@ -190,9 +185,9 @@ createCommand({
         const args = [...(subCommand.options?.values() ?? [])];
 
         switch (subCommand.name) {
-          case "bug": {
+          case 'bug': {
             const project = args
-              .find((arg) => arg.name === "project")?.value;
+              .find((arg) => arg.name === 'project')?.value;
 
             if (
               !repositories.find((repository) => repository.value === project)
@@ -219,7 +214,7 @@ createCommand({
                 data: {
                   title: `Report bug to github.com/${project}`,
                   customId: [interaction.data?.name, subCommand.name, project]
-                    .join("_"),
+                    .join('_'),
                   components: [
                     // TODO: Use generic select menu whenever Discord adds support for it.
                     // {
@@ -238,8 +233,8 @@ createCommand({
                         {
                           type: MessageComponentTypes.InputText,
                           style: TextStyles.Short,
-                          customId: "title",
-                          label: "Title",
+                          customId: 'title',
+                          label: 'Title',
                           maxLength: 32,
                           required: true,
                         },
@@ -251,9 +246,9 @@ createCommand({
                         {
                           type: MessageComponentTypes.InputText,
                           style: TextStyles.Paragraph,
-                          customId: "body",
-                          label: "Describe your issue:",
-                          placeholder: "Please enter a detailed description.",
+                          customId: 'body',
+                          label: 'Describe your issue:',
+                          placeholder: 'Please enter a detailed description.',
                           minLength: 12,
                           maxLength: 512,
                           required: true,

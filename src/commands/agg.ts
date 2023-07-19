@@ -11,33 +11,31 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { escapeMarkdown, formatBoardPoints } from "../utils/helpers.ts";
-import { AggregationType, Board } from "../services/board.ts";
-import { log } from "../utils/logger.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { escapeMarkdown, formatBoardPoints } from '../utils/helpers.ts';
+import { AggregationType, Board } from '../services/board.ts';
+import { log } from '../utils/logger.ts';
 
 createCommand({
-  name: "agg",
-  description: "Get the aggregated leaderboard on board.portal2.sr.",
+  name: 'agg',
+  description: 'Get the aggregated leaderboard on board.portal2.sr.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "sp",
-      description:
-        "Get the single player aggregated leaderboard on board.portal2.sr.",
+      name: 'sp',
+      description: 'Get the single player aggregated leaderboard on board.portal2.sr.',
       type: ApplicationCommandOptionTypes.SubCommand,
     },
     {
-      name: "coop",
-      description: "Get the coop aggregated leaderboard on board.portal2.sr.",
+      name: 'coop',
+      description: 'Get the coop aggregated leaderboard on board.portal2.sr.',
       type: ApplicationCommandOptionTypes.SubCommand,
     },
     {
-      name: "overall",
-      description:
-        "Get the overall aggregated leaderboard on board.portal2.sr.",
+      name: 'overall',
+      description: 'Get the overall aggregated leaderboard on board.portal2.sr.',
       type: ApplicationCommandOptionTypes.SubCommand,
     },
   ],
@@ -49,7 +47,7 @@ createCommand({
       case InteractionTypes.ApplicationCommand: {
         const aggregationType = subCommand.name as AggregationType;
 
-        if (!["sp", "coop", "overall"].includes(aggregationType)) {
+        if (!['sp', 'coop', 'overall'].includes(aggregationType)) {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
@@ -99,33 +97,30 @@ createCommand({
 
             const diff = recordPoints !== scoreData.score
               ? ` (+${formatBoardPoints(recordPoints - scoreData.score)})`
-              : "";
+              : '';
 
             return `${rank}\\. ${player} ${score}${diff}`;
           });
 
           const title = (() => {
             switch (aggregationType) {
-              case "sp":
-                return "Single Player";
-              case "coop":
-                return "Cooperative";
-              case "overall":
-                return "Overall";
+              case 'sp':
+                return 'Single Player';
+              case 'coop':
+                return 'Cooperative';
+              case 'overall':
+                return 'Overall';
               default:
-                return "";
+                return '';
             }
           })();
 
-          const aggregatedLink =
-            `https://board.portal2.sr/aggregated/${aggregationType}`;
+          const aggregatedLink = `https://board.portal2.sr/aggregated/${aggregationType}`;
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content: `[${title} Leaderboard](<${aggregatedLink}>)\n${
-                leaderboard.join("\n")
-              }`,
+              content: `[${title} Leaderboard](<${aggregatedLink}>)\n${leaderboard.join('\n')}`,
             },
           );
         } catch (err) {

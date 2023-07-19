@@ -12,12 +12,12 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { escapeMaskedLink, formatCmTime } from "../utils/helpers.ts";
-import { log } from "../utils/logger.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
-import { Campaign } from "../services/campaign.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { escapeMaskedLink, formatCmTime } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
+import { Campaign } from '../services/campaign.ts';
 
 const findWr = createAutocompletion({
   items: () =>
@@ -26,19 +26,19 @@ const findWr = createAutocompletion({
   additionalCheck: (map, query) => {
     return map.three_letter_code.toLowerCase() === query;
   },
-  idKey: "best_time_id",
-  nameKey: "cm_name",
+  idKey: 'best_time_id',
+  nameKey: 'cm_name',
 });
 
 createCommand({
-  name: "wr",
-  description: "Get the latest wr video on autorender.portal2.sr.",
+  name: 'wr',
+  description: 'Get the latest wr video on autorender.portal2.sr.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: 'query',
+      description: 'Search query.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -50,9 +50,7 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -74,9 +72,7 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         const wrMaps = findWr({ query, isAutocomplete: false });
         const wrMap = wrMaps.at(0);
@@ -103,8 +99,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content:
-                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
                 flags: 1 << 6,
               },
             },
@@ -131,7 +126,7 @@ createCommand({
 
           const res = await fetch(url, {
             headers: {
-              "User-Agent": Deno.env.get("USER_AGENT")!,
+              'User-Agent': Deno.env.get('USER_AGENT')!,
             },
           });
 
@@ -178,8 +173,7 @@ createCommand({
           );
 
           const time = escapeMaskedLink(formatCmTime(wr.time));
-          const videoLink =
-            `https://autorender.portal2.sr/video.html?v=${wr.id}`;
+          const videoLink = `https://autorender.portal2.sr/video.html?v=${wr.id}`;
 
           const playerName = escapeMaskedLink(wr.user);
           const profileLink = `https://board.portal2.sr/profile/${wr.user_id}`;
@@ -187,8 +181,7 @@ createCommand({
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content:
-                `[${map}](<${mapLink}>) in [${time}](${videoLink}) by [${playerName}](<${profileLink}>)`,
+              content: `[${map}](<${mapLink}>) in [${time}](${videoLink}) by [${playerName}](<${profileLink}>)`,
             },
           );
         } catch (err) {

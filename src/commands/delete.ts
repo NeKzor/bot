@@ -12,26 +12,26 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { Exploits } from "../services/exploits.ts";
-import { log } from "../utils/logger.ts";
-import { findExploit } from "./glitch.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { Exploits } from '../services/exploits.ts';
+import { log } from '../utils/logger.ts';
+import { findExploit } from './glitch.ts';
+import { createCommand } from './mod.ts';
 
 createCommand({
-  name: "delete",
-  description: "Delete specific bot data.",
+  name: 'delete',
+  description: 'Delete specific bot data.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "glitch",
-      description: "Delete a glitch.",
+      name: 'glitch',
+      description: 'Delete a glitch.',
       type: ApplicationCommandOptionTypes.SubCommand,
       options: [
         {
-          name: "name",
-          description: "Name of the glitch.",
+          name: 'name',
+          description: 'Name of the glitch.',
           type: ApplicationCommandOptionTypes.String,
           required: true,
           autocomplete: true,
@@ -45,14 +45,12 @@ createCommand({
     const args = [...(subCommand.options?.values() ?? [])];
     const getArg = (name: string) => {
       return args
-        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? "";
+        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? '';
     };
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "name"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'name')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -74,9 +72,9 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
-          case "glitch": {
+          case 'glitch': {
             // TODO: Permissions
-            const hasPermission = [BigInt("84272932246810624")].includes(
+            const hasPermission = [BigInt('84272932246810624')].includes(
               interaction.user.id,
             );
 
@@ -87,8 +85,7 @@ createCommand({
                 {
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
-                    content:
-                      `❌️ You do not have the permissions to use this command.`,
+                    content: `❌️ You do not have the permissions to use this command.`,
                     flags: 1 << 6,
                   },
                 },
@@ -96,7 +93,7 @@ createCommand({
               return;
             }
 
-            const name = getArg("name");
+            const name = getArg('name');
             if (!name.length) {
               await bot.helpers.sendInteractionResponse(
                 interaction.id,
@@ -130,8 +127,7 @@ createCommand({
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
-                    content:
-                      `❌️ Failed to find glitch. Please choose a result from autocompletion.`,
+                    content: `❌️ Failed to find glitch. Please choose a result from autocompletion.`,
                   },
                 );
                 return;
@@ -144,7 +140,7 @@ createCommand({
                 {
                   content: [
                     `Deleted glitch: ${exploit.name}`,
-                  ].join("\n"),
+                  ].join('\n'),
                 },
               );
             } catch (err) {

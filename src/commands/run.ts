@@ -13,23 +13,23 @@ import {
   InteractionTypes,
   MessageComponents,
   MessageComponentTypes,
-} from "../deps.ts";
-import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
-import { Piston } from "../services/piston.ts";
-import { log } from "../utils/logger.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { InteractionKey, InteractionsDb } from '../services/interactions.ts';
+import { Piston } from '../services/piston.ts';
+import { log } from '../utils/logger.ts';
+import { createCommand } from './mod.ts';
 
 createCommand({
-  name: "Run this as code",
-  description: "Execute code.",
+  name: 'Run this as code',
+  description: 'Execute code.',
   type: ApplicationCommandTypes.Message,
-  scope: "Global",
+  scope: 'Global',
   execute: async (bot: Bot, interaction: Interaction) => {
     switch (interaction.type) {
       case InteractionTypes.MessageComponent:
       case InteractionTypes.ApplicationCommand: {
         const message = interaction.data?.resolved?.messages?.first();
-        let content = "";
+        let content = '';
         const isRerun = interaction.type === InteractionTypes.MessageComponent;
 
         if (isRerun) {
@@ -91,11 +91,11 @@ createCommand({
             return;
           }
         } else {
-          content = message?.content ?? "";
+          content = message?.content ?? '';
         }
 
-        const start = content.indexOf("```") ?? -1;
-        const end = content.lastIndexOf("```") ?? -1;
+        const start = content.indexOf('```') ?? -1;
+        const end = content.lastIndexOf('```') ?? -1;
 
         if (!content || start === -1 || end === -1 || start === end) {
           await bot.helpers.sendInteractionResponse(
@@ -106,10 +106,10 @@ createCommand({
               data: {
                 content: [
                   `❌️ Unable to find code block. Make sure the code is formatted like:`,
-                  "\\`\\`\\`language",
-                  "code",
-                  "\\`\\`\\`",
-                ].join("\n"),
+                  '\\`\\`\\`language',
+                  'code',
+                  '\\`\\`\\`',
+                ].join('\n'),
                 flags: 1 << 6,
               },
             },
@@ -118,7 +118,7 @@ createCommand({
         }
 
         const codeBlockStart = content.slice(start + 3);
-        const codeStart = codeBlockStart.indexOf("\n");
+        const codeStart = codeBlockStart.indexOf('\n');
         const language = codeBlockStart.slice(0, codeStart).toLowerCase();
         const code = codeBlockStart.slice(codeStart + 1, end - 3);
         const runtime = Piston.findRuntime(language);
@@ -130,10 +130,9 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content:
-                  `❌️ Language is not supported. List of supported languages:\n` +
+                content: `❌️ Language is not supported. List of supported languages:\n` +
                   Piston.Runtimes.map((runtime) => `\`${runtime.language}\``)
-                    .join(", "),
+                    .join(', '),
                 flags: 1 << 6,
               },
             },
@@ -149,8 +148,8 @@ createCommand({
             components: [
               {
                 type: MessageComponentTypes.Button,
-                label: "Re-Run",
-                customId: "Run this as code",
+                label: 'Re-Run',
+                customId: 'Run this as code',
                 style: ButtonStyles.Primary,
               },
             ],
@@ -214,17 +213,17 @@ createCommand({
                 ...(result.compile && result.compile.code !== 0
                   ? [
                     `Error:`,
-                    "```",
+                    '```',
                     result.compile.output,
-                    "```",
+                    '```',
                   ]
                   : []),
                 `Output:`,
-                "```",
+                '```',
                 result.run.output,
-                "```",
+                '```',
                 `Code: ${result.run.code}`,
-              ].join("\n").slice(0, 2_000),
+              ].join('\n').slice(0, 2_000),
               components: buttons,
             },
           );

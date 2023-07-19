@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import "https://deno.land/std@0.190.0/dotenv/load.ts";
+import 'https://deno.land/std@0.190.0/dotenv/load.ts';
 
 import {
   ActivityTypes,
@@ -14,20 +14,20 @@ import {
   fastFileLoader,
   GatewayIntents,
   startBot,
-} from "./deps.ts";
-import { logger } from "./utils/logger.ts";
-import { events } from "./events/mod.ts";
-import { updateCommands } from "./utils/helpers.ts";
-import { loadAllServices } from "./services/mod.ts";
+} from './deps.ts';
+import { logger } from './utils/logger.ts';
+import { events } from './events/mod.ts';
+import { updateCommands } from './utils/helpers.ts';
+import { loadAllServices } from './services/mod.ts';
 
 // TODO: file logging
-const log = logger({ name: "Main" });
+const log = logger({ name: 'Main' });
 
-log.info("Using User-Agent:", Deno.env.get("USER_AGENT")!);
+log.info('Using User-Agent:', Deno.env.get('USER_AGENT')!);
 
-log.info("Starting Bot, this might take a while...");
+log.info('Starting Bot, this might take a while...');
 
-const paths = ["./events", "./commands"];
+const paths = ['./events', './commands'];
 await fastFileLoader(paths).catch((err) => {
   log.fatal(`Unable to Import ${paths}`);
   log.fatal(err);
@@ -36,8 +36,8 @@ await fastFileLoader(paths).catch((err) => {
 
 export const bot = enableCachePlugin(
   createBot({
-    token: Deno.env.get("DISCORD_BOT_TOKEN")!,
-    botId: BigInt(Deno.env.get("DISCORD_BOT_ID")!),
+    token: Deno.env.get('DISCORD_BOT_TOKEN')!,
+    botId: BigInt(Deno.env.get('DISCORD_BOT_ID')!),
     intents: GatewayIntents.Guilds,
     events,
   }),
@@ -49,10 +49,10 @@ enableCacheSweepers(bot);
 bot.gateway.manager.createShardOptions.makePresence = (shardId: number) => {
   return {
     shardId,
-    status: "online",
+    status: 'online',
     activities: [
       {
-        name: "portal2_linux",
+        name: 'portal2_linux',
         type: ActivityTypes.Game,
         createdAt: Date.now(),
       },

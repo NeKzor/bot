@@ -12,34 +12,34 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { Exploit, Exploits } from "../services/exploits.ts";
-import { escapeMaskedLink } from "../utils/helpers.ts";
-import { log } from "../utils/logger.ts";
-import { findExploit } from "./glitch.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { Exploit, Exploits } from '../services/exploits.ts';
+import { escapeMaskedLink } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
+import { findExploit } from './glitch.ts';
+import { createCommand } from './mod.ts';
 
 createCommand({
-  name: "update",
-  description: "Update specific bot data.",
+  name: 'update',
+  description: 'Update specific bot data.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "glitch",
-      description: "Update or add a glitch.",
+      name: 'glitch',
+      description: 'Update or add a glitch.',
       type: ApplicationCommandOptionTypes.SubCommand,
       options: [
         {
-          name: "name",
-          description: "Name of the glitch.",
+          name: 'name',
+          description: 'Name of the glitch.',
           type: ApplicationCommandOptionTypes.String,
           required: true,
           autocomplete: true,
         },
         {
-          name: "aliases",
-          description: "Aliases of the glitch separated by the `,` character.",
+          name: 'aliases',
+          description: 'Aliases of the glitch separated by the `,` character.',
           type: ApplicationCommandOptionTypes.String,
         },
         // {
@@ -58,18 +58,18 @@ createCommand({
         //   type: ApplicationCommandOptionTypes.String,
         // },
         {
-          name: "video",
-          description: "Showcase video of the glitch.",
+          name: 'video',
+          description: 'Showcase video of the glitch.',
           type: ApplicationCommandOptionTypes.String,
         },
         {
-          name: "wiki_link",
-          description: "Wiki link of the glitch.",
+          name: 'wiki_link',
+          description: 'Wiki link of the glitch.',
           type: ApplicationCommandOptionTypes.String,
         },
         {
-          name: "description",
-          description: "Description of the glitch.",
+          name: 'description',
+          description: 'Description of the glitch.',
           type: ApplicationCommandOptionTypes.String,
         },
       ],
@@ -81,14 +81,12 @@ createCommand({
     const args = [...(subCommand.options?.values() ?? [])];
     const getArg = (name: string) => {
       return args
-        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? "";
+        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? '';
     };
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "name"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'name')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -110,9 +108,9 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
-          case "glitch": {
+          case 'glitch': {
             // TODO: Permissions
-            const hasPermission = [BigInt("84272932246810624")].includes(
+            const hasPermission = [BigInt('84272932246810624')].includes(
               interaction.user.id,
             );
 
@@ -123,8 +121,7 @@ createCommand({
                 {
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
-                    content:
-                      `❌️ You do not have the permissions to use this command.`,
+                    content: `❌️ You do not have the permissions to use this command.`,
                     flags: 1 << 6,
                   },
                 },
@@ -132,7 +129,7 @@ createCommand({
               return;
             }
 
-            const name = getArg("name");
+            const name = getArg('name');
             if (!name.length) {
               await bot.helpers.sendInteractionResponse(
                 interaction.id,
@@ -148,13 +145,13 @@ createCommand({
               return;
             }
 
-            const aliases = getArg("aliases");
-            const type = getArg("type");
-            const category = getArg("category");
-            const status = getArg("status");
-            const showcase = getArg("video");
-            const wiki = getArg("wiki_link");
-            const overview = getArg("description");
+            const aliases = getArg('aliases');
+            const type = getArg('type');
+            const category = getArg('category');
+            const status = getArg('status');
+            const showcase = getArg('video');
+            const wiki = getArg('wiki_link');
+            const overview = getArg('description');
 
             await bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -175,9 +172,9 @@ createCommand({
               if (exploit) {
                 const update: Exploit = {
                   name,
-                  aliases: aliases !== ""
+                  aliases: aliases !== ''
                     ? aliases
-                      .split(",")
+                      .split(',')
                       .map((alias) => alias.trim())
                       .filter((alias) => alias)
                     : [],
@@ -190,7 +187,7 @@ createCommand({
                 };
 
                 Object.entries(update).forEach(([key, value]) => {
-                  if (value === "" || (Array.isArray(value) && !value.length)) {
+                  if (value === '' || (Array.isArray(value) && !value.length)) {
                     delete update[key as keyof Exploit];
                   }
                 });
@@ -213,7 +210,7 @@ createCommand({
                 const insert = await Exploits.create({
                   name,
                   aliases: aliases
-                    .split(",")
+                    .split(',')
                     .map((alias) => alias.trim())
                     .filter((alias) => alias),
                   type,
@@ -240,35 +237,29 @@ createCommand({
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
-                    content: `❌️ Failed to ${
-                      isUpdate ? "update" : "add"
-                    } new glitch.`,
+                    content: `❌️ Failed to ${isUpdate ? 'update' : 'add'} new glitch.`,
                   },
                 );
                 return;
               }
 
-              const title = exploit.wiki
-                ? `[${escapeMaskedLink(exploit.name)}](<${exploit.wiki}>)`
-                : exploit.name;
+              const title = exploit.wiki ? `[${escapeMaskedLink(exploit.name)}](<${exploit.wiki}>)` : exploit.name;
 
               const video = exploit.wiki
                 ? `[Watch Showcase](<${exploit.showcase}>)`
                 : exploit.showcase
                 ? `[Showcase](<${exploit.showcase}>)`
-                : "";
+                : '';
 
-              const description = exploit.overview
-                ? `\n${exploit.overview}`
-                : "";
+              const description = exploit.overview ? `\n${exploit.overview}` : '';
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
                   content: [
-                    `${isUpdate ? "Updated" : "Added"} glitch:`,
+                    `${isUpdate ? 'Updated' : 'Added'} glitch:`,
                     `${title}${description}\n${video}`,
-                  ].join("\n"),
+                  ].join('\n'),
                 },
               );
             } catch (err) {

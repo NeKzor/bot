@@ -12,28 +12,28 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { SpeedrunCom } from "../services/speedruncom.ts";
-import { escapeMarkdown } from "../utils/helpers.ts";
-import { log } from "../utils/logger.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { SpeedrunCom } from '../services/speedruncom.ts';
+import { escapeMarkdown } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
 
 const findLevel = createAutocompletion({
   items: () => SpeedrunCom.Portal2Bhop.Levels,
-  idKey: "id",
-  nameKey: "name",
+  idKey: 'id',
+  nameKey: 'name',
 });
 
 createCommand({
-  name: "bhop",
-  description: "Find a bhop level.",
+  name: 'bhop',
+  description: 'Find a bhop level.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: 'query',
+      description: 'Search query.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -45,9 +45,7 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -82,9 +80,7 @@ createCommand({
 
           const args = [...(command.options?.values() ?? [])];
 
-          const query = args.find((arg) =>
-            arg.name === "query"
-          )?.value?.toString() ?? "";
+          const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
           const levels = findLevel({ query, isAutocomplete: true });
           const level = levels.at(0);
@@ -103,8 +99,7 @@ createCommand({
             await bot.helpers.editOriginalInteractionResponse(
               interaction.token,
               {
-                content:
-                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
               },
             );
             return;
@@ -136,10 +131,8 @@ createCommand({
             }
 
             formatted.push(
-              `[${
-                url.hash.slice(1)
-              }](<${record.weblink}>) | ${wr.run.times.primary_t} by ${
-                wrHoldersFormatted.join(", ")
+              `[${url.hash.slice(1)}](<${record.weblink}>) | ${wr.run.times.primary_t} by ${
+                wrHoldersFormatted.join(', ')
               }`,
             );
           }
@@ -149,10 +142,10 @@ createCommand({
             {
               content: [
                 `🐇️ ${escapeMarkdown(level.name)}`,
-                formatted.join("\n"),
+                formatted.join('\n'),
                 ``,
                 `${escapeMarkdown(level.rules.trim())}`,
-              ].join("\n"),
+              ].join('\n'),
             },
           );
         } catch (err) {

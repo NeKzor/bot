@@ -11,32 +11,32 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { reloadAllServices, reloadService, services } from "../services/mod.ts";
-import { log } from "../utils/logger.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { reloadAllServices, reloadService, services } from '../services/mod.ts';
+import { log } from '../utils/logger.ts';
+import { createCommand } from './mod.ts';
 
 const startTime = Date.now();
 
 createCommand({
-  name: "bot",
-  description: "Bot specific commands.",
+  name: 'bot',
+  description: 'Bot specific commands.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "info",
-      description: "Get info about the bot!",
+      name: 'info',
+      description: 'Get info about the bot!',
       type: ApplicationCommandOptionTypes.SubCommand,
     },
     {
-      name: "reload",
-      description: "Reload bot data!",
+      name: 'reload',
+      description: 'Reload bot data!',
       type: ApplicationCommandOptionTypes.SubCommand,
       options: [
         {
-          name: "service",
-          description: "The service to reload.",
+          name: 'service',
+          description: 'The service to reload.',
           type: ApplicationCommandOptionTypes.String,
           autocomplete: true,
         },
@@ -49,15 +49,15 @@ createCommand({
     const args = [...(subCommand.options?.values() ?? [])];
     const getArg = (name: string) => {
       return args
-        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? "";
+        .find((arg) => arg.name === name)?.value?.toString()?.trim() ?? '';
     };
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
         switch (subCommand.name) {
-          case "reload": {
+          case 'reload': {
             // TODO: Permissions
-            const hasPermission = [BigInt("84272932246810624")].includes(
+            const hasPermission = [BigInt('84272932246810624')].includes(
               interaction.user.id,
             );
 
@@ -68,8 +68,7 @@ createCommand({
                 {
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
-                    content:
-                      `❌️ You do not have the permissions to use this command.`,
+                    content: `❌️ You do not have the permissions to use this command.`,
                     flags: 1 << 6,
                   },
                 },
@@ -81,8 +80,7 @@ createCommand({
               interaction.id,
               interaction.token,
               {
-                type:
-                  InteractionResponseTypes.ApplicationCommandAutocompleteResult,
+                type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
                 data: {
                   choices: Object.keys(services).map((service) => ({
                     name: service,
@@ -100,7 +98,7 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
-          case "info": {
+          case 'info': {
             const sec = (Date.now() - startTime) / 1_000;
             const uptime = sec < 60
               ? `${sec.toFixed(2)} seconds`
@@ -120,15 +118,15 @@ createCommand({
                     `:robot: [bot.nekz.me](<https://bot.nekz.me>)`,
                     `:small_red_triangle: ${Deno.build.os} ${Deno.build.arch}`,
                     `:up: ${uptime}`,
-                  ].join("\n"),
+                  ].join('\n'),
                   flags: 1 << 6,
                 },
               },
             );
             break;
           }
-          case "reload": {
-            const service = getArg("service");
+          case 'reload': {
+            const service = getArg('service');
 
             await bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -149,8 +147,7 @@ createCommand({
                   await bot.helpers.editOriginalInteractionResponse(
                     interaction.token,
                     {
-                      content:
-                        `❌️ Unknown service. Please choose a result from autocompletion.`,
+                      content: `❌️ Unknown service. Please choose a result from autocompletion.`,
                     },
                   );
                   return;
@@ -162,10 +159,8 @@ createCommand({
                   interaction.token,
                   {
                     content: [
-                      `🤖️ Reloaded service ${service}: ${
-                        result ? "success" : "failed"
-                      }`,
-                    ].join("\n"),
+                      `🤖️ Reloaded service ${service}: ${result ? 'success' : 'failed'}`,
+                    ].join('\n'),
                   },
                 );
               } else {
@@ -178,11 +173,9 @@ createCommand({
                     content: [
                       `🤖️ Reloaded bot data.`,
                       results.map((result, index) => {
-                        return `${toReload[index].at(0)}: ${
-                          result ? "success" : "failed"
-                        }`;
-                      }).join("\n"),
-                    ].join("\n"),
+                        return `${toReload[index].at(0)}: ${result ? 'success' : 'failed'}`;
+                      }).join('\n'),
+                    ].join('\n'),
                   },
                 );
               }

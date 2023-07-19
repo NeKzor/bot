@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
-import { db } from "./db.ts";
+import { log } from '../utils/logger.ts';
+import { db } from './db.ts';
 
 export interface SpeedrunLevel {
   id: string;
@@ -26,7 +26,7 @@ export interface SpeedrunRecord {
   platform: null;
   region: null;
   emulators: null;
-  "video-only": boolean;
+  'video-only': boolean;
   timing: null;
   values: Record<string, unknown>;
   runs: [
@@ -43,7 +43,7 @@ export interface SpeedrunRecord {
         status: {
           status: string;
           examiner: string;
-          "verify-date": string;
+          'verify-date': string;
         };
         players: [
           {
@@ -86,7 +86,7 @@ export interface SpeedrunRecord {
         status: {
           status: string;
           examiner: string;
-          "verify-date": string;
+          'verify-date': string;
         };
         players: [
           {
@@ -142,13 +142,13 @@ export interface User {
   supporterAnimation: false;
   pronouns: null;
   weblink: string;
-  "name-style": {
+  'name-style': {
     style: string;
-    "color-from": {
+    'color-from': {
       light: string;
       dark: string;
     };
-    "color-to": {
+    'color-to': {
       light: string;
       dark: string;
     };
@@ -194,16 +194,16 @@ export interface User {
 
 export const SpeedrunCom = {
   Portal2Bhop: {
-    Id: "v1pxk8p6",
+    Id: 'v1pxk8p6',
     Levels: [] as SpeedrunLevel[],
   },
 
   async load() {
     const key = [
-      "speedrun_com",
-      "games",
+      'speedrun_com',
+      'games',
       SpeedrunCom.Portal2Bhop.Id,
-      "level",
+      'level',
     ];
 
     const levels = [];
@@ -215,24 +215,23 @@ export const SpeedrunCom = {
     SpeedrunCom.Portal2Bhop.Levels = levels;
   },
   async fetch() {
-    const url =
-      `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`;
+    const url = `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`;
 
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
-    log.info("Fetched speedrun.com data");
+    log.info('Fetched speedrun.com data');
 
     const key = [
-      "speedrun_com",
-      "games",
+      'speedrun_com',
+      'games',
       SpeedrunCom.Portal2Bhop.Id,
-      "level",
+      'level',
     ];
 
     const levels = await res.json() as { data: SpeedrunLevel[] };
@@ -247,7 +246,7 @@ export const SpeedrunCom = {
     await SpeedrunCom.load();
   },
   async getRecords(level: SpeedrunLevel) {
-    const link = level.links.find((link) => link.rel === "records");
+    const link = level.links.find((link) => link.rel === 'records');
     if (link) {
       try {
         const url = link.uri;
@@ -255,7 +254,7 @@ export const SpeedrunCom = {
 
         const res = await fetch(url, {
           headers: {
-            "User-Agent": Deno.env.get("USER_AGENT")!,
+            'User-Agent': Deno.env.get('USER_AGENT')!,
           },
         });
         const records = (await res.json()).data as SpeedrunRecord[];
@@ -272,7 +271,7 @@ export const SpeedrunCom = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
     return (await res.json()).data as User;

@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
-import { db } from "./db.ts";
+import { log } from '../utils/logger.ts';
+import { db } from './db.ts';
 
 export enum FCVAR {
   NONE = 0,
@@ -43,37 +43,37 @@ export enum FCVAR {
 }
 
 const flags: [FCVAR, string][] = [
-  [FCVAR.UNREGISTERED, "unregistered"],
-  [FCVAR.DEVELOPMENTONLY, "developmentonly"],
-  [FCVAR.GAMEDLL, "gamedll"],
-  [FCVAR.CLIENTDLL, "clientdll"],
-  [FCVAR.HIDDEN, "hidden"],
-  [FCVAR.PROTECTED, "protected"],
-  [FCVAR.SPONLY, "sponly"],
-  [FCVAR.ARCHIVE, "archive"],
-  [FCVAR.NOTIFY, "notify"],
-  [FCVAR.USERINFO, "userinfo"],
-  [FCVAR.PRINTABLEONLY, "printableonly"],
-  [FCVAR.UNLOGGED, "unlogged"],
-  [FCVAR.NEVER_AS_STRING, "never_as_string"],
-  [FCVAR.REPLICATED, "replicated"],
-  [FCVAR.CHEAT, "cheat"],
-  [FCVAR.SS, "ss"],
-  [FCVAR.DEMO, "demo"],
-  [FCVAR.DONTRECORD, "dontrecord"],
-  [FCVAR.SS_ADDED, "ss_added"],
-  [FCVAR.RELEASE, "release"],
-  [FCVAR.RELOAD_MATERIALS, "reload_materials"],
-  [FCVAR.RELOAD_TEXTURES, "reload_textures"],
-  [FCVAR.NOT_CONNECTED, "not_connected"],
-  [FCVAR.MATERIAL_SYSTEM_THREAD, "material_system_thread"],
-  [FCVAR.ARCHIVE_XBOX, "archive_xbox"],
-  [FCVAR.ACCESSIBLE_FROM_THREADS, "accessible_from_threads"],
-  [FCVAR.NETWORKSYSTEM, "networksystem"],
-  [FCVAR.VPHYSICS, "vphysics"],
-  [FCVAR.SERVER_CAN_EXECUTE, "server_can_execute"],
-  [FCVAR.SERVER_CANNOT_QUERY, "server_cannot_query"],
-  [FCVAR.CLIENTCMD_CAN_EXECUTE, "clientcmd_can_execute"],
+  [FCVAR.UNREGISTERED, 'unregistered'],
+  [FCVAR.DEVELOPMENTONLY, 'developmentonly'],
+  [FCVAR.GAMEDLL, 'gamedll'],
+  [FCVAR.CLIENTDLL, 'clientdll'],
+  [FCVAR.HIDDEN, 'hidden'],
+  [FCVAR.PROTECTED, 'protected'],
+  [FCVAR.SPONLY, 'sponly'],
+  [FCVAR.ARCHIVE, 'archive'],
+  [FCVAR.NOTIFY, 'notify'],
+  [FCVAR.USERINFO, 'userinfo'],
+  [FCVAR.PRINTABLEONLY, 'printableonly'],
+  [FCVAR.UNLOGGED, 'unlogged'],
+  [FCVAR.NEVER_AS_STRING, 'never_as_string'],
+  [FCVAR.REPLICATED, 'replicated'],
+  [FCVAR.CHEAT, 'cheat'],
+  [FCVAR.SS, 'ss'],
+  [FCVAR.DEMO, 'demo'],
+  [FCVAR.DONTRECORD, 'dontrecord'],
+  [FCVAR.SS_ADDED, 'ss_added'],
+  [FCVAR.RELEASE, 'release'],
+  [FCVAR.RELOAD_MATERIALS, 'reload_materials'],
+  [FCVAR.RELOAD_TEXTURES, 'reload_textures'],
+  [FCVAR.NOT_CONNECTED, 'not_connected'],
+  [FCVAR.MATERIAL_SYSTEM_THREAD, 'material_system_thread'],
+  [FCVAR.ARCHIVE_XBOX, 'archive_xbox'],
+  [FCVAR.ACCESSIBLE_FROM_THREADS, 'accessible_from_threads'],
+  [FCVAR.NETWORKSYSTEM, 'networksystem'],
+  [FCVAR.VPHYSICS, 'vphysics'],
+  [FCVAR.SERVER_CAN_EXECUTE, 'server_can_execute'],
+  [FCVAR.SERVER_CANNOT_QUERY, 'server_cannot_query'],
+  [FCVAR.CLIENTCMD_CAN_EXECUTE, 'clientcmd_can_execute'],
 ];
 
 export enum OperatingSystem {
@@ -92,16 +92,15 @@ export interface CVar {
 
 export const CVars = {
   Api: {
-    Base: "https://raw.githubusercontent.com/NeKzor/cvars/api",
-    SAR:
-      "https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md",
+    Base: 'https://raw.githubusercontent.com/NeKzor/cvars/api',
+    SAR: 'https://raw.githubusercontent.com/p2sr/SourceAutoRecord/master/docs/cvars.md',
   },
   Portal2: [] as CVar[],
 
   async load() {
     const cvars: CVar[] = [];
 
-    for await (const cvar of db.list<CVar>({ prefix: ["cvars"] })) {
+    for await (const cvar of db.list<CVar>({ prefix: ['cvars'] })) {
       cvars.push(cvar.value);
     }
 
@@ -112,7 +111,7 @@ export const CVars = {
 
   async fetch() {
     const gameMods = [
-      "portal-2",
+      'portal-2',
     ];
 
     for (const gameMod of gameMods) {
@@ -121,7 +120,7 @@ export const CVars = {
 
       const res = await fetch(url, {
         headers: {
-          "User-Agent": Deno.env.get("USER_AGENT")!,
+          'User-Agent': Deno.env.get('USER_AGENT')!,
         },
       });
 
@@ -130,7 +129,7 @@ export const CVars = {
       const json = await res.json() as { Cvars: CVar[] };
 
       for (const cvar of json.Cvars) {
-        await db.set(["cvars", cvar.name], cvar);
+        await db.set(['cvars', cvar.name], cvar);
       }
     }
 
@@ -139,23 +138,23 @@ export const CVars = {
 
     const sar = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
     log.info(`Fetched SAR cvars`);
 
-    const sarMd = (await sar.text()).split("\n").slice(4);
+    const sarMd = (await sar.text()).split('\n').slice(4);
 
     for (const line of sarMd) {
-      const [name, cvarDefault, help] = line.slice(1, -1).split("|");
+      const [name, cvarDefault, help] = line.slice(1, -1).split('|');
 
-      await db.set(["cvars", name], {
+      await db.set(['cvars', name], {
         name,
-        default: cvarDefault ?? "",
+        default: cvarDefault ?? '',
         flags: 0,
         system: OperatingSystem.Both,
-        help: (help?.replaceAll("<br>", " ") ?? "").trim(),
+        help: (help?.replaceAll('<br>', ' ') ?? '').trim(),
       });
     }
 
@@ -173,11 +172,11 @@ export const CVars = {
   getOs(cvar: CVar) {
     switch (cvar.system) {
       case OperatingSystem.Windows:
-        return "Windows";
+        return 'Windows';
       case OperatingSystem.Linux:
-        return "Linux";
+        return 'Linux';
       case OperatingSystem.Both:
-        return "Windows/Linux";
+        return 'Windows/Linux';
     }
   },
 };

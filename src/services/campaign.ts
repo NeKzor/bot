@@ -22,7 +22,7 @@ export const Campaign = {
 
   async load() {
     const { map_list } = JSON.parse(
-      await Deno.readTextFile("./data/portal2_campaign.json"),
+      await Deno.readTextFile('./data/portal2_campaign.json'),
     );
     Campaign.Portal2.Maps = map_list;
   },

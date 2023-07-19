@@ -4,13 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { parseFeed } from "https://deno.land/x/rss@1.0.0/mod.ts";
-import { log } from "../utils/logger.ts";
-import {
-  escapeMarkdown,
-  htmlToDiscordMarkdown,
-  HtmlToDiscordMarkdownOptions,
-} from "../utils/helpers.ts";
+import { parseFeed } from 'https://deno.land/x/rss@1.0.0/mod.ts';
+import { log } from '../utils/logger.ts';
+import { escapeMarkdown, htmlToDiscordMarkdown, HtmlToDiscordMarkdownOptions } from '../utils/helpers.ts';
 
 export enum SteamAppId {
   Portal2 = 620,
@@ -22,29 +18,29 @@ export enum SteamAppId {
 
 export const Portal2Apps = [
   {
-    name: "Portal 2",
+    name: 'Portal 2',
     value: SteamAppId.Portal2.toString(),
   },
   {
-    name: "Aperture Tag",
+    name: 'Aperture Tag',
     value: SteamAppId.ApertureTag.toString(),
   },
   {
-    name: "Thinking with Time Machine",
+    name: 'Thinking with Time Machine',
     value: SteamAppId.ThinkingWithTimeMachine.toString(),
   },
   {
-    name: "Portal 2: Community Edition",
+    name: 'Portal 2: Community Edition',
     value: SteamAppId.Portal2CommunityEdition.toString(),
   },
   {
-    name: "Portal Reloaded",
+    name: 'Portal Reloaded',
     value: SteamAppId.PortalReloaded.toString(),
   },
 ];
 
 export const Steam = {
-  BaseApi: "https://store.steampowered.com",
+  BaseApi: 'https://store.steampowered.com',
   htmlConvertOptions: {
     imageFormatter: (src: string) => {
       if (!src) {
@@ -54,9 +50,9 @@ export const Steam = {
       // Filter out Steam's responsive YouTube hack
       if (
         src ===
-          "https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif"
+          'https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif'
       ) {
-        return "";
+        return '';
       }
 
       return `<${src}>`;
@@ -69,7 +65,7 @@ export const Steam = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
@@ -81,19 +77,19 @@ export const Steam = {
   },
 
   formatFeedEntryToMarkdown(
-    entry: Awaited<ReturnType<typeof parseFeed>>["entries"]["0"],
+    entry: Awaited<ReturnType<typeof parseFeed>>['entries']['0'],
     appName: string,
     newsLink?: string,
   ) {
-    const date = entry?.published?.toISOString().split("T").at(0);
+    const date = entry?.published?.toISOString().split('T').at(0);
     const entryTitle = `${appName} News ${date}`;
-    const title = escapeMarkdown(entry?.title?.value ?? "");
-    const rawDescription = entry?.description?.value ?? "";
+    const title = escapeMarkdown(entry?.title?.value ?? '');
+    const rawDescription = entry?.description?.value ?? '';
     const description = htmlToDiscordMarkdown(
       rawDescription,
       Steam.htmlConvertOptions,
     );
-    const link = entry?.links?.at(0)?.href ?? "";
+    const link = entry?.links?.at(0)?.href ?? '';
     const author = entry?.author?.name;
 
     return [
@@ -101,6 +97,6 @@ export const Steam = {
       `Published by ${author}`,
       `### [${title}](<${link}>)`,
       description,
-    ].join("\n");
+    ].join('\n');
   },
 };

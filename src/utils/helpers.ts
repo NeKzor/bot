@@ -4,51 +4,36 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Temporal } from "npm:@js-temporal/polyfill";
-import {
-  DOMParser,
-  Element,
-  Node,
-} from "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts";
-import {
-  Bot,
-  BotWithCache,
-  CreateApplicationCommand,
-  Guild,
-  MakeRequired,
-} from "../deps.ts";
-import {
-  getGuild,
-  hasProperty,
-  upsertGuildApplicationCommands,
-} from "../deps.ts";
-import { logger } from "./logger.ts";
-import type { subCommand, subCommandGroup } from "../commands/mod.ts";
-import { commands } from "../commands/mod.ts";
+import { Temporal } from 'npm:@js-temporal/polyfill';
+import { DOMParser, Element, Node } from 'https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts';
+import { Bot, BotWithCache, CreateApplicationCommand, Guild, MakeRequired } from '../deps.ts';
+import { getGuild, hasProperty, upsertGuildApplicationCommands } from '../deps.ts';
+import { logger } from './logger.ts';
+import type { subCommand, subCommandGroup } from '../commands/mod.ts';
+import { commands } from '../commands/mod.ts';
 
-const log = logger({ name: "Helpers" });
+const log = logger({ name: 'Helpers' });
 
 /** This function will update all commands, or the defined scope */
 export async function updateCommands(
   bot: BotWithCache,
-  scope?: "Guild" | "Global",
+  scope?: 'Guild' | 'Global',
 ) {
-  const globalCommands: Array<MakeRequired<CreateApplicationCommand, "name">> =
-    [];
+  const globalCommands: Array<MakeRequired<CreateApplicationCommand, 'name'>> = [];
   const perGuildCommands: Array<
-    MakeRequired<CreateApplicationCommand, "name">
+    MakeRequired<CreateApplicationCommand, 'name'>
   > = [];
 
   for (const command of commands.values()) {
     if (command.scope) {
-      if (command.scope === "Guild") {
+      if (command.scope === 'Guild') {
         perGuildCommands.push({
           name: command.name,
           description: command.description,
           type: command.type,
           options: command.options ? command.options : undefined,
         });
-      } else if (command.scope === "Global") {
+      } else if (command.scope === 'Global') {
         globalCommands.push({
           name: command.name,
           description: command.description,
@@ -66,14 +51,14 @@ export async function updateCommands(
     }
   }
 
-  if (globalCommands.length && (scope === "Global" || scope === undefined)) {
-    log.info("Updating Global Commands, changes should apply in short...");
+  if (globalCommands.length && (scope === 'Global' || scope === undefined)) {
+    log.info('Updating Global Commands, changes should apply in short...');
     await bot.helpers.upsertGlobalApplicationCommands(globalCommands).catch(
       log.error,
     );
   }
 
-  if (perGuildCommands.length && (scope === "Guild" || scope === undefined)) {
+  if (perGuildCommands.length && (scope === 'Guild' || scope === undefined)) {
     await bot.guilds.forEach(async (guild: Guild) => {
       await upsertGuildApplicationCommands(bot, guild.id, perGuildCommands);
     });
@@ -83,12 +68,12 @@ export async function updateCommands(
 /** Update commands for a guild */
 export async function updateGuildCommands(bot: Bot, guild: Guild) {
   const perGuildCommands: Array<
-    MakeRequired<CreateApplicationCommand, "name">
+    MakeRequired<CreateApplicationCommand, 'name'>
   > = [];
 
   for (const command of commands.values()) {
     if (command.scope) {
-      if (command.scope === "Guild") {
+      if (command.scope === 'Guild') {
         perGuildCommands.push({
           name: command.name,
           description: command.description,
@@ -131,17 +116,17 @@ export function snowflakeToTimestamp(id: bigint) {
 export function humanizeMilliseconds(milliseconds: number) {
   // Gets ms into seconds
   const time = milliseconds / 1000;
-  if (time < 1) return "1s";
+  if (time < 1) return '1s';
 
   const days = Math.floor(time / 86400);
   const hours = Math.floor((time % 86400) / 3600);
   const minutes = Math.floor(((time % 86400) % 3600) / 60);
   const seconds = Math.floor(((time % 86400) % 3600) % 60);
 
-  const dayString = days ? `${days}d ` : "";
-  const hourString = hours ? `${hours}h ` : "";
-  const minuteString = minutes ? `${minutes}m ` : "";
-  const secondString = seconds ? `${seconds}s ` : "";
+  const dayString = days ? `${days}d ` : '';
+  const hourString = hours ? `${hours}h ` : '';
+  const minuteString = minutes ? `${minutes}m ` : '';
+  const secondString = seconds ? `${seconds}s ` : '';
 
   return `${dayString}${hourString}${minuteString}${secondString}`;
 }
@@ -149,33 +134,33 @@ export function humanizeMilliseconds(milliseconds: number) {
 export function isSubCommand(
   data: subCommand | subCommandGroup,
 ): data is subCommand {
-  return !hasProperty(data, "subCommands");
+  return !hasProperty(data, 'subCommands');
 }
 
 export function isSubCommandGroup(
   data: subCommand | subCommandGroup,
 ): data is subCommandGroup {
-  return hasProperty(data, "subCommands");
+  return hasProperty(data, 'subCommands');
 }
 
 // NOTE: Discord's masked links are a scuffed version of Markdown links.
 //       You cannot escape [ and ] which means you have to remove it.
 export function escapeMaskedLink(link: string) {
-  return ["[", "]"].reduce(
-    (text, characterToRemove) => text.replaceAll(characterToRemove, ""),
+  return ['[', ']'].reduce(
+    (text, characterToRemove) => text.replaceAll(characterToRemove, ''),
     link,
   );
 }
 
 const specialMdCharacters = [
-  "[",
-  "]",
-  "(",
-  ")",
-  "`",
-  "*",
-  "_",
-  "~",
+  '[',
+  ']',
+  '(',
+  ')',
+  '`',
+  '*',
+  '_',
+  '~',
 ];
 
 export function escapeMarkdown(text: string) {
@@ -198,9 +183,7 @@ export function formatCmTime(time: number) {
   const sec = secs % 60;
   const min = Math.floor(secs / 60);
   return (min > 0)
-    ? `${min}:${((sec < 10) ? `0${sec}` : `${sec}`)}.${((cs < 10)
-      ? `0${cs}`
-      : `${cs}`)}`
+    ? `${min}:${((sec < 10) ? `0${sec}` : `${sec}`)}.${((cs < 10) ? `0${cs}` : `${cs}`)}`
     : `${sec}.${((cs < 10) ? `0${cs}` : `${cs}`)}`;
 }
 
@@ -211,10 +194,8 @@ export function formatCmTime(time: number) {
  * @params formatCharacter - Format character to use
  * @returns - Formatted points
  */
-export function formatBoardPoints(points: number, formatCharacter = ",") {
-  return points >= 1_000
-    ? `${Math.floor(points / 1_000)}${formatCharacter}${points % 1_000}`
-    : points.toString();
+export function formatBoardPoints(points: number, formatCharacter = ',') {
+  return points >= 1_000 ? `${Math.floor(points / 1_000)}${formatCharacter}${points % 1_000}` : points.toString();
 }
 
 export function getDurationSince(date: string) {
@@ -223,7 +204,7 @@ export function getDurationSince(date: string) {
 }
 
 export function parseHtmlDocument(html: string) {
-  return new DOMParser().parseFromString(html, "text/html");
+  return new DOMParser().parseFromString(html, 'text/html');
 }
 
 export type HtmlToDiscordMarkdownOptions = {
@@ -242,44 +223,44 @@ export function htmlToDiscordMarkdown(
     const nodeName = node.nodeName.toLowerCase();
 
     switch (nodeName) {
-      case "li":
-        result.push("*".padStart(depth, " ") + " ");
+      case 'li':
+        result.push('*'.padStart(depth, ' ') + ' ');
         break;
-      case "b":
-        result.push("**");
+      case 'b':
+        result.push('**');
         break;
-      case "br":
-        result.push("\n");
+      case 'br':
+        result.push('\n');
         break;
-      case "#text":
+      case '#text':
         result.push(node.textContent);
         break;
-      case "ul":
-        result.push("\n");
+      case 'ul':
+        result.push('\n');
         break;
-      case "img":
+      case 'img':
         {
-          const src = (node as Element).getAttribute("src") ?? "";
+          const src = (node as Element).getAttribute('src') ?? '';
           result.push(
             `${imageFormatter ? imageFormatter(src) : src}`,
           );
         }
         break;
-      case "iframe":
+      case 'iframe':
         result.push(
-          `${(node as Element).getAttribute("src") ?? ""}`,
+          `${(node as Element).getAttribute('src') ?? ''}`,
         );
         break;
-      case "i":
-        result.push("_");
+      case 'i':
+        result.push('_');
         break;
-      case "a":
-        result.push("[");
+      case 'a':
+        result.push('[');
         break;
-      case "html":
-      case "head":
-      case "body":
-      case "div":
+      case 'html':
+      case 'head':
+      case 'body':
+      case 'div':
         break;
       default:
         result.push(`<${nodeName}>`);
@@ -291,18 +272,18 @@ export function htmlToDiscordMarkdown(
       .forEach((child) => parseNode(child, depth + 1));
 
     switch (nodeName) {
-      case "b":
-        result.push("**");
+      case 'b':
+        result.push('**');
         break;
-      case "ul":
-        result.push("\n");
+      case 'ul':
+        result.push('\n');
         break;
-      case "i":
-        result.push("_");
+      case 'i':
+        result.push('_');
         break;
-      case "a":
+      case 'a':
         result.push(
-          `](<${(node as Element).getAttribute("href") ?? ""}>)`,
+          `](<${(node as Element).getAttribute('href') ?? ''}>)`,
         );
         break;
       default:
@@ -311,10 +292,10 @@ export function htmlToDiscordMarkdown(
   };
 
   const html = parseHtmlDocument(rawHtml)?.textContent;
-  const doc = parseHtmlDocument(html ?? "");
+  const doc = parseHtmlDocument(html ?? '');
 
   doc?.childNodes
     .forEach((node) => parseNode(node, -1));
 
-  return result.join("");
+  return result.join('');
 }

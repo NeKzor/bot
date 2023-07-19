@@ -4,30 +4,21 @@
  * SPDX-License-Identifier: MIT
  */
 
-import type { BotWithCache, Guild } from "../deps.ts";
-import {
-  bgBlack,
-  bgYellow,
-  black,
-  green,
-  InteractionTypes,
-  red,
-  white,
-  yellow,
-} from "../deps.ts";
-import { events } from "./mod.ts";
-import { logger } from "../utils/logger.ts";
-import { getGuildFromId } from "../utils/helpers.ts";
-import type { Command } from "../commands/mod.ts";
-import { commands } from "../commands/mod.ts";
+import type { BotWithCache, Guild } from '../deps.ts';
+import { bgBlack, bgYellow, black, green, InteractionTypes, red, white, yellow } from '../deps.ts';
+import { events } from './mod.ts';
+import { logger } from '../utils/logger.ts';
+import { getGuildFromId } from '../utils/helpers.ts';
+import type { Command } from '../commands/mod.ts';
+import { commands } from '../commands/mod.ts';
 
-const log = logger({ name: "Event: InteractionCreate" });
+const log = logger({ name: 'Event: InteractionCreate' });
 
 events.interactionCreate = async (rawBot, interaction) => {
   const bot = rawBot as BotWithCache;
 
   if (interaction.data && interaction.id) {
-    let guildName = "Direct Message";
+    let guildName = 'Direct Message';
     let guild = {} as Guild;
 
     // Set guild, if there was an error getting the guild, then just say it was a DM. (What else are we going to do?)
@@ -53,7 +44,7 @@ events.interactionCreate = async (rawBot, interaction) => {
       } - ${
         bgBlack(white(`Trigger`))
       }] by ${interaction.user.username}#${interaction.user.discriminator} in ${guildName}${
-        guildName !== "Direct Message" ? ` (${guild.id})` : ``
+        guildName !== 'Direct Message' ? ` (${guild.id})` : ``
       }`,
     );
 
@@ -68,13 +59,13 @@ events.interactionCreate = async (rawBot, interaction) => {
           `[Modal - ${
             bgBlack(yellow(`Not Found`))
           }] by ${interaction.user.username}#${interaction.user.discriminator} in ${guildName}${
-            guildName !== "Direct Message" ? ` (${guild.id})` : ``
+            guildName !== 'Direct Message' ? ` (${guild.id})` : ``
           }`,
         );
         return;
       }
 
-      const [modalCommand] = interaction.data.customId.split("_");
+      const [modalCommand] = interaction.data.customId.split('_');
       command = commands.get(modalCommand);
     } else {
       command = commands.get(interaction.data.name);
@@ -89,18 +80,18 @@ events.interactionCreate = async (rawBot, interaction) => {
               `[Command: ${bgYellow(black(String(source)))} - ${
                 bgBlack(green(`Success`))
               }] by ${interaction.user.username}#${interaction.user.discriminator} in ${guildName}${
-                guildName !== "Direct Message" ? ` (${guild.id})` : ``
+                guildName !== 'Direct Message' ? ` (${guild.id})` : ``
               }`,
             );
           } else {
-            throw "";
+            throw '';
           }
         } catch (err) {
           log.error(
             `[Command: ${bgYellow(black(String(source)))} - ${
               bgBlack(red(`Error`))
             }] by ${interaction.user.username}#${interaction.user.discriminator} in ${guildName}${
-              guildName !== "Direct Message" ? ` (${guild.id})` : ``
+              guildName !== 'Direct Message' ? ` (${guild.id})` : ``
             }`,
           );
           err.length ? log.error(err) : undefined;
@@ -110,7 +101,7 @@ events.interactionCreate = async (rawBot, interaction) => {
           `[Command: ${bgYellow(black(String(source)))} - ${
             bgBlack(yellow(`Not Found`))
           }] by ${interaction.user.username}#${interaction.user.discriminator} in ${guildName}${
-            guildName !== "Direct Message" ? ` (${guild.id})` : ``
+            guildName !== 'Direct Message' ? ` (${guild.id})` : ``
           }`,
         );
       }

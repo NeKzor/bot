@@ -16,20 +16,15 @@ import {
   InteractionTypes,
   MessageComponents,
   MessageComponentTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import {
-  escapeMarkdown,
-  escapeMaskedLink,
-  formatCmTime,
-  getDurationSince,
-} from "../utils/helpers.ts";
-import { Board } from "../services/board.ts";
-import { InteractionKey, InteractionsDb } from "../services/interactions.ts";
-import { SAR } from "../services/sar.ts";
-import { log } from "../utils/logger.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
-import { Campaign } from "../services/campaign.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { escapeMarkdown, escapeMaskedLink, formatCmTime, getDurationSince } from '../utils/helpers.ts';
+import { Board } from '../services/board.ts';
+import { InteractionKey, InteractionsDb } from '../services/interactions.ts';
+import { SAR } from '../services/sar.ts';
+import { log } from '../utils/logger.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
+import { Campaign } from '../services/campaign.ts';
 
 const findChamber = createAutocompletion({
   items: () =>
@@ -38,26 +33,26 @@ const findChamber = createAutocompletion({
   additionalCheck: (map, query) => {
     return map.three_letter_code.toLowerCase() === query;
   },
-  idKey: "best_time_id",
-  nameKey: "cm_name",
+  idKey: 'best_time_id',
+  nameKey: 'cm_name',
 });
 
 createCommand({
-  name: "lb",
-  description: "Get the leaderboard on board.portal2.sr.",
+  name: 'lb',
+  description: 'Get the leaderboard on board.portal2.sr.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "chamber",
-      description: "Search chamber.",
+      name: 'chamber',
+      description: 'Search chamber.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
     },
     {
-      name: "player",
-      description: "Get the score of a player by name.",
+      name: 'player',
+      description: 'Get the score of a player by name.',
       type: ApplicationCommandOptionTypes.String,
       required: false,
     },
@@ -68,11 +63,10 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.MessageComponent: {
-        const [_command, subcommand, changelogId] =
-          interaction.data?.customId?.split("_") ?? [];
+        const [_command, subcommand, changelogId] = interaction.data?.customId?.split('_') ?? [];
 
         switch (subcommand) {
-          case "parsedemo": {
+          case 'parsedemo': {
             if (!changelogId) {
               break;
             }
@@ -134,7 +128,7 @@ createCommand({
 
               const demo = await fetch(url, {
                 headers: {
-                  "User-Agent": Deno.env.get("USER_AGENT")!,
+                  'User-Agent': Deno.env.get('USER_AGENT')!,
                 },
               });
 
@@ -142,19 +136,18 @@ createCommand({
 
               if (
                 !demo.ok ||
-                demo.headers.get("Content-Type")?.startsWith("text/html")
+                demo.headers.get('Content-Type')?.startsWith('text/html')
               ) {
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
-                    content:
-                      `❌️ Unable to download demo. The file might not exist.`,
+                    content: `❌️ Unable to download demo. The file might not exist.`,
                   },
                 );
                 return;
               }
 
-              const demoName = new URL(demo.url).pathname.split("/").at(-1);
+              const demoName = new URL(demo.url).pathname.split('/').at(-1);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
@@ -169,7 +162,7 @@ createCommand({
               const buffer = new Uint8Array(await demo.arrayBuffer());
 
               const _data = await SAR.parseDemo(buffer, (...args) => {
-                parts.push(encoder.encode(args.join(" ") + "\n").buffer);
+                parts.push(encoder.encode(args.join(' ') + '\n').buffer);
               });
 
               // Remove last parse demo button
@@ -181,7 +174,7 @@ createCommand({
                 {
                   file: {
                     name: `${demoName}.txt`,
-                    blob: new Blob(parts, { type: "text/plain" }),
+                    blob: new Blob(parts, { type: 'text/plain' }),
                   },
                   components: messageToEdit.components as MessageComponents,
                 },
@@ -199,8 +192,7 @@ createCommand({
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,
                 {
-                  content:
-                    `❌️ Unable to parse demo. The file might be corrupted.`,
+                  content: `❌️ Unable to parse demo. The file might be corrupted.`,
                 },
               );
             }
@@ -212,9 +204,7 @@ createCommand({
         break;
       }
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "chamber"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'chamber')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -236,12 +226,9 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
-        const query = args.find((arg) =>
-          arg.name === "chamber"
-        )?.value?.toString() ?? "";
-        const player =
-          args.find((arg) => arg.name === "player")?.value?.toString()
-            ?.toLocaleLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'chamber')?.value?.toString() ?? '';
+        const player = args.find((arg) => arg.name === 'player')?.value?.toString()
+          ?.toLocaleLowerCase() ?? '';
 
         const chambers = findChamber({ query, isAutocomplete: false });
         const chamber = chambers.at(0);
@@ -268,8 +255,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content:
-                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
                 flags: 1 << 6,
               },
             },
@@ -296,15 +282,13 @@ createCommand({
           // Yes, the API returns an object which is not
           // the right thing to return, thanks iVerb :>
           const values = Object.values(lb);
-          const wrTime = parseInt(values.at(0)?.scoreData?.score ?? "0", 10);
+          const wrTime = parseInt(values.at(0)?.scoreData?.score ?? '0', 10);
 
           let addParseDemoButton = false;
 
           if (player) {
             const playerEntry = values
-              .find(({ userData }) =>
-                userData.boardname.toLocaleLowerCase() === player
-              );
+              .find(({ userData }) => userData.boardname.toLocaleLowerCase() === player);
 
             if (!playerEntry) {
               await bot.helpers.editOriginalInteractionResponse(
@@ -343,7 +327,7 @@ createCommand({
 
             const date = scoreData.date;
             const durationSince = getDurationSince(date);
-            const g = (value: number) => value === 1 ? "" : "s";
+            const g = (value: number) => value === 1 ? '' : 's';
             const duration = durationSince.days
               ? `${durationSince.days} day${g(durationSince.days)}`
               : durationSince.hours
@@ -360,19 +344,14 @@ createCommand({
 
             const demoLink = `https://board.portal2.sr/getDemo?id=${id}`;
 
-            const diff = wrTime !== time
-              ? ` (+${formatCmTime(time - wrTime)} to WR)`
-              : "";
+            const diff = wrTime !== time ? ` (+${formatCmTime(time - wrTime)} to WR)` : '';
 
             const title = escapeMaskedLink(chamber.cm_name);
 
-            const chamberLink =
-              `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
+            const chamberLink = `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
 
             // FIXME: Do not hard-code these IDs
-            const wrEmoji = interaction.guildId === BigInt("146404426746167296")
-              ? " <:wr:294282175396839426>"
-              : "";
+            const wrEmoji = interaction.guildId === BigInt('146404426746167296') ? ' <:wr:294282175396839426>' : '';
 
             const buttons: [ButtonComponent, ButtonComponent] | [
               ButtonComponent,
@@ -381,7 +360,7 @@ createCommand({
             ] = [
               {
                 type: MessageComponentTypes.Button,
-                label: `Watch on ${onYouTube ? "YouTube" : "autorender"}`,
+                label: `Watch on ${onYouTube ? 'YouTube' : 'autorender'}`,
                 style: ButtonStyles.Link,
                 url: videoLink,
               },
@@ -409,9 +388,9 @@ createCommand({
                   `[${title}](<${chamberLink}>)`,
                   `Player: ${playerName}`,
                   `Time: ${score}${diff}`,
-                  `Rank: ${rank === "1" ? `WR${wrEmoji}` : rank}`,
+                  `Rank: ${rank === '1' ? `WR${wrEmoji}` : rank}`,
                   `Date: ${date} (${duration} ago)`,
-                ].join("\n"),
+                ].join('\n'),
                 components: [
                   {
                     type: MessageComponentTypes.ActionRow,
@@ -424,9 +403,7 @@ createCommand({
           }
 
           const indexLimit = values
-            .findIndex(({ scoreData }) =>
-              parseInt(scoreData.playerRank, 10) >= 5
-            );
+            .findIndex(({ scoreData }) => parseInt(scoreData.playerRank, 10) >= 5);
 
           const entries = values.slice(
             0,
@@ -444,23 +421,18 @@ createCommand({
               ? `https://www.youtube.com/watch?v=${scoreData.youtubeID}`
               : `https://autorender.portal2.sr/video.html?v=${scoreData.changelogId}`;
 
-            const diff = wrTime !== time
-              ? ` (+${formatCmTime(time - wrTime)})`
-              : "";
+            const diff = wrTime !== time ? ` (+${formatCmTime(time - wrTime)})` : '';
             return `${rank}\\. ${player} [${score}](<${videoLink}>)${diff}`;
           });
 
           const title = `${chamber.cm_name} Leaderboard`;
 
-          const chamberLink =
-            `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
+          const chamberLink = `https://board.portal2.sr/chamber/${chamber.best_time_id}`;
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
             {
-              content: `[${title}](<${chamberLink}>)\n${
-                leaderboard.join("\n")
-              }`,
+              content: `[${title}](<${chamberLink}>)\n${leaderboard.join('\n')}`,
             },
           );
         } catch (err) {

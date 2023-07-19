@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-const defaultSplitCharacter = " ";
+const defaultSplitCharacter = ' ';
 const defaultMaxItems = 5;
 
 export const createAutocompletion = <T>(

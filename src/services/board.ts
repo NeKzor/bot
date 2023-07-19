@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
+import { log } from '../utils/logger.ts';
 
 export interface ChamberData {
   scoreData: {
@@ -37,7 +37,7 @@ export interface AggregatedData {
   };
 }
 
-export type AggregationType = "sp" | "coop" | "overall";
+export type AggregationType = 'sp' | 'coop' | 'overall';
 
 export interface ChangelogOptions {
   boardName?: string;
@@ -85,7 +85,7 @@ export interface ChangelogEntry {
 }
 
 export const Board = {
-  BaseApi: "https://board.portal2.sr",
+  BaseApi: 'https://board.portal2.sr',
 
   async getChamber(chamberId: number) {
     const url = `${Board.BaseApi}/chamber/${chamberId}/json`;
@@ -93,7 +93,7 @@ export const Board = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
@@ -110,7 +110,7 @@ export const Board = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
@@ -140,7 +140,7 @@ export const Board = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 

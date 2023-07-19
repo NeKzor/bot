@@ -12,27 +12,27 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { Portal2Apps, Steam } from "../services/steam.ts";
-import { log } from "../utils/logger.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { Portal2Apps, Steam } from '../services/steam.ts';
+import { log } from '../utils/logger.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
 
 const findApp = createAutocompletion({
   items: () => Portal2Apps,
-  idKey: "value",
-  nameKey: "name",
+  idKey: 'value',
+  nameKey: 'name',
 });
 
 createCommand({
-  name: "news",
-  description: "Get the latest news about a Steam game or app.",
+  name: 'news',
+  description: 'Get the latest news about a Steam game or app.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: 'query',
+      description: 'Search query.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -44,9 +44,7 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -68,9 +66,7 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
         const apps = findApp({ query, isAutocomplete: false });
         const app = apps.at(0);
@@ -101,8 +97,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content:
-                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
                 flags: 1 << 6,
               },
             },
@@ -138,17 +133,17 @@ createCommand({
 
           const appName = app?.name ?? `App ID ${appId}`;
           const link = news.links.at(0);
-          const newsLink = entry?.links?.at(0)?.href ?? "";
+          const newsLink = entry?.links?.at(0)?.href ?? '';
 
           const content = Steam.formatFeedEntryToMarkdown(entry, appName, link);
 
           const truncated = [];
           let charactersLeft = 1_900;
-          for (const line of content.split("\n")) {
+          for (const line of content.split('\n')) {
             charactersLeft -= line.length + 1;
             if (charactersLeft < 0) {
               truncated.push(
-                newsLink ? `[Read more](<${newsLink}>)` : "_truncated_",
+                newsLink ? `[Read more](<${newsLink}>)` : '_truncated_',
               );
               break;
             }

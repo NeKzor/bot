@@ -4,24 +4,24 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
-import { Campaign } from "./campaign.ts";
-import { CVars } from "./cvars.ts";
-import { Exploits } from "./exploits.ts";
-import { LP } from "./lp.ts";
-import { Piston } from "./piston.ts";
-import { SAR } from "./sar.ts";
-import { SpeedrunCom } from "./speedruncom.ts";
+import { log } from '../utils/logger.ts';
+import { Campaign } from './campaign.ts';
+import { CVars } from './cvars.ts';
+import { Exploits } from './exploits.ts';
+import { LP } from './lp.ts';
+import { Piston } from './piston.ts';
+import { SAR } from './sar.ts';
+import { SpeedrunCom } from './speedruncom.ts';
 
 const SERVICE_DATA_UPDATE_INTERVAL = 15 * 60 * 1_000;
 
 export const services = {
-  "CVars": () => CVars.fetch,
-  "SpeedrunCom": () => SpeedrunCom.fetch,
-  "Piston": () => Piston.fetch,
-  "SAR": () => SAR.fetch,
-  "LP": () => LP.fetch,
-  "Exploits": () => Exploits.load,
+  'CVars': () => CVars.fetch,
+  'SpeedrunCom': () => SpeedrunCom.fetch,
+  'Piston': () => Piston.fetch,
+  'SAR': () => SAR.fetch,
+  'LP': () => LP.fetch,
+  'Exploits': () => Exploits.load,
 };
 
 export const loadAllServices = async () => {
@@ -43,8 +43,8 @@ export const loadAllServices = async () => {
 
       log.info(
         `Reloaded all services\n` + results.map((result, index) => {
-          return `${toReload[index].at(0)}: ${result ? "success" : "failed"}`;
-        }).join("\n"),
+          return `${toReload[index].at(0)}: ${result ? 'success' : 'failed'}`;
+        }).join('\n'),
       );
     } catch (err) {
       log.error(err);

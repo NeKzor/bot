@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
+import { log } from '../utils/logger.ts';
 
 interface Issue {
   id: number;
@@ -166,7 +166,7 @@ interface Issue {
 }
 
 export const GitHub = {
-  ApiVersion: "2022-11-28",
+  ApiVersion: '2022-11-28',
 
   async createIssue(
     options: {
@@ -190,12 +190,12 @@ export const GitHub = {
     const res = await fetch(
       url,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${token}`,
-          "X-GitHub-Api-Version": this.ApiVersion,
-          "User-Agent": Deno.env.get("USER_AGENT")!,
+          'Accept': 'application/vnd.github+json',
+          'Authorization': `Bearer ${token}`,
+          'X-GitHub-Api-Version': this.ApiVersion,
+          'User-Agent': Deno.env.get('USER_AGENT')!,
         },
         body,
       },

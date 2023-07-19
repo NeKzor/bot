@@ -12,28 +12,28 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from "../deps.ts";
-import { createCommand } from "./mod.ts";
-import { escapeMarkdown } from "../utils/helpers.ts";
-import { CVars } from "../services/cvars.ts";
-import { createAutocompletion } from "../utils/autocompletion.ts";
+} from '../deps.ts';
+import { createCommand } from './mod.ts';
+import { escapeMarkdown } from '../utils/helpers.ts';
+import { CVars } from '../services/cvars.ts';
+import { createAutocompletion } from '../utils/autocompletion.ts';
 
 export const findCvar = createAutocompletion({
   items: () => CVars.Portal2,
-  idKey: "name",
-  nameKey: "name",
-  splitCharacter: "_",
+  idKey: 'name',
+  nameKey: 'name',
+  splitCharacter: '_',
 });
 
 createCommand({
-  name: "cvars",
-  description: "Find a console command or variable.",
+  name: 'cvars',
+  description: 'Find a console command or variable.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "query",
-      description: "Search query.",
+      name: 'query',
+      description: 'Search query.',
       type: ApplicationCommandOptionTypes.String,
       autocomplete: true,
       required: true,
@@ -45,9 +45,7 @@ createCommand({
 
     switch (interaction.type) {
       case InteractionTypes.ApplicationCommandAutocomplete: {
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString()?.toLowerCase() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString()?.toLowerCase() ?? '';
 
         await bot.helpers.sendInteractionResponse(
           interaction.id,
@@ -70,9 +68,7 @@ createCommand({
       case InteractionTypes.ApplicationCommand: {
         const args = [...(command.options?.values() ?? [])];
 
-        const query = args.find((arg) =>
-          arg.name === "query"
-        )?.value?.toString() ?? "";
+        const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
         const cvars = findCvar({ query, isAutocomplete: true });
         const cvar = cvars.at(0);
@@ -99,8 +95,7 @@ createCommand({
             {
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
-                content:
-                  `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
+                content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
                 flags: 1 << 6,
               },
             },
@@ -118,13 +113,11 @@ createCommand({
             data: {
               content: [
                 `**${escapeMarkdown(cvar.name)}**`,
-                `Default Value: ${escapeMarkdown(cvar.default ?? "-")}`,
-                `Flags: ${
-                  flags.length ? escapeMarkdown(flags.join(" | ")) : "-"
-                }`,
+                `Default Value: ${escapeMarkdown(cvar.default ?? '-')}`,
+                `Flags: ${flags.length ? escapeMarkdown(flags.join(' | ')) : '-'}`,
                 `OS: ${CVars.getOs(cvar)}`,
                 `Description: ${escapeMarkdown(cvar.help)}`,
-              ].join("\n"),
+              ].join('\n'),
             },
           },
         );

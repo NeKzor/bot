@@ -6,13 +6,8 @@
  * This is a re-implementation of: https://github.com/p2sr/mdp
  */
 
-import * as ed from "https://deno.land/x/ed25519@2.0.0/mod.ts";
-import {
-  DemoMessages,
-  SourceDemo,
-  SourceDemoBuffer,
-  SourceDemoParser,
-} from "npm:@nekz/sdp";
+import * as ed from 'https://deno.land/x/ed25519@2.0.0/mod.ts';
+import { DemoMessages, SourceDemo, SourceDemoBuffer, SourceDemoParser } from 'npm:@nekz/sdp';
 
 // deno-fmt-ignore
 const crcTable = new Uint32Array([
@@ -313,7 +308,7 @@ const readSarMessageData = (data: SourceDemoBuffer, len: number) => {
       for (let i = 0; i < out.speedrunTime.nsplits; ++i) {
         type Inner<T> = T extends (infer U)[] ? U : T;
         type SplitsType = Exclude<
-          Inner<Exclude<SarMessage["speedrunTime"], undefined>["splits"]>,
+          Inner<Exclude<SarMessage['speedrunTime'], undefined>['splits']>,
           undefined
         >;
 
@@ -391,7 +386,7 @@ const readSarData = async (buffer: Uint8Array) => {
     messages.push(readSarMessageData(data, len));
   }
 
-  let checksum: SarResult["checksum"] = undefined;
+  let checksum: SarResult['checksum'] = undefined;
   let v2sumState = ChecksumV2State.None;
 
   const stopMessage = demo.findMessage(DemoMessages.Stop)!;
@@ -462,7 +457,7 @@ const readSarData = async (buffer: Uint8Array) => {
 };
 
 const allowInt = (toAllowName: string, toAllowValue: number) => {
-  return (initialCvar: SarMessage["initialCvar"]) => {
+  return (initialCvar: SarMessage['initialCvar']) => {
     if (initialCvar?.cvar === toAllowName) {
       return parseInt(initialCvar?.val, 10) === toAllowValue;
     }
@@ -473,7 +468,7 @@ const allowRange = (
   toAllowValueStart: number,
   toAllowValueEnd: number,
 ) => {
-  return (initialCvar: SarMessage["initialCvar"]) => {
+  return (initialCvar: SarMessage['initialCvar']) => {
     if (initialCvar?.cvar === toAllowName) {
       const value = parseInt(initialCvar?.val, 10);
       return value >= toAllowValueStart && value <= toAllowValueEnd;
@@ -481,7 +476,7 @@ const allowRange = (
   };
 };
 const allow = (toAllowName: string, toAllowValue: string) => {
-  return (initialCvar: SarMessage["initialCvar"]) => {
+  return (initialCvar: SarMessage['initialCvar']) => {
     if (initialCvar?.cvar === toAllowName) {
       return initialCvar?.val === toAllowValue;
     }
@@ -489,20 +484,20 @@ const allow = (toAllowName: string, toAllowValue: string) => {
 };
 
 const cvarValidators = [
-  allowInt("host_timescale", 1),
-  allowInt("sv_alternateticks", 1),
-  allowInt("sv_allow_mobile_portals", 0),
-  allowInt("sv_portal_placement_debug", 0),
-  allowInt("cl_cmdrate", 30),
-  allowInt("cl_updaterate", 20),
-  allowRange("cl_fov", 45, 140),
-  allowRange("fps_max", 30, 999),
-  allow("sv_use_trace_duration", "0.5"),
-  allow("m_yaw", "0.022"),
+  allowInt('host_timescale', 1),
+  allowInt('sv_alternateticks', 1),
+  allowInt('sv_allow_mobile_portals', 0),
+  allowInt('sv_portal_placement_debug', 0),
+  allowInt('cl_cmdrate', 30),
+  allowInt('cl_updaterate', 20),
+  allowRange('cl_fov', 45, 140),
+  allowRange('fps_max', 30, 999),
+  allow('sv_use_trace_duration', '0.5'),
+  allow('m_yaw', '0.022'),
 ];
 
 // _allow_initial_cvar
-const allowInitialCvar = (initialCvar: SarMessage["initialCvar"]) => {
+const allowInitialCvar = (initialCvar: SarMessage['initialCvar']) => {
   for (const validation of cvarValidators) {
     const result = validation(initialCvar);
     if (result !== undefined) {
@@ -514,15 +509,15 @@ const allowInitialCvar = (initialCvar: SarMessage["initialCvar"]) => {
 };
 
 const ignoreExtensions = [
-  ".so",
-  ".dll",
-  ".bsp",
+  '.so',
+  '.dll',
+  '.bsp',
 ];
 const ignorePaths = [
-  "./portal2_dlc1",
-  "./portal2_dlc2",
-  "portal2_dlc1",
-  "portal2_dlc2",
+  './portal2_dlc1',
+  './portal2_dlc2',
+  'portal2_dlc1',
+  'portal2_dlc2',
 ];
 
 // _ignore_filesum
@@ -531,7 +526,7 @@ const ignoreFilePath = (path: string | undefined) => {
     return true;
   }
 
-  if (path?.endsWith(".vpk")) {
+  if (path?.endsWith('.vpk')) {
     return ignorePaths.some((ignorePath) => path?.startsWith(ignorePath));
   }
 
@@ -557,9 +552,9 @@ const validateResult = (
   const sar = checksum ? sarWhitelist.includes(checksum) : false;
 
   output(
-    "SAR",
-    checksum?.toString(16)?.toUpperCase() ?? "no checksum",
-    sar ? "" : "(INVALID)",
+    'SAR',
+    checksum?.toString(16)?.toUpperCase() ?? 'no checksum',
+    sar ? '' : '(INVALID)',
   );
 
   for (const message of demo.findMessages(DemoMessages.ConsoleCmd)) {
@@ -568,9 +563,9 @@ const validateResult = (
     const cmd = cmdWhitelist.some((cmd) => message.command!.startsWith(cmd));
 
     output(
-      "Command",
+      'Command',
       message.command,
-      cmd ? "" : "(INVALID)",
+      cmd ? '' : '(INVALID)',
     );
   }
 
@@ -580,7 +575,7 @@ const validateResult = (
   for (const message of messages) {
     switch (message.type) {
       case SarDataType.TimescaleCheat:
-        output("Timescale", message.timescale);
+        output('Timescale', message.timescale);
         detectedTimescale += 1;
         break;
       case SarDataType.InitialCvar: {
@@ -596,38 +591,36 @@ const validateResult = (
         const cvarValue = message.initialCvar?.val;
 
         output(
-          "Variable",
+          'Variable',
           message.initialCvar?.cvar,
-          "'" + message.initialCvar?.val + "'",
-          cvar && (cvar.val === undefined || cvar.val === cvarValue)
-            ? ""
-            : "(INVALID)",
+          '\'' + message.initialCvar?.val + '\'',
+          cvar && (cvar.val === undefined || cvar.val === cvarValue) ? '' : '(INVALID)',
         );
         break;
       }
       case SarDataType.Pause:
         output(
-          "Paused for",
+          'Paused for',
           message.pauseTicks,
-          "ticks (",
+          'ticks (',
           (message.pauseTicks ?? 0) / 60,
-          ")",
+          ')',
         );
         break;
       case SarDataType.Invalid:
-        output("Corrupted data");
+        output('Corrupted data');
         break;
       case SarDataType.WaitRun:
-        output("Wait for", message.waitRun?.tick, message.waitRun?.cmd);
+        output('Wait for', message.waitRun?.tick, message.waitRun?.cmd);
         break;
       case SarDataType.HwaitRun:
-        output("Wait for", message.hwaitRun?.ticks, message.hwaitRun?.cmd);
+        output('Wait for', message.hwaitRun?.ticks, message.hwaitRun?.cmd);
         break;
       case SarDataType.SpeedrunTime:
         output(
-          "Speedrun finished with",
+          'Speedrun finished with',
           message.speedrunTime?.nsplits,
-          "splits",
+          'splits',
         );
         for (const split of message.speedrunTime?.splits ?? []) {
           let ticks = 0;
@@ -647,31 +640,31 @@ const validateResult = (
           const hrs = total;
 
           output(
-            "    Total:",
+            '    Total:',
             ticks,
-            "ticks = ",
+            'ticks = ',
             [
               hrs,
-              mins.toString().padStart(2, "0"),
-              secs.toString().padStart(2, "0"),
-            ].join(":") + "." + ms.toString().padStart(3, "0"),
+              mins.toString().padStart(2, '0'),
+              secs.toString().padStart(2, '0'),
+            ].join(':') + '.' + ms.toString().padStart(3, '0'),
           );
         }
         break;
       case SarDataType.Timestamp:
         output(
-          "Recorded at",
+          'Recorded at',
           [
-            message.timestamp?.year?.toString()?.padStart(2, "4"),
-            message.timestamp?.mon?.toString()?.padStart(2, "0"),
-            message.timestamp?.day?.toString()?.padStart(2, "0"),
-          ].join("/"),
+            message.timestamp?.year?.toString()?.padStart(2, '4'),
+            message.timestamp?.mon?.toString()?.padStart(2, '0'),
+            message.timestamp?.day?.toString()?.padStart(2, '0'),
+          ].join('/'),
           [
-            message.timestamp?.hour?.toString()?.padStart(2, "0"),
-            message.timestamp?.min?.toString()?.padStart(2, "0"),
-            message.timestamp?.sec?.toString()?.padStart(2, "0"),
-          ].join(":"),
-          "UTC",
+            message.timestamp?.hour?.toString()?.padStart(2, '0'),
+            message.timestamp?.min?.toString()?.padStart(2, '0'),
+            message.timestamp?.sec?.toString()?.padStart(2, '0'),
+          ].join(':'),
+          'UTC',
         );
         break;
       case SarDataType.FileChecksum: {
@@ -688,10 +681,10 @@ const validateResult = (
           .toUpperCase();
 
         output(
-          "File",
+          'File',
           message.fileChecksum?.path,
-          "'" + fileChecksum + "'",
-          filesum?.val === fileChecksum ? "" : "(INVALID)",
+          '\'' + fileChecksum + '\'',
+          filesum?.val === fileChecksum ? '' : '(INVALID)',
         );
         break;
       }
@@ -715,10 +708,10 @@ const validateResult = (
   }
 };
 
-const sarWhitelistFile = "./data/sar/sar_whitelist.txt";
-const cmdWhitelistFile = "./data/sar/cmd_whitelist.txt";
-const cvarWhitelistFile = "./data/sar/cvar_whitelist.txt";
-const filesumWhitelistFile = "./data/sar/filesum_whitelist.txt";
+const sarWhitelistFile = './data/sar/sar_whitelist.txt';
+const cmdWhitelistFile = './data/sar/cmd_whitelist.txt';
+const cvarWhitelistFile = './data/sar/cvar_whitelist.txt';
+const filesumWhitelistFile = './data/sar/filesum_whitelist.txt';
 
 export const SAR = {
   Whitelists: {
@@ -731,41 +724,40 @@ export const SAR = {
   async load() {
     SAR.Whitelists.sarWhitelist = (await Deno.readTextFile(sarWhitelistFile))
       .trim()
-      .split("\n")
+      .split('\n')
       .map((sar) => parseInt(sar.trim(), 16));
 
     SAR.Whitelists.cmdWhitelist = (await Deno.readTextFile(cmdWhitelistFile))
       .trim()
-      .split("\n")
+      .split('\n')
       .map((cmd) => cmd.trim());
 
     SAR.Whitelists.cvarWhitelist = (await Deno.readTextFile(cvarWhitelistFile))
       .trim()
-      .split("\n")
+      .split('\n')
       .map((line) => {
-        const [varName, val] = line.trim().split(" ", 2);
+        const [varName, val] = line.trim().split(' ', 2);
         return { varName, val };
       })
-      .filter((cvar) => cvar.varName !== "");
+      .filter((cvar) => cvar.varName !== '');
 
-    SAR.Whitelists.filesumWhitelist =
-      (await Deno.readTextFile(filesumWhitelistFile))
-        .trim()
-        .split("\n")
-        .map((line) => {
-          const [varName, val] = line.trim().split(" ", 2);
+    SAR.Whitelists.filesumWhitelist = (await Deno.readTextFile(filesumWhitelistFile))
+      .trim()
+      .split('\n')
+      .map((line) => {
+        const [varName, val] = line.trim().split(' ', 2);
 
-          if (varName === "" || varName.startsWith("//")) {
-            return { varName, val };
-          }
-
-          if (val === undefined) {
-            throw new Error(`Missing checksum value for file ${varName}`);
-          }
-
+        if (varName === '' || varName.startsWith('//')) {
           return { varName, val };
-        })
-        .filter((cvar) => cvar.varName !== "");
+        }
+
+        if (val === undefined) {
+          throw new Error(`Missing checksum value for file ${varName}`);
+        }
+
+        return { varName, val };
+      })
+      .filter((cvar) => cvar.varName !== '');
   },
 
   async fetch() {

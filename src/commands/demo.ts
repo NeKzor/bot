@@ -11,11 +11,11 @@ import {
   Bot,
   Interaction,
   InteractionResponseTypes,
-} from "../deps.ts";
-import { SAR } from "../services/sar.ts";
-import { escapeMarkdown } from "../utils/helpers.ts";
-import { log } from "../utils/logger.ts";
-import { createCommand } from "./mod.ts";
+} from '../deps.ts';
+import { SAR } from '../services/sar.ts';
+import { escapeMarkdown } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
+import { createCommand } from './mod.ts';
 
 const MAX_DEMO_FILE_SIZE = 6_000_000;
 
@@ -56,7 +56,7 @@ const getDemoInfo = async (
 
     const demo = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
@@ -77,14 +77,14 @@ const getDemoInfo = async (
     const buffer = new Uint8Array(await demo.arrayBuffer());
 
     const _data = await SAR.parseDemo(buffer, (...args) => {
-      parts.push(encoder.encode(args.join(" ") + "\n").buffer);
+      parts.push(encoder.encode(args.join(' ') + '\n').buffer);
     });
 
     await bot.helpers.editOriginalInteractionResponse(interaction.token, {
       content: `🛠️ Results for ${escapeMarkdown(attachment.filename)}`,
       file: {
         name: `${attachment.filename}.txt`,
-        blob: new Blob(parts, { type: "text/plain" }),
+        blob: new Blob(parts, { type: 'text/plain' }),
       },
     });
   } catch (err) {
@@ -97,10 +97,10 @@ const getDemoInfo = async (
 };
 
 createCommand({
-  name: "Get demo info",
-  description: "Get info about a demo!",
+  name: 'Get demo info',
+  description: 'Get info about a demo!',
   type: ApplicationCommandTypes.Message,
-  scope: "Global",
+  scope: 'Global',
   execute: async (bot: Bot, interaction: Interaction) => {
     const attachment = interaction.data?.resolved?.messages?.first()
       ?.attachments?.at(0);
@@ -112,8 +112,7 @@ createCommand({
         {
           type: InteractionResponseTypes.ChannelMessageWithSource,
           data: {
-            content:
-              `❌️ Unable to get demo info. This message does not have an attached demo file.`,
+            content: `❌️ Unable to get demo info. This message does not have an attached demo file.`,
             flags: 1 << 6,
           },
         },
@@ -126,19 +125,19 @@ createCommand({
 });
 
 createCommand({
-  name: "demo",
-  description: "Get info about a demo!",
+  name: 'demo',
+  description: 'Get info about a demo!',
   type: ApplicationCommandTypes.ChatInput,
-  scope: "Global",
+  scope: 'Global',
   options: [
     {
-      name: "info",
-      description: "Get info about a demo file!",
+      name: 'info',
+      description: 'Get info about a demo file!',
       type: ApplicationCommandOptionTypes.SubCommand,
       options: [
         {
-          name: "file",
-          description: "Demo file.",
+          name: 'file',
+          description: 'Demo file.',
           type: ApplicationCommandOptionTypes.Attachment,
           required: true,
         },

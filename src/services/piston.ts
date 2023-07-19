@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
-import { db } from "./db.ts";
+import { log } from '../utils/logger.ts';
+import { db } from './db.ts';
 
 export interface Runtime {
   language: string;
@@ -33,11 +33,11 @@ export interface ExecutionResult {
 }
 
 export const Piston = {
-  Version: "v2",
+  Version: 'v2',
   Runtimes: [] as Runtime[],
 
   async load() {
-    Piston.Runtimes = (await db.get<Runtime[]>(["piston"])).value ?? [];
+    Piston.Runtimes = (await db.get<Runtime[]>(['piston'])).value ?? [];
   },
   async fetch() {
     const url = `https://emkc.org/api/${Piston.Version}/piston/runtimes`;
@@ -45,13 +45,13 @@ export const Piston = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
-    log.info("Fetched emkc.org data");
+    log.info('Fetched emkc.org data');
 
-    await db.set(["piston"], await res.json());
+    await db.set(['piston'], await res.json());
 
     await Piston.load();
   },
@@ -66,9 +66,9 @@ export const Piston = {
     log.info(`[POST] ${url}`);
 
     const res = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
       body: JSON.stringify({
         language: runtime.language,
@@ -81,7 +81,7 @@ export const Piston = {
       }),
     });
 
-    log.info("Executed code on emkc.org");
+    log.info('Executed code on emkc.org');
 
     return await res.json() as ExecutionResult;
   },

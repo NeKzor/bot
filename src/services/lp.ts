@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from "../utils/logger.ts";
-import { db } from "./db.ts";
+import { log } from '../utils/logger.ts';
+import { db } from './db.ts';
 
 export interface LpShowcasePlayer {
   id?: string;
@@ -38,14 +38,14 @@ export interface LpRecordsResponse {
 }
 
 export const LP = {
-  BaseApi: "https://lp.nekz.me/api/v1",
+  BaseApi: 'https://lp.nekz.me/api/v1',
 
   async upsert(record: LpRecord) {
-    const key = ["lp", record.id];
+    const key = ['lp', record.id];
 
     return await db.atomic()
       .mutate({
-        type: "set",
+        type: 'set',
         key,
         value: record,
       })
@@ -53,7 +53,7 @@ export const LP = {
   },
 
   async find(id: number) {
-    return await db.get<LpRecord>(["lp", id]);
+    return await db.get<LpRecord>(['lp', id]);
   },
 
   async fetch() {
@@ -62,7 +62,7 @@ export const LP = {
 
     const res = await fetch(url, {
       headers: {
-        "User-Agent": Deno.env.get("USER_AGENT")!,
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
     });
 
