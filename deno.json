@@ -9,6 +9,11 @@
     ]
   },
   "fmt": {
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve",
     "exclude": [
       "docs/book",
       "src/data",
