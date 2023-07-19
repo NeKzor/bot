@@ -82,6 +82,7 @@ const checkForNews = async () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "User-Agent": Deno.env.get("USER_AGENT")!,
             },
             body: JSON.stringify({
               content: truncated.join("\n").slice(0, 2_000),
