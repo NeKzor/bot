@@ -609,7 +609,8 @@
   "npm": {
     "specifiers": {
       "@js-temporal/polyfill": "@js-temporal/polyfill@0.4.4",
-      "@nekz/sdp": "@nekz/sdp@0.4.0"
+      "@nekz/sdp": "@nekz/sdp@0.4.0",
+      "rate-limiter-flexible": "rate-limiter-flexible@2.4.1"
     },
     "packages": {
       "@js-temporal/polyfill@0.4.4": {
@@ -629,6 +630,10 @@
       },
       "jsbi@4.3.0": {
         "integrity": "sha512-SnZNcinB4RIcnEyZqFPdGPVgrg2AcnykiBy0sHVJQKHYeaLUvi3Exj+iaPpLnFVkDPZIV4U0yvgC9/R4uEAZ9g==",
+        "dependencies": {}
+      },
+      "rate-limiter-flexible@2.4.1": {
+        "integrity": "sha512-dgH4T44TzKVO9CLArNto62hJOwlWJMLUjVVr/ii0uUzZXEXthDNr7/yefW5z/1vvHAfycc1tnuiYyNJ8CTRB3g==",
         "dependencies": {}
       },
       "tslib@2.6.0": {
