@@ -53,7 +53,7 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findLevel({ query, isAutocomplete: false })
+              choices: findLevel({ query, isAutocomplete: true })
                 .map((level) => {
                   return {
                     name: level.name,
@@ -82,7 +82,7 @@ createCommand({
 
           const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
-          const levels = findLevel({ query, isAutocomplete: true });
+          const levels = findLevel({ query, isAutocomplete: false });
           const level = levels.at(0);
 
           if (!level) {

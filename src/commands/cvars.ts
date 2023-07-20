@@ -53,7 +53,7 @@ createCommand({
           {
             type: InteractionResponseTypes.ApplicationCommandAutocompleteResult,
             data: {
-              choices: findCvar({ query, isAutocomplete: false })
+              choices: findCvar({ query, isAutocomplete: true })
                 .map((cvar) => {
                   return {
                     name: cvar.name,
@@ -70,7 +70,7 @@ createCommand({
 
         const query = args.find((arg) => arg.name === 'query')?.value?.toString() ?? '';
 
-        const cvars = findCvar({ query, isAutocomplete: true });
+        const cvars = findCvar({ query, isAutocomplete: false });
         const cvar = cvars.at(0);
 
         if (!cvar) {
