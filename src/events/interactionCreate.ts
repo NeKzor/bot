@@ -21,7 +21,6 @@ events.interactionCreate = async (rawBot, interaction) => {
     let guildName = 'Direct Message';
     let guild = {} as Guild;
 
-    // Set guild, if there was an error getting the guild, then just say it was a DM. (What else are we going to do?)
     if (interaction.guildId) {
       const guildOrVoid = await getGuildFromId(bot, interaction.guildId).catch(
         (err) => {

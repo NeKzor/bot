@@ -4,16 +4,19 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from '../utils/logger.ts';
+import { logger } from '../utils/logger.ts';
 import { Campaign } from './campaign.ts';
 import { CVars } from './cvars.ts';
 import { Exploits } from './exploits.ts';
 import { LP } from './lp.ts';
 import { Piston } from './piston.ts';
+import { CustomRoles } from './roles.ts';
 import { SAR } from './sar.ts';
 import { SpeedrunCom } from './speedruncom.ts';
 
 const SERVICE_DATA_UPDATE_INTERVAL = 15 * 60 * 1_000;
+
+const log = logger({ name: 'Services' });
 
 export const services = {
   'CVars': () => CVars.fetch,
@@ -22,10 +25,11 @@ export const services = {
   'SAR': () => SAR.fetch,
   'LP': () => LP.fetch,
   'Exploits': () => Exploits.load,
+  'CustomRoles': () => CustomRoles.load,
 };
 
 export const loadAllServices = async () => {
-  log.info(`Loading all services...`);
+  log.info(`Loading all services`);
 
   await CVars.load();
   await SpeedrunCom.load();
@@ -33,9 +37,12 @@ export const loadAllServices = async () => {
   await SAR.load();
   await Exploits.load();
   await Campaign.load();
+  await CustomRoles.load();
+
+  log.info(`Loaded all services`);
 
   setInterval(async () => {
-    log.info(`Reloading all services...`);
+    log.info(`Reloading all services`);
 
     try {
       const toReload = Object.entries(services);
@@ -46,6 +53,8 @@ export const loadAllServices = async () => {
           return `${toReload[index].at(0)}: ${result ? 'success' : 'failed'}`;
         }).join('\n'),
       );
+
+      log.info(`Reloaded all services`);
     } catch (err) {
       log.error(err);
       log.warn(`Failed to reload all services`);

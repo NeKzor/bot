@@ -25,7 +25,7 @@ const log = logger({ name: 'Main' });
 
 log.info('Using User-Agent:', Deno.env.get('USER_AGENT')!);
 
-log.info('Starting Bot, this might take a while...');
+log.info('Starting bot');
 
 const paths = ['./events', './commands'];
 await fastFileLoader(paths).catch((err) => {
@@ -71,5 +71,8 @@ bot.gateway.manager.createShardOptions.makePresence = (shardId: number) => {
 // };
 
 await loadAllServices();
-await startBot(bot);
 await updateCommands(bot);
+
+log.info('Started bot');
+
+await startBot(bot);
