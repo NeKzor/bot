@@ -18,7 +18,7 @@ import { createCommand } from './mod.ts';
 import { log } from '../utils/logger.ts';
 import { findRole } from './role.ts';
 import { CustomRoles } from '../services/roles.ts';
-import { hasPermissionFlags } from "../utils/helpers.ts";
+import { hasPermissionFlags } from '../utils/helpers.ts';
 
 createCommand({
   name: 'manage',

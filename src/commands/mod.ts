@@ -20,7 +20,7 @@ export interface Command {
   type: ApplicationCommandTypes;
   /** Defaults to `Guild` */
   scope?: 'Global' | 'Guild';
-  guilds?: bigint[],
+  guilds?: bigint[];
   execute: (bot: Bot, interaction: Interaction) => unknown;
   subcommands?: Array<subCommandGroup | subCommand>;
 }
