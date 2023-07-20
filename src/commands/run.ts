@@ -21,7 +21,7 @@ import { createCommand } from './mod.ts';
 
 createCommand({
   name: 'Run this as code',
-  description: 'Execute code.',
+  description: '',
   type: ApplicationCommandTypes.Message,
   scope: 'Global',
   execute: async (bot: Bot, interaction: Interaction) => {
@@ -73,7 +73,7 @@ createCommand({
               codeMessage.channel_id,
               codeMessage.message_id,
             );
-            content = originalMessage.content;
+            content = originalMessage?.content ?? '';
           } catch (err) {
             log.error(err);
 
@@ -194,7 +194,7 @@ createCommand({
                   guild_id: message.guildId,
                   channel_id: message.channelId,
                   message_id: message.id,
-                  user_id: message.authorId,
+                  user_id: message.author.id,
                 },
               );
 

@@ -82,10 +82,13 @@ const getDemoInfo = async (
 
     await bot.helpers.editOriginalInteractionResponse(interaction.token, {
       content: `🛠️ Results for ${escapeMarkdown(attachment.filename)}`,
-      file: {
-        name: `${attachment.filename}.txt`,
-        blob: new Blob(parts, { type: 'text/plain' }),
-      },
+      files: [
+        {
+          name: `${attachment.filename}.txt`,
+          // deno-lint-ignore no-explicit-any
+          blob: new Blob(parts, { type: 'text/plain' }) as any,
+        },
+      ],
     });
   } catch (err) {
     log.error(err);
@@ -98,7 +101,7 @@ const getDemoInfo = async (
 
 createCommand({
   name: 'Get demo info',
-  description: 'Get info about a demo!',
+  description: '',
   type: ApplicationCommandTypes.Message,
   scope: 'Global',
   execute: async (bot: Bot, interaction: Interaction) => {

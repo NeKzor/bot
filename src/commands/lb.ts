@@ -172,10 +172,13 @@ createCommand({
                 lbMessage.channel_id,
                 lbMessage.message_id,
                 {
-                  file: {
-                    name: `${demoName}.txt`,
-                    blob: new Blob(parts, { type: 'text/plain' }),
-                  },
+                  files: [
+                    {
+                      name: `${demoName}.txt`,
+                      // deno-lint-ignore no-explicit-any
+                      blob: new Blob(parts, { type: 'text/plain' }) as any,
+                    },
+                  ],
                   components: messageToEdit.components as MessageComponents,
                 },
               );

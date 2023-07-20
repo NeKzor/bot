@@ -6,11 +6,11 @@
 
 import { Temporal } from 'npm:@js-temporal/polyfill';
 import { DOMParser, Element, Node } from 'https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts';
-import { Bot, BotWithCache, CreateApplicationCommand, Guild, MakeRequired } from '../deps.ts';
-import { getGuild, hasProperty, upsertGuildApplicationCommands } from '../deps.ts';
+import { Bot, CreateApplicationCommand, Guild, hasProperty } from '../deps.ts';
 import { logger } from './logger.ts';
 import type { subCommand, subCommandGroup } from '../commands/mod.ts';
 import { commands } from '../commands/mod.ts';
+import { BotWithCache } from '../bot.ts';
 
 const log = logger({ name: 'Helpers' });
 
@@ -19,10 +19,8 @@ export async function updateCommands(
   bot: BotWithCache,
   scope?: 'Guild' | 'Global',
 ) {
-  const globalCommands: Array<MakeRequired<CreateApplicationCommand, 'name'>> = [];
-  const perGuildCommands: Array<
-    MakeRequired<CreateApplicationCommand, 'name'>
-  > = [];
+  const globalCommands: CreateApplicationCommand[] = [];
+  const perGuildCommands: CreateApplicationCommand[] = [];
 
   for (const command of commands.values()) {
     if (command.scope) {
@@ -53,23 +51,19 @@ export async function updateCommands(
 
   if (globalCommands.length && (scope === 'Global' || scope === undefined)) {
     log.info('Updating Global Commands, changes should apply in short...');
-    await bot.helpers.upsertGlobalApplicationCommands(globalCommands).catch(
-      log.error,
-    );
+    await bot.helpers.upsertGlobalApplicationCommands(globalCommands);
   }
 
   if (perGuildCommands.length && (scope === 'Guild' || scope === undefined)) {
-    await bot.guilds.forEach(async (guild: Guild) => {
-      await upsertGuildApplicationCommands(bot, guild.id, perGuildCommands);
-    });
+    for (const [guildId] of bot.guilds) {
+      await bot.helpers.upsertGuildApplicationCommands(guildId, perGuildCommands);
+    }
   }
 }
 
 /** Update commands for a guild */
 export async function updateGuildCommands(bot: Bot, guild: Guild) {
-  const perGuildCommands: Array<
-    MakeRequired<CreateApplicationCommand, 'name'>
-  > = [];
+  const perGuildCommands: CreateApplicationCommand[] = [];
 
   for (const command of commands.values()) {
     if (command.scope) {
@@ -85,7 +79,7 @@ export async function updateGuildCommands(bot: Bot, guild: Guild) {
   }
 
   if (perGuildCommands.length) {
-    await upsertGuildApplicationCommands(bot, guild.id, perGuildCommands);
+    await bot.helpers.upsertGuildApplicationCommands(guild.id, perGuildCommands);
   }
 }
 
@@ -100,7 +94,7 @@ export async function getGuildFromId(
       returnValue = bot.guilds.get(guildId) as Guild;
     }
 
-    await getGuild(bot, guildId).then((guild) => {
+    await bot.helpers.getGuild(guildId).then((guild) => {
       if (guild) bot.guilds.set(guildId, guild);
       if (guild) returnValue = guild;
     });
