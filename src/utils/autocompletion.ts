@@ -7,9 +7,9 @@
 const defaultSplitCharacter = ' ';
 const defaultMaxItems = 5;
 
-export const createAutocompletion = <T>(
+export const createAutocompletion = <T, C = undefined>(
   options: {
-    items: () => T[];
+    items: (context?: C) => T[];
     idKey: Extract<keyof T, string | number>;
     nameKey: Extract<keyof T, string>;
     maxItems?: number;
@@ -23,9 +23,9 @@ export const createAutocompletion = <T>(
   const maxItems = options.maxItems ?? defaultMaxItems;
 
   return (
-    { query, isAutocomplete }: { query: string; isAutocomplete: boolean },
+    { query, isAutocomplete, context }: { query: string; isAutocomplete: boolean; context?: C },
   ) => {
-    const list = items();
+    const list = items(context);
 
     if (query.length === 0) {
       return list.slice(0, maxItems);
