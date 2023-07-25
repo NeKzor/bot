@@ -1,5 +1,7 @@
 {
   "tasks": {
+    "dev": "deno task --cwd src dev",
+    "prod": "deno task --cwd src prod",
     "docs:build": "mdbook build docs",
     "docs:serve": "mdbook serve docs"
   },
