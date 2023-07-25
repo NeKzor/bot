@@ -617,12 +617,8 @@
         "integrity": "sha512-2X6bvghJ/JAoZO52lbgyAPFj8uCflhTo2g7nkFzEQdXd/D8rEeD4HtmTEpmtGCva260fcd66YNXBOYdnmHqSOg==",
         "dependencies": {
           "jsbi": "jsbi@4.3.0",
-          "tslib": "tslib@2.6.0"
+          "tslib": "tslib@2.6.1"
         }
-      },
-      "@nekz/sdp@0.3.0": {
-        "integrity": "sha512-4vffmc60cA1o6SHMM65c5JXgsaFV99yDMJldufetl/bBb2BjZk1kHj4VqbfKlCrsL66YLhS5oXrJUvMgPgutAg==",
-        "dependencies": {}
       },
       "@nekz/sdp@0.4.0": {
         "integrity": "sha512-zbTEWQOmWPn5ZFKfwlghoJfdjQR9RJLI/OjpfIN4PWxIBBzdbVH0T7QA+NfpQztDhHjWekLIjg+s6lRyg2PPmw==",
@@ -636,8 +632,8 @@
         "integrity": "sha512-dgH4T44TzKVO9CLArNto62hJOwlWJMLUjVVr/ii0uUzZXEXthDNr7/yefW5z/1vvHAfycc1tnuiYyNJ8CTRB3g==",
         "dependencies": {}
       },
-      "tslib@2.6.0": {
-        "integrity": "sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==",
+      "tslib@2.6.1": {
+        "integrity": "sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==",
         "dependencies": {}
       }
     }
