@@ -57,12 +57,8 @@ createCommand({
       case InteractionTypes.ApplicationCommandAutocomplete: {
         switch (subCommand.name) {
           case 'reload': {
-            // TODO: Permissions
-            const hasPermission = [BigInt('84272932246810624')].includes(
-              interaction.user.id,
-            );
-
-            if (!hasPermission) {
+            const isBotOwner = BigInt(Deno.env.get('DISCORD_USER_ID')!) === interaction.user.id;
+            if (!isBotOwner) {
               await bot.helpers.sendInteractionResponse(
                 interaction.id,
                 interaction.token,
