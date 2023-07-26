@@ -33,6 +33,12 @@ const humanize = (str: string) =>
     .replace(/_/g, ' ')
     .replace(/^./, (str) => str.toUpperCase());
 
+const formatToString = (obj: unknown) =>
+  JSON.stringify(
+    obj ?? 'null',
+    (_key, value) => typeof value === 'bigint' ? value.toString() : value,
+  );
+
 events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
   log.info(`[Guild: ${guildId}]`);
 
@@ -592,12 +598,8 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         }
 
         const changeIcon = change.new !== undefined ? ' →' : '';
-
-        const oldChange = change.old !== undefined
-          ? ` ${escapeMarkdown(change.old?.toString() ?? 'null')}${changeIcon}`
-          : '';
-
-        const newChange = change.new !== undefined ? ` ${escapeMarkdown(change.new?.toString() ?? 'null')}` : '';
+        const oldChange = change.old !== undefined ? ` ${escapeMarkdown(formatToString(change.old))}${changeIcon}` : '';
+        const newChange = change.new !== undefined ? ` ${escapeMarkdown(formatToString(change.new))}` : '';
 
         changes.push(
           `${humanize(change.key)}:${oldChange}${newChange}`,
