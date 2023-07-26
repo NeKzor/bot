@@ -89,6 +89,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           changes.push(`Bot: <@${auditLog.targetId}>`);
           break;
         }
+        case AuditLogEvents.ApplicationCommandPermissionUpdate: {
+          const applicationCommand = await bot.helpers.getGuildApplicationCommand(auditLog.targetId!, guildId);
+          changes.push(`Command: /${applicationCommand.name}`);
+          break;
+        }
         default:
           break;
       }
@@ -583,9 +588,6 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.ApplicationCommandPermissionUpdate: {
-            const applicationCommand = await bot.helpers.getGuildApplicationCommand(auditLog.targetId!, guildId);
-            changes.push(`Command: /${applicationCommand.name}`);
-
             // deno-lint-ignore no-explicit-any
             const oldUpdate = change.old as any as ApplicationCommandPermissions | undefined;
             // deno-lint-ignore no-explicit-any
