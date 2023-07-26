@@ -10,6 +10,7 @@ import { Auditor } from '../services/auditor.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
 import {
   ApplicationCommandPermissions,
+  ApplicationCommandPermissionTypes,
   AuditLogEvents,
   BitwisePermissionFlags,
   ChannelTypes,
@@ -25,7 +26,6 @@ import {
   WebhookTypes,
 } from '../deps.ts';
 import { bot } from '../bot.ts';
-import { ApplicationCommandPermissionTypes } from '../../../../.cache/deno/npm/registry.npmjs.org/@discordeno/types/19.0.0-next.3445211/dist/shared.js';
 
 const log = logger({ name: 'Event: GuildAuditLogEntryCreate' });
 
