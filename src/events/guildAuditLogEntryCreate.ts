@@ -9,6 +9,7 @@ import { logger } from '../utils/logger.ts';
 import { Auditor } from '../services/auditor.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
 import {
+  ApplicationCommandPermissions,
   AuditLogEvents,
   BitwisePermissionFlags,
   ChannelTypes,
@@ -24,6 +25,7 @@ import {
   WebhookTypes,
 } from '../deps.ts';
 import { bot } from '../bot.ts';
+import { ApplicationCommandPermissionTypes } from '../../../../.cache/deno/npm/registry.npmjs.org/@discordeno/types/19.0.0-next.3445211/dist/shared.js';
 
 const log = logger({ name: 'Event: GuildAuditLogEntryCreate' });
 
@@ -581,7 +583,26 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.ApplicationCommandPermissionUpdate: {
-            break;
+            const applicationCommand = await bot.helpers.getGuildApplicationCommand(auditLog.targetId!, guildId);
+            changes.push(`Command: /${applicationCommand.name}`);
+
+            // deno-lint-ignore no-explicit-any
+            const update = change.new as any as ApplicationCommandPermissions;
+            switch (update.type) {
+              case ApplicationCommandPermissionTypes.Role:
+                changes.push(`Role: <@&${update.id}>`);
+                break;
+              case ApplicationCommandPermissionTypes.User:
+                changes.push(`User: <@${update.id}>`);
+                break;
+              case ApplicationCommandPermissionTypes.Channel:
+                changes.push(`Channel: <#${update.id}>`);
+                break;
+              default:
+                break;
+            }
+            changes.push(`Permission: ${update.permission ? 'allow' : 'disallow'}`);
+            continue;
           }
           case AuditLogEvents.AutoModerationRuleCreate: {
             break;
