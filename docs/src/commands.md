@@ -32,6 +32,12 @@ Find a console command.
 
 ![cvars.gif](./images/cvars.gif)
 
+### `/delete`
+
+Delete specific bot data.
+
+![delete.gif](./images/delete.gif)
+
 ### `/demo info`
 
 Get information about a demo.
@@ -56,6 +62,18 @@ Find the current least portals record.
 
 ![lp.gif](./images/lp.gif)
 
+### `/manage`
+
+Manage custom roles and auditor webhook.
+
+![manage.gif](./images/manage.gif)
+
+### `/news`
+
+Get the latest news about a Steam game or app.
+
+![news.gif](./images/news.gif)
+
 ### `/report bug`
 
 Report a bug to a specific project.
@@ -67,6 +85,18 @@ Report a bug to a specific project.
 Convert text to regional indicator symbols.
 
 ![ris.gif](./images/ris.gif)
+
+### `/role`
+
+Get a custom role.
+
+![role.gif](./images/role.gif)
+
+### `/update`
+
+Update specific bot data.
+
+![update.gif](./images/update.gif)
 
 ### `/wr`
 

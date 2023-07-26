@@ -2,4 +2,6 @@
 
 - [NeKzBot](./index.md)
 - [Commands](./commands.md)
-- [Installation](./installation.md)
+- [Permissions](./permissions.md)
+- [Development](./development.md)
+  - [Scripts](./scripts.md)
