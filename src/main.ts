@@ -42,12 +42,16 @@ await import('./commands/lb.ts');
 await import('./commands/lp.ts');
 await import('./commands/manage.ts');
 await import('./commands/news.ts');
-await import('./commands/report.ts');
 await import('./commands/ris.ts');
 await import('./commands/role.ts');
 await import('./commands/run.ts');
 await import('./commands/update.ts');
 await import('./commands/wr.ts');
+
+if (Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false') {
+  await import('./commands/report.ts');
+}
+
 await import('./events/guildAuditLogEntryCreate.ts');
 await import('./events/guildCreate.ts');
 await import('./events/interactionCreate.ts');
