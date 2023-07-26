@@ -29,8 +29,10 @@ if (!STEAM_NEWS_SEND) {
 
 const db = await Deno.openKv();
 
+const apps = Portal2Apps.filter((app) => app.name === 'Portal 2');
+
 const checkForNews = async () => {
-  for (const app of Portal2Apps) {
+  for (const app of apps) {
     try {
       log.info(`Checking for ${app.name} news...`);
 
