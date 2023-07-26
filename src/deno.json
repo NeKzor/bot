@@ -8,7 +8,11 @@
     "lineWidth": 120,
     "indentWidth": 2,
     "singleQuote": true,
-    "proseWrap": "preserve"
+    "proseWrap": "preserve",
+    "exclude": [
+      "data",
+      "fileloader.ts"
+    ]
   },
   "compilerOptions": {
     "noUncheckedIndexedAccess": true
