@@ -23,7 +23,7 @@ createCommand({
   name: 'delete',
   description: 'Delete specific bot data.',
   type: ApplicationCommandTypes.ChatInput,
-  scope: 'Global',
+  scope: 'Guild',
   options: [
     {
       name: 'glitch',
@@ -74,26 +74,6 @@ createCommand({
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
           case 'glitch': {
-            // TODO: Permissions
-            const hasPermission = [BigInt('84272932246810624')].includes(
-              interaction.user.id,
-            );
-
-            if (!hasPermission) {
-              await bot.helpers.sendInteractionResponse(
-                interaction.id,
-                interaction.token,
-                {
-                  type: InteractionResponseTypes.ChannelMessageWithSource,
-                  data: {
-                    content: `❌️ You do not have the permissions to use this command.`,
-                    flags: MessageFlags.Ephemeral,
-                  },
-                },
-              );
-              return;
-            }
-
             const name = getArg('name');
             if (!name.length) {
               await bot.helpers.sendInteractionResponse(
