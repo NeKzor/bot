@@ -138,7 +138,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               `${humanize(change.key)}: ${
                 // deno-lint-ignore no-explicit-any
                 (change.new as any[] ?? []).map((item) => {
-                  return JSON.stringify(item);
+                  return JSON.stringify(item, (_key, value) => typeof value === 'bigint' ? value.toString() : value);
                 }).join(', ')}`,
             );
           }
