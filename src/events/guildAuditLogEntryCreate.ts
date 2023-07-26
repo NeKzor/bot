@@ -343,11 +343,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           case AuditLogEvents.RoleUpdate: {
             switch (change.key) {
               case 'name':
-                changes.push(`Name: <@&${change.old}> -> <@&${change.new}>`);
+                changes.push(`Name: <@&${change.old}> → <@&${change.new}>`);
                 continue;
               case 'permissions':
                 changes.push(
-                  `Permissions: ${permissionBitsToString(change.old as bigint)} -> ${
+                  `Permissions: ${permissionBitsToString(change.old as bigint)} → ${
                     permissionBitsToString(change.new as bigint)
                   }`,
                 );
@@ -587,8 +587,12 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             changes.push(`Command: /${applicationCommand.name}`);
 
             // deno-lint-ignore no-explicit-any
-            const update = change.new as any as ApplicationCommandPermissions;
-            switch (update.type) {
+            const oldUpdate = change.old as any as ApplicationCommandPermissions | undefined;
+            // deno-lint-ignore no-explicit-any
+            const newUpdate = change.new as any as ApplicationCommandPermissions | undefined;
+            const update = oldUpdate ?? newUpdate;
+
+            switch (update?.type) {
               case ApplicationCommandPermissionTypes.Role:
                 changes.push(`Role: <@&${update.id}>`);
                 break;
@@ -601,7 +605,18 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               default:
                 break;
             }
-            changes.push(`Permission: ${update.permission ? 'allow' : 'disallow'}`);
+
+            if (oldUpdate && !newUpdate) {
+              changes.push(`Permission: ${oldUpdate.permission ? 'allow' : 'disallow'}`);
+            } else if (oldUpdate && newUpdate) {
+              changes.push(
+                `Permission: ${oldUpdate.permission ? 'allow' : 'disallow'} → ${
+                  newUpdate.permission ? 'allow' : 'disallow'
+                }`,
+              );
+            } else if (newUpdate) {
+              changes.push(`Permission: ${newUpdate.permission ? 'allow' : 'disallow'}`);
+            }
             continue;
           }
           case AuditLogEvents.AutoModerationRuleCreate: {
