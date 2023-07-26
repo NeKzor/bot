@@ -35,7 +35,7 @@ A preview of each command can be seen on [bot.nekz.me/commands].
 - ~~Add rate limiter~~
 - ~~Add permission checks~~
 - Document new commands
-- Migrate discordeno to v19
+- ~~Migrate discordeno to v19~~
 
 ## Dependencies
 
