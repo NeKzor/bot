@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "news": "deno run --unstable --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,store.steampowered.com news.ts",
+    "stats": "deno run --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,board.portal2.sr stats.ts"
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve"
+  }
+}
