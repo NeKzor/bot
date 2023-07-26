@@ -38,7 +38,7 @@ export const bot = enableCachePlugin(
   createBot({
     token: Deno.env.get('DISCORD_BOT_TOKEN')!,
     botId: BigInt(Deno.env.get('DISCORD_BOT_ID')!),
-    intents: GatewayIntents.Guilds,
+    intents: GatewayIntents.Guilds | (1 << 2),
     events,
   }),
 );

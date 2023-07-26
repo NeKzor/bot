@@ -19,6 +19,7 @@ import { log } from '../utils/logger.ts';
 import { findRole } from './role.ts';
 import { CustomRoles } from '../services/roles.ts';
 import { hasPermissionFlags } from '../utils/helpers.ts';
+import { Auditor } from '../services/auditor.ts';
 
 createCommand({
   name: 'manage',
@@ -26,6 +27,31 @@ createCommand({
   type: ApplicationCommandTypes.ChatInput,
   scope: 'Guild',
   options: [
+    {
+      name: 'auditor',
+      description: 'Manage auditor.',
+      type: ApplicationCommandOptionTypes.SubCommandGroup,
+      options: [
+        {
+          name: 'create',
+          description: 'Create and install a new auditor.',
+          type: ApplicationCommandOptionTypes.SubCommand,
+          options: [
+            {
+              name: 'channel',
+              description: 'Channel for audit logs.',
+              type: ApplicationCommandOptionTypes.Channel,
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'delete',
+          description: 'Delete the currently installed auditor.',
+          type: ApplicationCommandOptionTypes.SubCommand,
+        },
+      ],
+    },
     {
       name: 'roles',
       description: 'Manage custom roles.',
@@ -46,7 +72,7 @@ createCommand({
         },
         {
           name: 'delete',
-          description: 'Remove an existing custom role.',
+          description: 'Delete an existing custom role.',
           type: ApplicationCommandOptionTypes.SubCommand,
           options: [
             {
@@ -73,19 +99,43 @@ createCommand({
     };
     const guildId = interaction.guildId!;
 
-    if (!hasPermissionFlags(interaction.member?.permissions, BitwisePermissionFlags.MANAGE_ROLES)) {
-      await bot.helpers.sendInteractionResponse(
-        interaction.id,
-        interaction.token,
-        {
-          type: InteractionResponseTypes.ChannelMessageWithSource,
-          data: {
-            content: `❌️ You do not have the permissions to use this command.`,
-            flags: 1 << 6,
-          },
-        },
-      );
-      return;
+    switch (subCommand.name) {
+      case 'auditor': {
+        if (!hasPermissionFlags(interaction.member?.permissions, BitwisePermissionFlags.VIEW_AUDIT_LOG)) {
+          await bot.helpers.sendInteractionResponse(
+            interaction.id,
+            interaction.token,
+            {
+              type: InteractionResponseTypes.ChannelMessageWithSource,
+              data: {
+                content: `❌️ You do not have the permissions to use this command.`,
+                flags: 1 << 6,
+              },
+            },
+          );
+          return;
+        }
+        break;
+      }
+      case 'roles': {
+        if (!hasPermissionFlags(interaction.member?.permissions, BitwisePermissionFlags.MANAGE_ROLES)) {
+          await bot.helpers.sendInteractionResponse(
+            interaction.id,
+            interaction.token,
+            {
+              type: InteractionResponseTypes.ChannelMessageWithSource,
+              data: {
+                content: `❌️ You do not have the permissions to use this command.`,
+                flags: 1 << 6,
+              },
+            },
+          );
+          return;
+        }
+        break;
+      }
+      default:
+        break;
     }
 
     switch (interaction.type) {
@@ -126,6 +176,110 @@ createCommand({
       }
       case InteractionTypes.ApplicationCommand: {
         switch (subCommand.name) {
+          case 'auditor': {
+            switch (subSubCommand.name) {
+              case 'create': {
+                try {
+                  await bot.helpers.sendInteractionResponse(
+                    interaction.id,
+                    interaction.token,
+                    {
+                      type: InteractionResponseTypes.ChannelMessageWithSource,
+                      data: {
+                        content: `🔍️ Creating new auditor...`,
+                        flags: 1 << 6,
+                      },
+                    },
+                  );
+
+                  const auditor = await Auditor.find(interaction.guildId!);
+                  if (auditor) {
+                    await bot.helpers.editOriginalInteractionResponse(
+                      interaction.token,
+                      {
+                        content: `❌️ An existing auditor already exists.`,
+                      },
+                    );
+                    return;
+                  }
+
+                  const webhook = await bot.helpers.createWebhook(getArg('channel'), {
+                    name: 'Auditor',
+                  });
+
+                  await Auditor.save({
+                    guildId: interaction.guildId!,
+                    url: webhook.url!,
+                  });
+
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `🔍️ Created new auditor.`,
+                    },
+                  );
+                } catch (err) {
+                  log.error(err);
+
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `❌️ Failed to create auditor.`,
+                    },
+                  );
+                }
+                break;
+              }
+              case 'delete': {
+                try {
+                  await bot.helpers.sendInteractionResponse(
+                    interaction.id,
+                    interaction.token,
+                    {
+                      type: InteractionResponseTypes.ChannelMessageWithSource,
+                      data: {
+                        content: `🔍️ Deleting auditor...`,
+                        flags: 1 << 6,
+                      },
+                    },
+                  );
+
+                  const auditor = await Auditor.find(interaction.guildId!);
+                  if (!auditor) {
+                    await bot.helpers.editOriginalInteractionResponse(
+                      interaction.token,
+                      {
+                        content: `❌️ Did not find an installed auditor.`,
+                      },
+                    );
+                    return;
+                  }
+
+                  await Auditor.remove(auditor);
+
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `🔍️ Deleted auditor.`,
+                    },
+                  );
+                } catch (err) {
+                  log.error(err);
+
+                  await bot.helpers.editOriginalInteractionResponse(
+                    interaction.token,
+                    {
+                      content: `❌️ Failed to delete auditor.`,
+                    },
+                  );
+                }
+                break;
+              }
+              default:
+                break;
+            }
+            break;
+          }
           case 'roles': {
             switch (subSubCommand.name) {
               case 'create': {
