@@ -4,18 +4,19 @@
  * SPDX-License-Identifier: MIT
  */
 
-import type { BotWithCache, Guild } from '../deps.ts';
+import type { Guild } from '../deps.ts';
 import { bgBlack, bgYellow, black, green, InteractionTypes, red, white, yellow } from '../deps.ts';
 import { events } from './mod.ts';
 import { logger } from '../utils/logger.ts';
 import { getGuildFromId } from '../utils/helpers.ts';
 import type { Command } from '../commands/mod.ts';
 import { commands } from '../commands/mod.ts';
+import { BotWithCache } from '../bot.ts';
 
 const log = logger({ name: 'Event: InteractionCreate' });
 
-events.interactionCreate = async (rawBot, interaction) => {
-  const bot = rawBot as BotWithCache;
+events.interactionCreate = async (interaction) => {
+  const bot = interaction.bot as BotWithCache;
 
   if (interaction.data && interaction.id) {
     let guildName = 'Direct Message';
@@ -74,7 +75,7 @@ events.interactionCreate = async (rawBot, interaction) => {
       if (source) {
         try {
           if (command) {
-            command.execute(rawBot, interaction);
+            command.execute(bot, interaction);
             log.info(
               `[Command: ${bgYellow(black(String(source)))} - ${
                 bgBlack(green(`Success`))

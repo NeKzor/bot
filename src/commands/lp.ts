@@ -12,6 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { escapeMaskedLink } from '../utils/helpers.ts';
@@ -87,7 +88,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Map not found.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -102,7 +103,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -122,7 +123,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ LP record not found.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );

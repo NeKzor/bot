@@ -8,17 +8,16 @@ import {
   ApplicationCommandOptionChoice,
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
-  BitwisePermissionFlags,
   Bot,
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { log } from '../utils/logger.ts';
 import { findRole } from './role.ts';
 import { CustomRoles } from '../services/roles.ts';
-import { hasPermissionFlags } from '../utils/helpers.ts';
 import { Auditor } from '../services/auditor.ts';
 
 createCommand({
@@ -101,7 +100,7 @@ createCommand({
 
     switch (subCommand.name) {
       case 'auditor': {
-        if (!hasPermissionFlags(interaction.member?.permissions, BitwisePermissionFlags.VIEW_AUDIT_LOG)) {
+        if (!interaction.member?.permissions?.has('VIEW_AUDIT_LOG')) {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
@@ -109,7 +108,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ You do not have the permissions to use this command.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -118,7 +117,7 @@ createCommand({
         break;
       }
       case 'roles': {
-        if (!hasPermissionFlags(interaction.member?.permissions, BitwisePermissionFlags.MANAGE_ROLES)) {
+        if (!interaction.member?.permissions?.has('MANAGE_ROLES')) {
           await bot.helpers.sendInteractionResponse(
             interaction.id,
             interaction.token,
@@ -126,7 +125,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ You do not have the permissions to use this command.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -187,7 +186,7 @@ createCommand({
                       type: InteractionResponseTypes.ChannelMessageWithSource,
                       data: {
                         content: `🔍️ Creating new auditor...`,
-                        flags: 1 << 6,
+                        flags: MessageFlags.Ephemeral,
                       },
                     },
                   );
@@ -239,7 +238,7 @@ createCommand({
                       type: InteractionResponseTypes.ChannelMessageWithSource,
                       data: {
                         content: `🔍️ Deleting auditor...`,
-                        flags: 1 << 6,
+                        flags: MessageFlags.Ephemeral,
                       },
                     },
                   );
@@ -291,7 +290,7 @@ createCommand({
                       type: InteractionResponseTypes.ChannelMessageWithSource,
                       data: {
                         content: `🎉️ Creating custom roles...`,
-                        flags: 1 << 6,
+                        flags: MessageFlags.Ephemeral,
                       },
                     },
                   );
@@ -368,7 +367,7 @@ createCommand({
                       type: InteractionResponseTypes.ChannelMessageWithSource,
                       data: {
                         content: `🎉️ Deleting custom roles...`,
-                        flags: 1 << 6,
+                        flags: MessageFlags.Ephemeral,
                       },
                     },
                   );

@@ -11,6 +11,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { escapeMarkdown, formatBoardPoints } from '../utils/helpers.ts';
@@ -55,7 +56,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Invalid aggregation type.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );

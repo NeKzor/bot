@@ -13,6 +13,7 @@ import {
   InteractionTypes,
   MessageComponents,
   MessageComponentTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { InteractionKey, InteractionsDb } from '../services/interactions.ts';
 import { Piston } from '../services/piston.ts';
@@ -21,7 +22,7 @@ import { createCommand } from './mod.ts';
 
 createCommand({
   name: 'Run this as code',
-  description: 'Execute code.',
+  description: '',
   type: ApplicationCommandTypes.Message,
   scope: 'Global',
   execute: async (bot: Bot, interaction: Interaction) => {
@@ -46,7 +47,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Unable to re-run the original code.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -61,7 +62,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ You are not allowed to re-run this code.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -73,7 +74,7 @@ createCommand({
               codeMessage.channel_id,
               codeMessage.message_id,
             );
-            content = originalMessage.content;
+            content = originalMessage?.content ?? '';
           } catch (err) {
             log.error(err);
 
@@ -84,7 +85,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ Unable to find original message.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -110,7 +111,7 @@ createCommand({
                   'code',
                   '\\`\\`\\`',
                 ].join('\n'),
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -133,7 +134,7 @@ createCommand({
                 content: `❌️ Language is not supported. List of supported languages:\n` +
                   Piston.Runtimes.map((runtime) => `\`${runtime.language}\``)
                     .join(', '),
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -194,7 +195,7 @@ createCommand({
                   guild_id: message.guildId,
                   channel_id: message.channelId,
                   message_id: message.id,
-                  user_id: message.authorId,
+                  user_id: message.author.id,
                 },
               );
 

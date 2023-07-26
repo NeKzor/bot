@@ -6,10 +6,10 @@
 
 import { Temporal } from 'npm:@js-temporal/polyfill';
 import { DOMParser, Element, Node } from 'https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts';
-import { BitwisePermissionFlags, Bot, BotWithCache, CreateApplicationCommand, Guild } from '../deps.ts';
-import { getGuild, upsertGuildApplicationCommands } from '../deps.ts';
+import { Bot, CreateApplicationCommand, Guild } from '../deps.ts';
 import { logger } from './logger.ts';
 import { commands } from '../commands/mod.ts';
+import { BotWithCache } from '../bot.ts';
 
 const log = logger({ name: 'Helpers' });
 
@@ -60,7 +60,7 @@ export async function updateGuildCommands(bot: Bot, guild: Guild) {
 
   log.info(`Updating ${guildCommands.length} commands for guild ${guild.id}`);
 
-  await upsertGuildApplicationCommands(bot, guild.id, guildCommands)
+  await bot.helpers.upsertGuildApplicationCommands(guild.id, guildCommands)
     .catch(log.error);
 }
 
@@ -83,7 +83,7 @@ export async function getGuildFromId(
       returnValue = guild;
     }
 
-    await getGuild(bot, guildId).then((guild) => {
+    await bot.helpers.getGuild(guildId).then((guild) => {
       if (guild) {
         bot.guilds.set(guildId, guild);
         returnValue = guild;
@@ -93,17 +93,6 @@ export async function getGuildFromId(
 
   return returnValue;
 }
-
-/**
- * Check the permissions of a member.
- *
- * @param permissions - The permission of the member.
- * @param flags - The flags to check against.
- * @returns - Returns true if the flags are set.
- */
-export const hasPermissionFlags = (permissions: bigint | undefined, flags: BitwisePermissionFlags) => {
-  return (permissions ?? 0n) & BigInt(flags);
-};
 
 /**
  * Escape the title of a link for rendering Discord's masked links.

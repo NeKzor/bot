@@ -12,6 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { Exploits } from '../services/exploits.ts';
 import { log } from '../utils/logger.ts';
@@ -86,7 +87,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ You do not have the permissions to use this command.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );
@@ -102,7 +103,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ Invalid glitch name.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );
@@ -116,7 +117,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `Deleting glitch...`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );

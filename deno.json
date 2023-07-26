@@ -18,8 +18,7 @@
     "proseWrap": "preserve",
     "exclude": [
       "docs/book",
-      "src/data",
-      "src/fileloader.ts"
+      "src/data"
     ]
   }
 }

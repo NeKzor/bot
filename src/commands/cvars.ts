@@ -12,6 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
@@ -81,7 +82,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Console command not found.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -96,7 +97,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );

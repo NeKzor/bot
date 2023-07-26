@@ -13,6 +13,7 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
   MessageComponentTypes,
+  MessageFlags,
   SelectOption,
   TextStyles,
 } from '../deps.ts';
@@ -199,7 +200,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ Invalid project.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );

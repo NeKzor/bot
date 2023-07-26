@@ -12,6 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { Portal2Apps, Steam } from '../services/steam.ts';
@@ -84,7 +85,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `❌️ App not found.`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -98,7 +99,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );

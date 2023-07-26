@@ -16,15 +16,16 @@ import {
   Embed,
   ExplicitContentFilterLevels,
   GuildNsfwLevel,
-  InviteTargetTypes,
   MfaLevels,
   PremiumTiers,
   SystemChannelFlags,
+  TargetTypes,
   VerificationLevels,
   WebhookTypes,
 } from '../deps.ts';
+import { bot } from '../bot.ts';
 
-const log = logger({ name: 'Event: AuditLogEntryCreate' });
+const log = logger({ name: 'Event: GuildAuditLogEntryCreate' });
 
 const humanize = (str: string) =>
   str
@@ -32,7 +33,7 @@ const humanize = (str: string) =>
     .replace(/_/g, ' ')
     .replace(/^./, (str) => str.toUpperCase());
 
-events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
+events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
   log.info(`[Guild: ${guildId}]`);
 
   try {
@@ -95,7 +96,9 @@ events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
 
         if (Array.isArray(change.new) || Array.isArray(change.old)) {
           if (change.key === 'permission_overwrites') {
+            // deno-lint-ignore no-explicit-any
             const newPermissions = (change.new ?? []) as any[];
+            // deno-lint-ignore no-explicit-any
             const oldPermission = (change.old ?? []) as any[];
 
             if (oldPermission.length) {
@@ -133,10 +136,10 @@ events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
           } else {
             changes.push(
               `${humanize(change.key)}: ${
+                // deno-lint-ignore no-explicit-any
                 (change.new as any[] ?? []).map((item) => {
                   return JSON.stringify(item);
-                }).join(', ')
-              }`,
+                }).join(', ')}`,
             );
           }
 
@@ -371,7 +374,7 @@ events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
                 changes.push(`Inviter: <@${change.new}>`);
                 continue;
               case 'type':
-                changes.push(`Type: ${inviteTargetTypesMapping[change.new as InviteTargetTypes]}`);
+                changes.push(`Type: ${targetTypesMapping[change.new as TargetTypes]}`);
                 continue;
               default:
                 break;
@@ -391,8 +394,8 @@ events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
                 continue;
               case 'type':
                 changes.push(
-                  `Type: ${inviteTargetTypesMapping[change.old as InviteTargetTypes]} → ${
-                    inviteTargetTypesMapping[change.new as InviteTargetTypes]
+                  `Type: ${targetTypesMapping[change.old as TargetTypes]} → ${
+                    targetTypesMapping[change.new as TargetTypes]
                   }`,
                 );
                 continue;
@@ -413,7 +416,7 @@ events.auditLogEntryCreate = async (bot, auditLog, guildId) => {
                 changes.push(`Inviter: <@${change.old}>`);
                 continue;
               case 'type':
-                changes.push(`Type: ${inviteTargetTypesMapping[change.old as InviteTargetTypes]}`);
+                changes.push(`Type: ${targetTypesMapping[change.old as TargetTypes]}`);
                 continue;
               default:
                 break;
@@ -669,7 +672,7 @@ const permissionStringMapping = {
   [BitwisePermissionFlags.MANAGE_NICKNAMES]: 'Manage Nicknames',
   [BitwisePermissionFlags.MANAGE_ROLES]: 'Manage Roles',
   [BitwisePermissionFlags.MANAGE_WEBHOOKS]: 'Manage Webhooks',
-  [BitwisePermissionFlags.MANAGE_EMOJIS_AND_STICKERS]: 'Manage Emojis And Stickers',
+  [BitwisePermissionFlags.MANAGE_GUILD_EXPRESSIONS]: 'Manage Guild Expressions',
   [BitwisePermissionFlags.USE_SLASH_COMMANDS]: 'Use Slash Commands',
   [BitwisePermissionFlags.REQUEST_TO_SPEAK]: 'Request To Speak',
   [BitwisePermissionFlags.MANAGE_EVENTS]: 'Manage Events',
@@ -694,20 +697,20 @@ const defaultMessageNotificationLevelMapping = {
   [DefaultMessageNotificationLevels.OnlyMentions]:
     DefaultMessageNotificationLevels[DefaultMessageNotificationLevels.OnlyMentions],
 };
-const explicitContentFilterLevelsMapping = {
+const _explicitContentFilterLevelsMapping = {
   [ExplicitContentFilterLevels.Disabled]: ExplicitContentFilterLevels[ExplicitContentFilterLevels.Disabled],
   [ExplicitContentFilterLevels.MembersWithoutRoles]:
     ExplicitContentFilterLevels[ExplicitContentFilterLevels.MembersWithoutRoles],
   [ExplicitContentFilterLevels.AllMembers]: ExplicitContentFilterLevels[ExplicitContentFilterLevels.AllMembers],
 };
-const verificationLevelsMapping = {
+const _verificationLevelsMapping = {
   [VerificationLevels.None]: VerificationLevels[VerificationLevels.None],
   [VerificationLevels.Low]: VerificationLevels[VerificationLevels.Low],
   [VerificationLevels.Medium]: VerificationLevels[VerificationLevels.Medium],
   [VerificationLevels.High]: VerificationLevels[VerificationLevels.High],
   [VerificationLevels.VeryHigh]: VerificationLevels[VerificationLevels.VeryHigh],
 };
-const mfaLevelsMapping = {
+const _mfaLevelsMapping = {
   [MfaLevels.None]: MfaLevels[MfaLevels.None],
   [MfaLevels.Elevated]: MfaLevels[MfaLevels.Elevated],
 };
@@ -739,13 +742,13 @@ const channelFlagsBitsToString = (bits: number) => {
     return bits & Number(key) ? value : null;
   }).filter((value) => value !== null).join(', ');
 };
-const premiumTiersMapping = {
+const _premiumTiersMapping = {
   [PremiumTiers.None]: PremiumTiers[PremiumTiers.None],
   [PremiumTiers.Tier1]: PremiumTiers[PremiumTiers.Tier1],
   [PremiumTiers.Tier2]: PremiumTiers[PremiumTiers.Tier2],
   [PremiumTiers.Tier3]: PremiumTiers[PremiumTiers.Tier3],
 };
-const guildNsfwLevelMapping = {
+const _guildNsfwLevelMapping = {
   [GuildNsfwLevel.Default]: GuildNsfwLevel[GuildNsfwLevel.Default],
   [GuildNsfwLevel.Explicit]: GuildNsfwLevel[GuildNsfwLevel.Explicit],
   [GuildNsfwLevel.Safe]: GuildNsfwLevel[GuildNsfwLevel.Safe],
@@ -770,7 +773,7 @@ const webhookTypesMapping = {
   [WebhookTypes.ChannelFollower]: WebhookTypes[WebhookTypes.ChannelFollower],
   [WebhookTypes.Application]: WebhookTypes[WebhookTypes.Application],
 };
-const inviteTargetTypesMapping = {
-  [InviteTargetTypes.Stream]: InviteTargetTypes[InviteTargetTypes.Stream],
-  [InviteTargetTypes.EmbeddedApplication]: InviteTargetTypes[InviteTargetTypes.EmbeddedApplication],
+const targetTypesMapping = {
+  [TargetTypes.Stream]: TargetTypes[TargetTypes.Stream],
+  [TargetTypes.EmbeddedApplication]: TargetTypes[TargetTypes.EmbeddedApplication],
 };

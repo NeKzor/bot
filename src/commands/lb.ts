@@ -16,6 +16,7 @@ import {
   InteractionTypes,
   MessageComponents,
   MessageComponentTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { createCommand } from './mod.ts';
 import { escapeMarkdown, escapeMaskedLink, formatCmTime, getDurationSince } from '../utils/helpers.ts';
@@ -84,7 +85,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ Unable to parse demo.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );
@@ -99,7 +100,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ You are not allowed to parse this demo.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );
@@ -172,10 +173,13 @@ createCommand({
                 lbMessage.channel_id,
                 lbMessage.message_id,
                 {
-                  file: {
-                    name: `${demoName}.txt`,
-                    blob: new Blob(parts, { type: 'text/plain' }),
-                  },
+                  files: [
+                    {
+                      name: `${demoName}.txt`,
+                      // deno-lint-ignore no-explicit-any
+                      blob: new Blob(parts, { type: 'text/plain' }) as any,
+                    },
+                  ],
                   components: messageToEdit.components as MessageComponents,
                 },
               );
@@ -241,7 +245,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Chamber not found.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );
@@ -256,7 +260,7 @@ createCommand({
               type: InteractionResponseTypes.ChannelMessageWithSource,
               data: {
                 content: `❌️ Your query matched too many results. Please choose a result from autocompletion.`,
-                flags: 1 << 6,
+                flags: MessageFlags.Ephemeral,
               },
             },
           );

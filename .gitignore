@@ -1,7 +1,6 @@
 .vscode/
 docs/book/
 log/
-src/fileloader.ts
 
 # Logs
 logs

@@ -11,6 +11,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
+  MessageFlags,
 } from '../deps.ts';
 import { reloadAllServices, reloadService, services } from '../services/mod.ts';
 import { log } from '../utils/logger.ts';
@@ -69,7 +70,7 @@ createCommand({
                   type: InteractionResponseTypes.ChannelMessageWithSource,
                   data: {
                     content: `❌️ You do not have the permissions to use this command.`,
-                    flags: 1 << 6,
+                    flags: MessageFlags.Ephemeral,
                   },
                 },
               );
@@ -119,7 +120,7 @@ createCommand({
                     `:small_red_triangle: ${Deno.build.os} ${Deno.build.arch}`,
                     `:up: ${uptime}`,
                   ].join('\n'),
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
@@ -135,7 +136,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   content: `🤖️ Reloading bot data...`,
-                  flags: 1 << 6,
+                  flags: MessageFlags.Ephemeral,
                 },
               },
             );
