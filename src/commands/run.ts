@@ -120,8 +120,12 @@ createCommand({
 
         const codeBlockStart = content.slice(start + 3);
         const codeStart = codeBlockStart.indexOf('\n');
-        const language = codeBlockStart.slice(0, codeStart).toLowerCase();
         const code = codeBlockStart.slice(codeStart + 1, end - 3);
+        const hasLanguageOrRuntimeTag = code.startsWith('// language:') || code.startsWith('// runtime:');
+        const language = hasLanguageOrRuntimeTag
+          ? code.slice(code.indexOf(':') + 1, code.indexOf('\n')).trim()
+          : codeBlockStart.slice(0, codeStart).toLowerCase();
+        const codeWithoutTag = hasLanguageOrRuntimeTag ? code.slice(code.indexOf('\n') + 1) : code;
         const runtime = Piston.findRuntime(language);
 
         if (!runtime) {
@@ -205,7 +209,7 @@ createCommand({
             }
           }
 
-          const result = await Piston.execute(runtime, code);
+          const result = await Piston.execute(runtime, codeWithoutTag);
 
           await bot.helpers.editOriginalInteractionResponse(
             interaction.token,
