@@ -119,4 +119,6 @@ This will run formatted code via the [piston engine].
 
 ![run_this_as_code.gif](./images/run_this_as_code.gif)
 
+To specify the exact language or runtime use `// language:<name>` or `// runtime:<name>` as the first line in the code.
+
 [piston engine]: https://github.com/engineer-man/piston
