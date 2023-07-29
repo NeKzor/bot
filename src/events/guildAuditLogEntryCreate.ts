@@ -195,6 +195,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -211,6 +212,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -235,6 +237,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -251,6 +254,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -270,6 +274,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Deny: ${permissionBitsToString(change.new as bigint)}`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -297,6 +302,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -316,6 +322,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Deny: ${permissionBitsToString(change.old as bigint)}`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -351,6 +358,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                   }`,
                 );
                 break;
+              default:
+                log.warn(`Unresolved key: ${change.key}`);
+                break;
             }
             continue;
           }
@@ -372,6 +382,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Permissions: ${permissionBitsToString(change.new as bigint)}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -389,6 +400,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -402,6 +414,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Permissions: ${permissionBitsToString(change.old as bigint)}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -421,6 +434,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${targetTypesMapping[change.new as TargetTypes]}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -444,6 +458,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -463,6 +478,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${targetTypesMapping[change.old as TargetTypes]}`);
                 continue;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -476,6 +492,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${webhookTypesMapping[change.new as WebhookTypes]}`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -493,6 +510,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -506,6 +524,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${webhookTypesMapping[change.old as WebhookTypes]}`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -516,6 +535,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Name: ${change.new} <:${change.new}:${auditLog.targetId}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -526,6 +546,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Name: ${change.old} → ${change.new} <:${change.new}:${auditLog.targetId}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -536,6 +557,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Name: ${change.old} <:${change.old}:${auditLog.targetId}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
@@ -558,6 +580,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Channel: <#${change.new}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -568,6 +591,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Channel: <#${change.old}> → <#${change.new}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -578,6 +602,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Channel: <#${change.old}>`);
                 break;
               default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             break;
@@ -632,6 +657,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'flags':
                 changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
                 break;
+              default:
+                log.warn(`Unresolved key: ${change.key}`);
+                break;
             }
             continue;
           }
@@ -678,6 +706,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Applied Tags: ${oldTags} → ${newTags}`);
                 break;
               }
+              default:
+                log.warn(`Unresolved key: ${change.key}`);
+                break;
             }
             continue;
           }
@@ -703,6 +734,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 break;
               case 'flags':
                 changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                break;
+              default:
+                log.warn(`Unresolved key: ${change.key}`);
                 break;
             }
             continue;
