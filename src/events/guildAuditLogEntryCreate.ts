@@ -9,10 +9,12 @@ import { logger } from '../utils/logger.ts';
 import { Auditor } from '../services/auditor.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
 import {
+  ApplicationCommand,
   ApplicationCommandPermissions,
   ApplicationCommandPermissionTypes,
   AuditLogEvents,
   BitwisePermissionFlags,
+  ChannelFlags,
   ChannelTypes,
   DefaultMessageNotificationLevels,
   Embed,
@@ -22,6 +24,7 @@ import {
   PremiumTiers,
   SystemChannelFlags,
   TargetTypes,
+  User,
   VerificationLevels,
   WebhookTypes,
 } from '../deps.ts';
@@ -90,8 +93,20 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           break;
         }
         case AuditLogEvents.ApplicationCommandPermissionUpdate: {
-          const applicationCommand = await bot.helpers.getGuildApplicationCommand(auditLog.targetId!, guildId);
-          changes.push(`Command: /${applicationCommand.name}`);
+          let applicationCommand: ApplicationCommand | null = null;
+          try {
+            applicationCommand = await bot.helpers.getGuildApplicationCommand(auditLog.targetId!, guildId);
+
+            changes.push(`Command: /${applicationCommand?.name ?? auditLog.targetId!}`);
+          } catch (err) {
+            log.error('Unable to get guild application command', err);
+          }
+          break;
+        }
+        case AuditLogEvents.ThreadCreate:
+        case AuditLogEvents.ThreadUpdate:
+        case AuditLogEvents.ThreadDelete: {
+          changes.push(`Thread: <#${auditLog.targetId}>`);
           break;
         }
         default:
@@ -321,7 +336,23 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.MemberRoleUpdate: {
-            break;
+            switch (change.key) {
+              case '$add':
+                changes.push(
+                  `Added: ${
+                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')
+                  }`,
+                );
+                break;
+              case '$remove':
+                changes.push(
+                  `Removed: ${
+                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')
+                  }`,
+                );
+                break;
+            }
+            continue;
           }
           case AuditLogEvents.MemberMove: {
             break;
@@ -579,13 +610,102 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.ThreadCreate: {
-            break;
+            switch (change.key as string) {
+              case 'name':
+                changes.push(`Name: ${change.new}`);
+                break;
+              case 'type':
+                changes.push(`Type: ${channelTypesMapping[change.new as ChannelTypes]}`);
+                break;
+              case 'archived':
+                changes.push(`Archived: ${change.new}`);
+                break;
+              case 'locked':
+                changes.push(`Locked: ${change.new}`);
+                break;
+              case 'auto_archive_duration':
+                changes.push(`Auto archive duration: ${change.new}`);
+                break;
+              case 'rate_limit_per_user':
+                changes.push(`Rate limit per user: ${change.new}`);
+                break;
+              case 'flags':
+                changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
+                break;
+            }
+            continue;
           }
           case AuditLogEvents.ThreadUpdate: {
-            break;
+            switch (change.key as string) {
+              case 'name':
+                changes.push(`Name: ${change.old} → ${change.new}`);
+                break;
+              case 'type':
+                changes.push(
+                  `Type: ${channelTypesMapping[change.old as ChannelTypes]} → ${
+                    channelTypesMapping[change.new as ChannelTypes]
+                  }`,
+                );
+                break;
+              case 'archived':
+                changes.push(`Archived: ${change.old} → ${change.new}`);
+                break;
+              case 'locked':
+                changes.push(`Locked: ${change.old} → ${change.new}`);
+                break;
+              case 'auto_archive_duration':
+                changes.push(`Auto archive duration: ${change.old} → ${change.new}`);
+                break;
+              case 'rate_limit_per_user':
+                changes.push(`Rate limit per user: ${change.old} → ${change.new}`);
+                break;
+              case 'flags':
+                changes.push(
+                  `Flags: ${channelFlagsBitsToString(change.old as number)} → ${
+                    channelFlagsBitsToString(change.new as number)
+                  }`,
+                );
+                break;
+              case 'applied_tags': {
+                const thread = await bot.rest.getChannel(auditLog.targetId!);
+                const tags = thread.availableTags ?? [];
+                const oldTags = (change.old as any as [])
+                  .map((id) => tags.find((tag) => tag.id === id)?.name)
+                  .join(', ');
+                const newTags = (change.new as any as [])
+                  .map((id) => tags.find((tag) => tag.id === id)?.name)
+                  .join(', ');
+                changes.push(`Applied Tags: ${oldTags} → ${newTags}`);
+                break;
+              }
+            }
+            continue;
           }
           case AuditLogEvents.ThreadDelete: {
-            break;
+            switch (change.key as string) {
+              case 'name':
+                changes.push(`Name: ${change.old}`);
+                break;
+              case 'type':
+                changes.push(`Type: ${channelTypesMapping[change.old as ChannelTypes]}`);
+                break;
+              case 'archived':
+                changes.push(`Archived: ${change.old}`);
+                break;
+              case 'locked':
+                changes.push(`Locked: ${change.old}`);
+                break;
+              case 'auto_archive_duration':
+                changes.push(`Auto archive duration: ${change.old}`);
+                break;
+              case 'rate_limit_per_user':
+                changes.push(`Rate limit per user: ${change.old}`);
+                break;
+              case 'flags':
+                changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                break;
+            }
+            continue;
           }
           case AuditLogEvents.ApplicationCommandPermissionUpdate: {
             // deno-lint-ignore no-explicit-any
@@ -644,7 +764,13 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         );
       }
 
-      const user = auditLog.userId ? await bot.helpers.getUser(auditLog.userId!) : null;
+      let user: User | null = null;
+
+      try {
+        user = await bot.helpers.getUser(auditLog.userId!);
+      } catch (err) {
+        log.error('Unable to get user', err);
+      }
 
       console.dir({ changes });
 
@@ -769,13 +895,9 @@ const systemChannelFlagsBitsToString = (bits: number) => {
   }).filter((value) => value !== null).join(', ');
 };
 const channelFlagsMapping = {
-  [SystemChannelFlags.SuppressJoinNotifications]: SystemChannelFlags[SystemChannelFlags.SuppressJoinNotifications],
-  [SystemChannelFlags.SuppressPremiumSubscriptions]:
-    SystemChannelFlags[SystemChannelFlags.SuppressPremiumSubscriptions],
-  [SystemChannelFlags.SuppressGuildReminderNotifications]:
-    SystemChannelFlags[SystemChannelFlags.SuppressGuildReminderNotifications],
-  [SystemChannelFlags.SuppressJoinNotificationReplies]:
-    SystemChannelFlags[SystemChannelFlags.SuppressJoinNotificationReplies],
+  [ChannelFlags.None]: ChannelFlags[ChannelFlags.None],
+  [ChannelFlags.Pinned]: ChannelFlags[ChannelFlags.Pinned],
+  [ChannelFlags.RequireTag]: ChannelFlags[ChannelFlags.RequireTag],
 };
 const channelFlagsBitsToString = (bits: number) => {
   return Object.entries(channelFlagsMapping).map(([key, value]) => {
