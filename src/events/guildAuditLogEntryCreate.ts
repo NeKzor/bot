@@ -351,15 +351,15 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case '$add':
                 changes.push(
                   `Added: ${
-                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')
-                  }`,
+                    // deno-lint-ignore no-explicit-any
+                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')}`,
                 );
                 break;
               case '$remove':
                 changes.push(
                   `Removed: ${
-                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')
-                  }`,
+                    // deno-lint-ignore no-explicit-any
+                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')}`,
                 );
                 break;
               default:
@@ -716,9 +716,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'applied_tags': {
                 const thread = await bot.rest.getChannel(auditLog.targetId!);
                 const tags = thread.availableTags ?? [];
+                // deno-lint-ignore no-explicit-any
                 const oldTags = (change.old as any as [])
                   .map((id) => tags.find((tag) => tag.id === id)?.name)
                   .join(', ');
+                // deno-lint-ignore no-explicit-any
                 const newTags = (change.new as any as [])
                   .map((id) => tags.find((tag) => tag.id === id)?.name)
                   .join(', ');
