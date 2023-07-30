@@ -86,6 +86,10 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         case AuditLogEvents.MemberMove:
         case AuditLogEvents.MemberDisconnect: {
           changes.push(`Member: <@${auditLog.targetId}>`);
+
+          if (auditLog.reason) {
+            changes.push(`Reason: ${auditLog.reason}`);
+          }
           break;
         }
         case AuditLogEvents.BotAdd: {
@@ -420,7 +424,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.InviteCreate: {
-            switch (change.key) {
+            switch (change.key as string) {
               case 'code':
                 changes.push(`Code: [${change.new}](https://discord.gg/${change.new})`);
                 continue;
@@ -433,6 +437,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'type':
                 changes.push(`Type: ${targetTypesMapping[change.new as TargetTypes]}`);
                 continue;
+              case 'max_age':
+                changes.push(`Max age: ${change.new} seconds`);
+                continue;
+              case 'flags':
+                continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
                 break;
@@ -440,7 +449,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.InviteUpdate: {
-            switch (change.key) {
+            switch (change.key as string) {
               case 'code':
                 changes.push(`Code: ${change.old} → [${change.new}](https://discord.gg/${change.new})`);
                 continue;
@@ -457,14 +466,19 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                   }`,
                 );
                 continue;
+              case 'max_age':
+                changes.push(`Max age: ${change.old} seconds -> ${change.new} seconds`);
+                continue;
+              case 'flags':
+                continue;
               default:
-                log.warn(`Unresolved key: ${change.key}`);
+                log.warn(`Unresolved key: ${change.old} -> ${change.key}`);
                 break;
             }
             break;
           }
           case AuditLogEvents.InviteDelete: {
-            switch (change.key) {
+            switch (change.key as string) {
               case 'code':
                 changes.push(`Code: ${change.old}`);
                 continue;
@@ -476,6 +490,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 continue;
               case 'type':
                 changes.push(`Type: ${targetTypesMapping[change.old as TargetTypes]}`);
+                continue;
+              case 'max_age':
+                changes.push(`Max age: ${change.old} seconds`);
+                continue;
+              case 'flags':
                 continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
@@ -818,7 +837,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               : undefined,
             title: Auditor.getDescription(auditLog.actionType),
             description: changes.join('\n'),
-            color: 15065943,
+            color: user?.bot ? 3447003 : 15065943,
           } satisfies Embed,
         ],
       });
