@@ -165,6 +165,18 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 }`,
               );
             }
+          } else if (change.key === '$add') {
+            changes.push(
+              `Added: ${
+                // deno-lint-ignore no-explicit-any
+                (change.new as any as { id: number; name: string }[]).map((change) => `<@&${change.id}>`).join(', ')}`,
+            );
+          } else if (change.key === '$remove') {
+            changes.push(
+              `Removed: ${
+                // deno-lint-ignore no-explicit-any
+                (change.new as any as { id: number; name: string }[]).map((change) => `<@&${change.id}>`).join(', ')}`,
+            );
           } else {
             changes.push(
               `${humanize(change.key)}: ${
@@ -347,26 +359,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.MemberRoleUpdate: {
-            switch (change.key) {
-              case '$add':
-                changes.push(
-                  `Added: ${
-                    // deno-lint-ignore no-explicit-any
-                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')}`,
-                );
-                break;
-              case '$remove':
-                changes.push(
-                  `Removed: ${
-                    // deno-lint-ignore no-explicit-any
-                    (change.new as any as { id: number; name: string }[]).map((change) => change.name).join(', ')}`,
-                );
-                break;
-              default:
-                log.warn(`Unresolved key: ${change.key}`);
-                break;
-            }
-            continue;
+            break;
           }
           case AuditLogEvents.MemberMove: {
             break;
