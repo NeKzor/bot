@@ -45,6 +45,18 @@ const formatToString = (obj: unknown) =>
     (_key, value) => typeof value === 'bigint' ? value.toString() : value,
   );
 
+const getUsername = async (userId: bigint | string) => {
+  try {
+    const user = await bot.helpers.getUser(userId);
+    return user.discriminator !== '0'
+      ? `${user.username}#${user.discriminator}`
+      : user.username;
+  } catch (err) {
+    log.error('Unable to user name', err);
+  }
+  return '';
+};
+
 events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
   log.info(`[Guild: ${guildId}]`);
 
@@ -86,19 +98,8 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         case AuditLogEvents.MemberRoleUpdate:
         case AuditLogEvents.MemberMove:
         case AuditLogEvents.MemberDisconnect: {
-          let member: Member | null = null;
-          try {
-            member = await bot.helpers.getMember(guildId, auditLog.targetId!);
-            console.dir({ member }, { depth: 8 })
-          } catch (err) {
-            log.error('Unable to get member', err);
-          }
-
-          const memberName = member?.user?.discriminator !== '0'
-            ? `${member?.user?.username}#${member?.user?.discriminator}`
-            : member?.user?.username;
-
-          changes.push(`Member: <@${auditLog.targetId}> (${memberName})`);
+          const username = await getUsername(auditLog.targetId!);
+          changes.push(`Member: <@${auditLog.targetId}>${username ? ` (${username})` : ''}`);
 
           if (auditLog.reason) {
             changes.push(`Reason: ${auditLog.reason}`);
@@ -106,7 +107,8 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           break;
         }
         case AuditLogEvents.BotAdd: {
-          changes.push(`Bot: <@${auditLog.targetId}>`);
+          const username = await getUsername(auditLog.targetId!);
+          changes.push(`Bot: <@${auditLog.targetId}>${username ? ` (${username})` : ''}`);
           break;
         }
         case AuditLogEvents.ApplicationCommandPermissionUpdate: {
@@ -437,9 +439,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'channel_id':
                 changes.push(`Channel: <#${change.new}>`);
                 continue;
-              case 'inviter_id':
-                changes.push(`Inviter: <@${change.new}>`);
+              case 'inviter_id': {
+                const username = await getUsername(change.new as bigint);
+                changes.push(`Inviter: <@${change.new}>${username ? ` (${username})` : ''}`);
                 continue;
+              }
               case 'type':
                 changes.push(`Type: ${targetTypesMapping[change.new as TargetTypes]}`);
                 continue;
@@ -491,9 +495,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'channel_id':
                 changes.push(`Channel: <#${change.old}>`);
                 continue;
-              case 'inviter_id':
-                changes.push(`Inviter: <@${change.old}>`);
+              case 'inviter_id': {
+                const username = await getUsername(change.old as bigint);
+                changes.push(`Inviter: <@${change.old}>${username ? ` (${username})` : ''}`);
                 continue;
+              }
               case 'type':
                 changes.push(`Type: ${targetTypesMapping[change.old as TargetTypes]}`);
                 continue;
@@ -779,9 +785,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case ApplicationCommandPermissionTypes.Role:
                 changes.push(`Role: <@&${update.id}>`);
                 break;
-              case ApplicationCommandPermissionTypes.User:
-                changes.push(`User: <@${update.id}>`);
+              case ApplicationCommandPermissionTypes.User: {
+                const username = await getUsername(update.id);
+                changes.push(`User: <@${update.id}>${username ? ` (${username})` : ''}`);
                 break;
+              }
               case ApplicationCommandPermissionTypes.Channel:
                 changes.push(`Channel: <#${update.id}>`);
                 break;
