@@ -63,7 +63,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         }
         case AuditLogEvents.RoleCreate:
         case AuditLogEvents.RoleUpdate: {
-          changes.push(`Role: <@&:${auditLog.targetId}>`);
+          changes.push(`Role: <@&${auditLog.targetId}>`);
           break;
         }
         case AuditLogEvents.MessagePin: {
