@@ -48,9 +48,7 @@ const formatToString = (obj: unknown) =>
 const getUsername = async (userId: bigint | string) => {
   try {
     const user = await bot.helpers.getUser(userId);
-    return user.discriminator !== '0'
-      ? `${user.username}#${user.discriminator}`
-      : user.username;
+    return user.discriminator !== '0' ? `${user.username}#${user.discriminator}` : user.username;
   } catch (err) {
     log.error('Unable to user name', err);
   }
@@ -448,7 +446,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${targetTypesMapping[change.new as TargetTypes]}`);
                 continue;
               case 'max_age':
-                changes.push(`Max age: ${change.new} seconds`);
+                changes.push(`Max age: ${inviteTimes[change.new as number] ?? `${change.new} seconds`}`);
                 continue;
               case 'flags':
                 continue;
@@ -477,7 +475,11 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 );
                 continue;
               case 'max_age':
-                changes.push(`Max age: ${change.old} seconds -> ${change.new} seconds`);
+                changes.push(
+                  `Max age: ${inviteTimes[change.old as number] ?? `${change.old} seconds`} -> ${
+                    inviteTimes[change.new as number] ?? `${change.new} seconds`
+                  }`,
+                );
                 continue;
               case 'flags':
                 continue;
@@ -504,7 +506,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${targetTypesMapping[change.old as TargetTypes]}`);
                 continue;
               case 'max_age':
-                changes.push(`Max age: ${change.old} seconds`);
+                changes.push(`Max age: ${inviteTimes[change.old as number] ?? `${change.old} seconds`}`);
                 continue;
               case 'flags':
                 continue;
@@ -1007,4 +1009,14 @@ const webhookTypesMapping = {
 const targetTypesMapping = {
   [TargetTypes.Stream]: TargetTypes[TargetTypes.Stream],
   [TargetTypes.EmbeddedApplication]: TargetTypes[TargetTypes.EmbeddedApplication],
+};
+
+const inviteTimes = {
+  [60 * 30]: '30 minutes',
+  [60 * 60 * 1]: '1 hour',
+  [60 * 60 * 6]: '6 hours',
+  [60 * 60 * 12]: '12 hours',
+  [60 * 60 * 24 * 1]: '1 day',
+  [60 * 60 * 24 * 7]: '7 days',
+  [60 * 60 * 24 * 30]: '30 days',
 };
