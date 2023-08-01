@@ -20,6 +20,7 @@ import {
   Embed,
   ExplicitContentFilterLevels,
   GuildNsfwLevel,
+  Member,
   MfaLevels,
   PremiumTiers,
   SystemChannelFlags,
@@ -85,7 +86,19 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         case AuditLogEvents.MemberRoleUpdate:
         case AuditLogEvents.MemberMove:
         case AuditLogEvents.MemberDisconnect: {
-          changes.push(`Member: <@${auditLog.targetId}>`);
+          let member: Member | null = null;
+          try {
+            member = await bot.helpers.getMember(guildId, auditLog.targetId!);
+            console.dir({ member }, { depth: 8 })
+          } catch (err) {
+            log.error('Unable to get member', err);
+          }
+
+          const memberName = member?.user?.discriminator !== '0'
+            ? `${member?.user?.username}#${member?.user?.discriminator}`
+            : member?.user?.username;
+
+          changes.push(`Member: <@${auditLog.targetId}> (${memberName})`);
 
           if (auditLog.reason) {
             changes.push(`Reason: ${auditLog.reason}`);
