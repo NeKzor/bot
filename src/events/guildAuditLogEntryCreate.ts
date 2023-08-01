@@ -255,7 +255,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${channelTypesMapping[change.new as ChannelTypes]}`);
                 continue;
               case 'flags':
-                changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
+                if (!change.new) {
+                  changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
+                }
                 continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
@@ -297,7 +299,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${channelTypesMapping[change.old as ChannelTypes]}`);
                 continue;
               case 'flags':
-                changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                if (!change.old) {
+                  changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                }
                 continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
@@ -705,7 +709,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Rate limit per user: ${change.new}`);
                 break;
               case 'flags':
-                changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
+                if (!change.new) {
+                  changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
+                }
                 break;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
@@ -771,7 +777,9 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Rate limit per user: ${change.old}`);
                 break;
               case 'flags':
-                changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                if (!change.old) {
+                  changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
+                }
                 break;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
