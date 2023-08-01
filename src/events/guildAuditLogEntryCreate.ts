@@ -423,13 +423,19 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               case 'name':
                 changes.push(`Name: <@&${change.old}> → <@&${change.new}>`);
                 continue;
-              case 'permissions':
-                changes.push(
-                  `Permissions: ${permissionBitsToString(change.old as bigint)} → ${
-                    permissionBitsToString(change.new as bigint)
-                  }`,
-                );
+              case 'permissions': {
+                const oldPerms = change.old as bigint;
+                const newPerms = change.new as bigint;
+                const added = (oldPerms ^ newPerms) & newPerms;
+                const removed = (oldPerms ^ newPerms) & oldPerms;
+                if (added) {
+                  changes.push(`Permissions added: ${permissionBitsToString(added)}`);
+                }
+                if (removed) {
+                  changes.push(`Permissions removed: ${permissionBitsToString(removed)}`);
+                }
                 continue;
+              }
               default:
                 log.warn(`Unresolved key: ${change.key}`);
                 break;
