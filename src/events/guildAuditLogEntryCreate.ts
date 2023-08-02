@@ -193,19 +193,36 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           } else if (change.key as string === 'applied_tags') {
             try {
               const thread = await bot.rest.getChannel(auditLog.targetId!);
-              const tags = thread.availableTags ?? [];
+              const forum = await bot.rest.getChannel(thread.parentId!);
+
+              const forumTags = forum.availableTags ?? [];
+              const tagName = (id: string) => forumTags.find((tag) => tag.id === id)?.name ?? id;
+
               // deno-lint-ignore no-explicit-any
-              const oldTags = change.old as any as [] | undefined;
+              const oldTags = change.old as any as string[] | undefined;
               // deno-lint-ignore no-explicit-any
-              const newTags = change.new as any as [] | undefined;
+              const newTags = change.new as any as string[] | undefined;
+
               const isChange = oldTags !== undefined && newTags !== undefined;
-              changes.push(
-                `Applied tags: ${oldTags?.map((id) => tags.find((tag) => tag.id === id)?.name)?.join(', ') ?? ''}${
-                  isChange ? ' → ' : ''
-                }${newTags?.map((id) => tags.find((tag) => tag.id === id)?.name)?.join(', ') ?? ''}`,
-              );
+              if (isChange) {
+                const added = newTags.filter((id) => !oldTags.includes(id));
+                const removed = oldTags.filter((id) => !newTags.includes(id));
+
+                if (added.length) {
+                  changes.push(`Added tags: ${added.map(tagName).join(', ')}`);
+                }
+
+                if (removed.length) {
+                  changes.push(`Removed tags: ${removed.map(tagName).join(', ')}`);
+                }
+              } else {
+                const tags = oldTags ?? newTags;
+                if (tags) {
+                  changes.push(`Applied tags: ${tags.map(tagName).join(', ')}`);
+                }
+              }
             } catch (err) {
-              log.error('Unable to get thread channel', err);
+              log.error('Unable to get thread or forum channel', err);
             }
           } else {
             changes.push(
