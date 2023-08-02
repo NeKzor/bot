@@ -272,7 +272,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${channelTypesMapping[change.new as ChannelTypes]}`);
                 continue;
               case 'flags':
-                if (!change.new) {
+                if (change.new) {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
                 }
                 continue;
@@ -316,7 +316,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Type: ${channelTypesMapping[change.old as ChannelTypes]}`);
                 continue;
               case 'flags':
-                if (!change.old) {
+                if (change.old) {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
                 }
                 continue;
@@ -732,7 +732,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Rate limit per user: ${change.new}`);
                 break;
               case 'flags':
-                if (!change.new) {
+                if (change.new) {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
                 }
                 break;
@@ -800,7 +800,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 changes.push(`Rate limit per user: ${change.old}`);
                 break;
               case 'flags':
-                if (!change.old) {
+                if (change.old) {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
                 }
                 break;
