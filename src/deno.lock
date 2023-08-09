@@ -58,14 +58,14 @@
   },
   "npm": {
     "specifiers": {
-      "@discordeno/bot": "@discordeno/bot@19.0.0-next.3445211",
-      "@discordeno/gateway": "@discordeno/gateway@19.0.0-next.3445211",
-      "@discordeno/rest": "@discordeno/rest@19.0.0-next.3445211",
-      "@discordeno/types": "@discordeno/types@19.0.0-next.3445211",
-      "@discordeno/utils": "@discordeno/utils@19.0.0-next.3445211",
+      "@discordeno/bot@19.0.0-next.3445211": "@discordeno/bot@19.0.0-next.3445211",
+      "@discordeno/gateway@19.0.0-next.3445211": "@discordeno/gateway@19.0.0-next.3445211",
+      "@discordeno/rest@19.0.0-next.3445211": "@discordeno/rest@19.0.0-next.3445211",
+      "@discordeno/types@19.0.0-next.3445211": "@discordeno/types@19.0.0-next.3445211",
+      "@discordeno/utils@19.0.0-next.3445211": "@discordeno/utils@19.0.0-next.3445211",
       "@js-temporal/polyfill": "@js-temporal/polyfill@0.4.4",
       "@nekz/sdp": "@nekz/sdp@0.4.0",
-      "rate-limiter-flexible": "rate-limiter-flexible@2.4.1"
+      "rate-limiter-flexible": "rate-limiter-flexible@2.4.2"
     },
     "packages": {
       "@discordeno/bot@19.0.0-next.3445211": {
@@ -123,8 +123,8 @@
         "integrity": "sha512-SnZNcinB4RIcnEyZqFPdGPVgrg2AcnykiBy0sHVJQKHYeaLUvi3Exj+iaPpLnFVkDPZIV4U0yvgC9/R4uEAZ9g==",
         "dependencies": {}
       },
-      "rate-limiter-flexible@2.4.1": {
-        "integrity": "sha512-dgH4T44TzKVO9CLArNto62hJOwlWJMLUjVVr/ii0uUzZXEXthDNr7/yefW5z/1vvHAfycc1tnuiYyNJ8CTRB3g==",
+      "rate-limiter-flexible@2.4.2": {
+        "integrity": "sha512-rMATGGOdO1suFyf/mI5LYhts71g1sbdhmd6YvdiXO2gJnd42Tt6QS4JUKJKSWVVkMtBacm6l40FR7Trjo6Iruw==",
         "dependencies": {}
       },
       "tslib@2.6.1": {
