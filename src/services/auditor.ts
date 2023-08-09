@@ -27,6 +27,17 @@ export const Auditor = {
   },
 };
 
+export enum AuditLogEventsExtended {
+  /** Message was flagged by Auto Moderation */
+  AutoModerationFlagToChannel =	144, 
+  /** Member was timed out by Auto Moderation */
+  AutoModerationUserCommunicationDisabled =	145, 
+  /** Creator monetization request was created */
+  CreatorMonetizationRequestCreated =	150, 
+  /** Creator monetization terms were accepted */
+  CreatorMonetizationTermsAccepted =	151, 
+}
+
 const auditLogEventDescriptions = {
   [AuditLogEvents.GuildUpdate]: 'Server settings were updated',
   [AuditLogEvents.ChannelCreate]: 'Channel was created',
@@ -80,8 +91,8 @@ const auditLogEventDescriptions = {
   [AuditLogEvents.AutoModerationRuleUpdate]: 'Auto Moderation rule was updated',
   [AuditLogEvents.AutoModerationRuleDelete]: 'Auto Moderation rule was deleted',
   [AuditLogEvents.AutoModerationBlockMessage]: 'Message was blocked by Auto Moderation',
-  //   [AuditLogEvents.AutoModerationFlagToChannel]: 'Message was flagged by Auto Moderation',
-  //   [AuditLogEvents.AutoModerationUserCommunicationDisabled]: 'Member was timed out by Auto Moderation',
-  //   [AuditLogEvents.CreatorMonetizationRequestCreated]: 'Creator monetization request was created',
-  //   [AuditLogEvents.CreatorMonetizationTermsAccepted]: 'Creator monetization terms were accepted',
+  [AuditLogEventsExtended.AutoModerationFlagToChannel]: 'Message was flagged by Auto Moderation',
+  [AuditLogEventsExtended.AutoModerationUserCommunicationDisabled]: 'Member was timed out by Auto Moderation',
+  [AuditLogEventsExtended.CreatorMonetizationRequestCreated]: 'Creator monetization request was created',
+  [AuditLogEventsExtended.CreatorMonetizationTermsAccepted]: 'Creator monetization terms were accepted',
 };

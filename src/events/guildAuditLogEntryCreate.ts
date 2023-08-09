@@ -6,7 +6,7 @@
 
 import { events } from './mod.ts';
 import { logger } from '../utils/logger.ts';
-import { Auditor } from '../services/auditor.ts';
+import { AuditLogEventsExtended, Auditor } from '../services/auditor.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
 import {
   ApplicationCommand,
@@ -65,7 +65,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
     if (auditor) {
       const changes = [];
 
-      switch (auditLog.actionType) {
+      switch (auditLog.actionType as number) {
         case AuditLogEvents.ChannelCreate:
         case AuditLogEvents.ChannelUpdate: {
           changes.push(`Channel: <#${auditLog.targetId}>`);
@@ -124,6 +124,29 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         case AuditLogEvents.ThreadUpdate:
         case AuditLogEvents.ThreadDelete: {
           changes.push(`Thread: <#${auditLog.targetId}>`);
+          break;
+        }
+        case AuditLogEventsExtended.AutoModerationFlagToChannel: {
+          if (auditLog.options?.autoModerationRuleName) {
+            changes.push(`Rule name: ${auditLog.options.autoModerationRuleName}`);
+          }
+          if (auditLog.options?.autoModerationRuleTriggerType) {
+            const triggerTypes: Record<number, string> = {
+              1: 'Keyword',
+              3: 'Spam',
+              4: 'KeywordPreset',
+              5: 'MentionSpam',
+            };
+            changes.push(`Trigger type: ${triggerTypes[Number(auditLog.options.autoModerationRuleTriggerType)]}`);
+          }
+          if (auditLog.targetId && auditLog.options?.channelId) {
+            changes.push(
+              `[Message](https://discord.com/channels/${guildId}/${auditLog.options?.channelId}/${auditLog.targetId})`,
+            );
+          }
+          if (auditLog.reason) {
+            changes.push(`Reason: ${auditLog.reason}`);
+          }
           break;
         }
         default:
@@ -237,7 +260,7 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
           continue;
         }
 
-        switch (auditLog.actionType) {
+        switch (auditLog.actionType as number) {
           case AuditLogEvents.GuildUpdate: {
             switch (change.key as string) {
               case 'system_channel_id':
@@ -856,6 +879,18 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
             break;
           }
           case AuditLogEvents.AutoModerationBlockMessage: {
+            break;
+          }
+          case AuditLogEventsExtended.AutoModerationFlagToChannel: {
+            break;
+          }
+          case AuditLogEventsExtended.AutoModerationUserCommunicationDisabled: {
+            break;
+          }
+          case AuditLogEventsExtended.CreatorMonetizationRequestCreated: {
+            break;
+          }
+          case AuditLogEventsExtended.CreatorMonetizationTermsAccepted: {
             break;
           }
         }
