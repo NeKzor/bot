@@ -1,8 +1,6 @@
-# NeKzBot
-
 Current Version: 3.0.0 | Last Update: Jul 2023
 
-## Introduction
+# Introduction
 
 NeKzBot is a [Discord] chatbot created for the [Portal 2 Speedrunning]
 community.
