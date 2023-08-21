@@ -2,8 +2,8 @@
   "tasks": {
     "dev": "deno task --cwd src dev",
     "prod": "deno task --cwd src prod",
+    "docs": "mdbook serve docs",
     "docs:build": "mdbook build docs",
-    "docs:serve": "mdbook serve docs",
     "news": "deno task --cwd scripts news",
     "stats": "deno task --cwd scripts stats"
   },
