@@ -13,7 +13,7 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { Exploit, Exploits } from '../services/exploits.ts';
 import { escapeMaskedLink } from '../utils/helpers.ts';
 import { log } from '../utils/logger.ts';

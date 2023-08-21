@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { parseFeed } from 'https://deno.land/x/rss@1.0.0/mod.ts';
+import { parseFeed } from 'rss/mod.ts';
 import { log } from '../utils/logger.ts';
 import { escapeMarkdown, htmlToDiscordMarkdown, HtmlToDiscordMarkdownOptions } from '../utils/helpers.ts';
 

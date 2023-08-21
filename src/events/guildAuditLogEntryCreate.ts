@@ -28,7 +28,7 @@ import {
   User,
   VerificationLevels,
   WebhookTypes,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { bot } from '../bot.ts';
 
 const log = logger({ name: 'Event: GuildAuditLogEntryCreate' });

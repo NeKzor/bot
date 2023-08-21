@@ -10,7 +10,7 @@ import {
   Bot,
   Interaction,
   InteractionResponseTypes,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { createCommand } from './mod.ts';
 
 const numbers = [

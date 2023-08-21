@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'https://deno.land/std@0.190.0/dotenv/load.ts';
+import 'dotenv/load.ts';
 
-import { Temporal } from 'npm:@js-temporal/polyfill';
+import { Temporal } from '@js-temporal/polyfill';
 import { Board } from '../src/services/board.ts';
 import { escapeMarkdown, formatCmTime } from '../src/utils/helpers.ts';
 import { log } from '../src/utils/logger.ts';

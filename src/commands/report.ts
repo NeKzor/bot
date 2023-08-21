@@ -16,7 +16,7 @@ import {
   MessageFlags,
   SelectOption,
   TextStyles,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { GitHub } from '../services/github.ts';
 import { RateLimit } from '../services/ratelimit.ts';
 import { escapeMaskedLink } from '../utils/helpers.ts';

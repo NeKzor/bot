@@ -14,7 +14,7 @@ import {
   MessageComponents,
   MessageComponentTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { InteractionKey, InteractionsDb } from '../services/interactions.ts';
 import { Piston } from '../services/piston.ts';
 import { log } from '../utils/logger.ts';

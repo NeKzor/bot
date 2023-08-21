@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { ActivityTypes } from '../deps.ts';
+import { ActivityTypes } from '@discordeno/bot';
 import { events } from './mod.ts';
 import { logger } from '../utils/logger.ts';
 import { bot } from '../bot.ts';

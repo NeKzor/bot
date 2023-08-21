@@ -22,5 +22,6 @@
       "docs/book",
       "src/data"
     ]
-  }
+  },
+  "importMap": "./import_map.json"
 }

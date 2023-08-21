@@ -12,7 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   InteractionTypes,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { createCommand } from './mod.ts';
 import { SpeedrunCom } from '../services/speedruncom.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';

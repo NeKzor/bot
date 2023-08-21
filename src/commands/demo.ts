@@ -12,7 +12,7 @@ import {
   Interaction,
   InteractionResponseTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { SAR } from '../services/sar.ts';
 import { escapeMarkdown } from '../utils/helpers.ts';
 import { log } from '../utils/logger.ts';

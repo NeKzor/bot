@@ -12,7 +12,7 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { reloadAllServices, reloadService, services } from '../services/mod.ts';
 import { log } from '../utils/logger.ts';
 import { createCommand } from './mod.ts';

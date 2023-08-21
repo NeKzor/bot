@@ -17,7 +17,7 @@ import {
   MessageComponents,
   MessageComponentTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { createCommand } from './mod.ts';
 import { escapeMarkdown, escapeMaskedLink, formatCmTime, getDurationSince } from '../utils/helpers.ts';
 import { Board } from '../services/board.ts';

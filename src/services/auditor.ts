@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { AuditLogEvents } from '../deps.ts';
+import { AuditLogEvents } from '@discordeno/bot';
 import { db } from './db.ts';
 
 export interface AuditorWebhook {

@@ -6,8 +6,8 @@
  * This is a re-implementation of: https://github.com/p2sr/mdp
  */
 
-import * as ed from 'https://deno.land/x/ed25519@2.0.0/mod.ts';
-import { DemoMessages, SourceDemo, SourceDemoBuffer, SourceDemoParser } from 'npm:@nekz/sdp';
+import * as ed from 'ed25519/mod.ts';
+import { DemoMessages, SourceDemo, SourceDemoBuffer, SourceDemoParser } from '@nekz/sdp';
 
 // deno-fmt-ignore
 const crcTable = new Uint32Array([

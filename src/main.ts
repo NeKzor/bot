@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'https://deno.land/std@0.190.0/dotenv/load.ts';
+import 'dotenv/load.ts';
 
 import { loadAllServices } from './services/mod.ts';
 import { logger } from './utils/logger.ts';

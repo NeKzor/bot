@@ -10,7 +10,7 @@ import {
   type Bot,
   Collection,
   type Interaction,
-} from '../deps.ts';
+} from '@discordeno/bot';
 
 export type subCommand = Omit<Command, 'subcommands'>;
 export interface subCommandGroup {

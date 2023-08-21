@@ -12,7 +12,7 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
   MessageFlags,
-} from '../deps.ts';
+} from '@discordeno/bot';
 import { createCommand } from './mod.ts';
 import { escapeMarkdown, formatBoardPoints } from '../utils/helpers.ts';
 import { AggregationType, Board } from '../services/board.ts';
