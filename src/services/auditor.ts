@@ -29,13 +29,13 @@ export const Auditor = {
 
 export enum AuditLogEventsExtended {
   /** Message was flagged by Auto Moderation */
-  AutoModerationFlagToChannel =	144, 
+  AutoModerationFlagToChannel = 144,
   /** Member was timed out by Auto Moderation */
-  AutoModerationUserCommunicationDisabled =	145, 
+  AutoModerationUserCommunicationDisabled = 145,
   /** Creator monetization request was created */
-  CreatorMonetizationRequestCreated =	150, 
+  CreatorMonetizationRequestCreated = 150,
   /** Creator monetization terms were accepted */
-  CreatorMonetizationTermsAccepted =	151, 
+  CreatorMonetizationTermsAccepted = 151,
 }
 
 const auditLogEventDescriptions = {
