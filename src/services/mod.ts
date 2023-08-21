@@ -51,7 +51,7 @@ export const loadAllServices = async () => {
       log.info(
         `Reloaded all services\n` + results.map((result, index) => {
           return `${toReload[index].at(0)}: ${result ? 'success' : 'failed'}`;
-        }).join('\n'),
+        }).join(' | '),
       );
 
       log.info(`Reloaded all services`);
