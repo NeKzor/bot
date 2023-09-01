@@ -104,8 +104,15 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
         case AuditLogEvents.MemberRoleUpdate:
         case AuditLogEvents.MemberMove:
         case AuditLogEvents.MemberDisconnect: {
-          const username = await getUsername(auditLog.targetId!);
-          changes.push(`Member: <@${auditLog.targetId}>${username ? ` (${username})` : ''}`);
+          if (auditLog.targetId) {
+            const username = await getUsername(auditLog.targetId!);
+            changes.push(`Member: <@${auditLog.targetId}>${username ? ` (${username})` : ''}`);
+          } else {
+            const memberCount = auditLog.options?.count ?? 0;
+            if (memberCount) {
+              changes.push(`Member count: ${memberCount}`);
+            }
+          }
 
           if (auditLog.reason) {
             changes.push(`Reason: ${auditLog.reason}`);
