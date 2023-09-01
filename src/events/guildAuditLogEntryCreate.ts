@@ -184,10 +184,10 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
               Member = 1,
             }
             type PermissionOverwrite = {
-              id:	string;
-              type:	PermissionOverwriteType;
-              allow:	string;
-              deny:	string;
+              id: string;
+              type: PermissionOverwriteType;
+              allow: string;
+              deny: string;
             };
 
             // deno-lint-ignore no-explicit-any
