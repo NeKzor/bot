@@ -20,7 +20,6 @@ import {
   Embed,
   ExplicitContentFilterLevels,
   GuildNsfwLevel,
-  Member,
   MfaLevels,
   PremiumTiers,
   SystemChannelFlags,
@@ -299,6 +298,13 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.new as number)}`);
                 }
                 continue;
+              case 'bitrate':
+                changes.push(`Bitrate: ${change.new}`);
+                continue;
+              case 'icon_emoji':
+                // deno-lint-ignore no-explicit-any
+                changes.push(`Icon emoji: ${(change.new as any as { name: string; id?: unknown }).name}`);
+                continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
                 break;
@@ -324,6 +330,17 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                   }`,
                 );
                 continue;
+              case 'bitrate':
+                changes.push(`Bitrate: ${change.old} → ${change.new}`);
+                continue;
+              case 'icon_emoji':
+                changes.push(
+                  // deno-lint-ignore no-explicit-any
+                  `Icon emoji: ${(change.old as any as { name: string; id?: unknown }).name} → ${
+                    // deno-lint-ignore no-explicit-any
+                    (change.new as any as { name: string; id?: unknown }).name}`,
+                );
+                continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
                 break;
@@ -342,6 +359,13 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
                 if (change.old) {
                   changes.push(`Flags: ${channelFlagsBitsToString(change.old as number)}`);
                 }
+                continue;
+              case 'bitrate':
+                changes.push(`Bitrate: ${change.old}`);
+                continue;
+              case 'icon_emoji':
+                // deno-lint-ignore no-explicit-any
+                changes.push(`Icon emoji: ${(change.old as any as { name: string; id?: unknown }).name}`);
                 continue;
               default:
                 log.warn(`Unresolved key: ${change.key}`);
