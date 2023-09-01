@@ -49,9 +49,18 @@ const getUsername = async (userId: bigint | string) => {
     const user = await bot.helpers.getUser(userId);
     return user.discriminator !== '0' ? `${user.username}#${user.discriminator}` : user.username;
   } catch (err) {
-    log.error('Unable to user name', err);
+    log.error('Unable to get user name', err);
   }
   return '';
+};
+
+const getRoles = async (guildId: bigint | string) => {
+  try {
+    return await bot.helpers.getRoles(guildId);
+  } catch (err) {
+    log.error('Unable to get roles', err);
+  }
+  return [];
 };
 
 events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
@@ -163,42 +172,79 @@ events.guildAuditLogEntryCreate = async (auditLog, guildId) => {
 
         if (Array.isArray(change.new) || Array.isArray(change.old)) {
           if (change.key === 'permission_overwrites') {
+            enum PermissionOverwriteType {
+              Role = 0,
+              Member = 1,
+            }
+            type PermissionOverwrite = {
+              id:	string;
+              type:	PermissionOverwriteType;
+              allow:	string;
+              deny:	string;
+            };
+
             // deno-lint-ignore no-explicit-any
-            const newPermissions = (change.new ?? []) as any[];
+            const newPermissions = (change.new ?? []) as any as PermissionOverwrite[];
             // deno-lint-ignore no-explicit-any
-            const oldPermission = (change.old ?? []) as any[];
+            const oldPermission = (change.old ?? []) as any as PermissionOverwrite[];
+
+            const roles = await getRoles(guildId);
 
             if (oldPermission.length) {
-              changes.push(
-                `${humanize(change.key)}: Allow → ${
-                  oldPermission.map((item) => {
-                    return item.allow;
-                  }).join(', ')
-                }`,
-              );
-              changes.push(
-                `${humanize(change.key)}: Deny → ${
-                  oldPermission.map((item) => {
-                    return item.deny;
-                  }).join(', ')
-                }`,
-              );
+              changes.push(`Old permission overwrites:`);
+
+              for (const perm of oldPermission) {
+                const allow = permissionBitsToString(BigInt(perm.allow));
+                const deny = permissionBitsToString(BigInt(perm.deny));
+
+                if (perm.type === PermissionOverwriteType.Role) {
+                  const role = roles.find(({ id }) => id.toString() === perm.id);
+                  changes.push(`  <@&${perm.id}> (${role?.name ?? perm.id})`);
+                  if (allow) {
+                    changes.push(`    Allow: ${deny}`);
+                  }
+                  if (deny) {
+                    changes.push(`    Deny: ${deny}`);
+                  }
+                } else if (perm.type === PermissionOverwriteType.Member) {
+                  const username = await getUsername(perm.id);
+                  changes.push(`  <@${perm.id}> (${username})`);
+                  if (allow) {
+                    changes.push(`    Allow: ${deny}`);
+                  }
+                  if (deny) {
+                    changes.push(`    Deny: ${deny}`);
+                  }
+                }
+              }
             }
             if (newPermissions.length) {
-              changes.push(
-                `${humanize(change.key)}: Allow → ${
-                  newPermissions.map((item) => {
-                    return item.allow;
-                  }).join(', ')
-                }`,
-              );
-              changes.push(
-                `${humanize(change.key)}: Deny → ${
-                  newPermissions.map((item) => {
-                    return item.deny;
-                  }).join(', ')
-                }`,
-              );
+              changes.push(`New permission overwrites:`);
+
+              for (const perm of newPermissions) {
+                const allow = permissionBitsToString(BigInt(perm.allow));
+                const deny = permissionBitsToString(BigInt(perm.deny));
+
+                if (perm.type === PermissionOverwriteType.Role) {
+                  const role = roles.find(({ id }) => id.toString() === perm.id);
+                  changes.push(`  <@&${perm.id}> (${role?.name ?? perm.id})`);
+                  if (allow) {
+                    changes.push(`    Allow: ${deny}`);
+                  }
+                  if (deny) {
+                    changes.push(`    Deny: ${deny}`);
+                  }
+                } else if (perm.type === PermissionOverwriteType.Member) {
+                  const username = await getUsername(perm.id);
+                  changes.push(`  <@${perm.id}> (${username})`);
+                  if (allow) {
+                    changes.push(`    Allow: ${deny}`);
+                  }
+                  if (deny) {
+                    changes.push(`    Deny: ${deny}`);
+                  }
+                }
+              }
             }
           } else if (change.key === '$add') {
             changes.push(
