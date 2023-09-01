@@ -36,6 +36,18 @@ export enum AuditLogEventsExtended {
   CreatorMonetizationRequestCreated = 150,
   /** Creator monetization terms were accepted */
   CreatorMonetizationTermsAccepted = 151,
+  OnboardingPromptCreate = 163,
+  OnboardingPromptUpdate = 164,
+  OnboardingPromptDelete = 165,
+  OnboardingCreate = 166,
+  OnboardingUpdate = 167,
+  GuildHomeFeatureItem = 171,
+  GuildHomeRemoveItem = 172,
+  HarmfulLinksBlockedMessage = 180,
+  HomeSettingsCreate = 190,
+  HomeSettingsUpdate = 191,
+  VoiceChannelStatusCreate = 192,
+  VoiceChannelStatusDelete = 193,
 }
 
 const auditLogEventDescriptions = {
@@ -95,4 +107,16 @@ const auditLogEventDescriptions = {
   [AuditLogEventsExtended.AutoModerationUserCommunicationDisabled]: 'Member was timed out by Auto Moderation',
   [AuditLogEventsExtended.CreatorMonetizationRequestCreated]: 'Creator monetization request was created',
   [AuditLogEventsExtended.CreatorMonetizationTermsAccepted]: 'Creator monetization terms were accepted',
+  [AuditLogEventsExtended.OnboardingPromptCreate]: 'Onboarding prompt was created',
+  [AuditLogEventsExtended.OnboardingPromptUpdate]: 'Onboarding prompt was updated',
+  [AuditLogEventsExtended.OnboardingPromptDelete]: 'Onboarding prompt was deleted',
+  [AuditLogEventsExtended.OnboardingCreate]: 'Onboarding was created',
+  [AuditLogEventsExtended.OnboardingUpdate]: 'Onboarding was updated',
+  [AuditLogEventsExtended.GuildHomeFeatureItem]: 'Guild home feature item',
+  [AuditLogEventsExtended.GuildHomeRemoveItem]: 'Guild home remove item',
+  [AuditLogEventsExtended.HarmfulLinksBlockedMessage]: 'Harmful links blocked message',
+  [AuditLogEventsExtended.HomeSettingsCreate]: 'Home settings was created',
+  [AuditLogEventsExtended.HomeSettingsUpdate]: 'Home settings was updated',
+  [AuditLogEventsExtended.VoiceChannelStatusCreate]: 'Voice channel status was created',
+  [AuditLogEventsExtended.VoiceChannelStatusDelete]: 'Voice channel status was deleted',
 };
