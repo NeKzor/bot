@@ -10,7 +10,6 @@ import { CVars } from './cvars.ts';
 import { Exploits } from './exploits.ts';
 import { LP } from './lp.ts';
 import { Piston } from './piston.ts';
-import { CustomRoles } from './roles.ts';
 import { SAR } from './sar.ts';
 import { SpeedrunCom } from './speedruncom.ts';
 
@@ -25,7 +24,6 @@ export const services = {
   'SAR': () => SAR.fetch,
   'LP': () => LP.fetch,
   'Exploits': () => Exploits.load,
-  'CustomRoles': () => CustomRoles.load,
 };
 
 export const loadAllServices = async () => {
@@ -37,7 +35,6 @@ export const loadAllServices = async () => {
   await SAR.load();
   await Exploits.load();
   await Campaign.load();
-  await CustomRoles.load();
 
   log.info(`Loaded all services`);
 

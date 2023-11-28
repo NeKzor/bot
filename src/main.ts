@@ -45,7 +45,6 @@ await import('./commands/lp.ts');
 await import('./commands/manage.ts');
 await import('./commands/news.ts');
 await import('./commands/ris.ts');
-await import('./commands/role.ts');
 await import('./commands/run.ts');
 await import('./commands/update.ts');
 await import('./commands/wr.ts');
