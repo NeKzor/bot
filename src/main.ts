@@ -39,6 +39,7 @@ await import('./commands/bot.ts');
 await import('./commands/cvars.ts');
 await import('./commands/delete.ts');
 await import('./commands/demo.ts');
+await import('./commands/gh.ts');
 await import('./commands/glitch.ts');
 await import('./commands/lb.ts');
 await import('./commands/lp.ts');

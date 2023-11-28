@@ -5,168 +5,129 @@
  */
 
 import { log } from '../utils/logger.ts';
+import { Branch, Issue, Pull, Release } from './github_api.ts';
 
-interface Issue {
-  id: number;
-  node_id: string;
-  url: string;
-  repository_url: string;
-  labels_url: string;
-  comments_url: string;
-  events_url: string;
-  html_url: string;
-  number: number;
-  state: string;
-  title: string;
-  body: string;
-  user: {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  labels: [
-    {
-      id: number;
-      node_id: string;
-      url: string;
-      name: string;
-      description: string;
-      color: string;
-      default: boolean;
-    },
-  ];
-  assignee: {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  assignees: [
-    {
-      login: string;
-      id: number;
-      node_id: string;
-      avatar_url: string;
-      gravatar_id: string;
-      url: string;
-      html_url: string;
-      followers_url: string;
-      following_url: string;
-      gists_url: string;
-      starred_url: string;
-      subscriptions_url: string;
-      organizations_url: string;
-      repos_url: string;
-      events_url: string;
-      received_events_url: string;
-      type: string;
-      site_admin: boolean;
-    },
-  ];
-  milestone: {
-    url: string;
-    html_url: string;
-    labels_url: string;
-    id: number;
-    node_id: string;
-    number: number;
-    state: string;
-    title: string;
-    description: string;
-    creator: {
-      login: string;
-      id: number;
-      node_id: string;
-      avatar_url: string;
-      gravatar_id: string;
-      url: string;
-      html_url: string;
-      followers_url: string;
-      following_url: string;
-      gists_url: string;
-      starred_url: string;
-      subscriptions_url: string;
-      organizations_url: string;
-      repos_url: string;
-      events_url: string;
-      received_events_url: string;
-      type: string;
-      site_admin: boolean;
-    };
-    open_issues: number;
-    closed_issues: number;
-    created_at: string;
-    updated_at: string;
-    closed_at: string;
-    due_on: string;
-  };
-  locked: boolean;
-  active_lock_reason: string;
-  comments: number;
-  pull_request: {
-    url: string;
-    html_url: string;
-    diff_url: string;
-    patch_url: string;
-  };
-  closed_at: string;
-  created_at: string;
-  updated_at: string;
-  closed_by: {
-    login: string;
-    id: number;
-    node_id: string;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    followers_url: string;
-    following_url: string;
-    gists_url: string;
-    starred_url: string;
-    subscriptions_url: string;
-    organizations_url: string;
-    repos_url: string;
-    events_url: string;
-    received_events_url: string;
-    type: string;
-    site_admin: boolean;
-  };
-  author_association: string;
-  state_reason: string;
-}
+const repos = [
+  'p2sr/SourceAutoRecord',
+  'p2sr/portal2-mtriggers',
+  'p2sr/srconfigs',
+  'p2sr/Portal2SpeedrunMod',
+  'p2sr/rules',
+  'p2sr/mdp',
+  'p2sr/demofixup',
+];
+
+const reposWithReleases = [
+  'p2sr/SourceAutoRecord',
+  'p2sr/srconfigs',
+  'p2sr/Portal2SpeedrunMod',
+  'p2sr/mdp',
+  'p2sr/demofixup',
+];
+
+const reposWithBranches = [
+  'p2sr/SourceAutoRecord',
+];
 
 export const GitHub = {
   ApiVersion: '2022-11-28',
+  BaseApi: 'https://api.github.com',
+
+  Issues: {
+    List: [] as Issue[],
+  },
+
+  Pulls: {
+    List: [] as Pull[],
+  },
+
+  Releases: {
+    List: [] as Release[],
+  },
+
+  Branches: {
+    List: [] as (Branch & { id: string; html_url: string })[],
+  },
+
+  async loadAll() {
+    const headers = {
+      'Accept': 'application/vnd.github+json',
+      'Authorization': 'Bearer ' + Deno.env.get('GITHUB_ACCESS_TOKEN')!,
+      'X-GitHub-Api-Version': this.ApiVersion,
+      'User-Agent': Deno.env.get('USER_AGENT')!,
+    };
+
+    const res = await fetch(`${this.BaseApi}/rate_limit`, { headers });
+    const rateLimit = await res.json();
+
+    log.info(`[GitHub] Remaining: ${rateLimit.resources.core.remaining}`);
+
+    if (rateLimit.resources.core.remaining === 0) {
+      log.info('[GitHub] Rate limited');
+      return;
+    }
+
+    const responses = await Promise.all(repos.map((repo) => {
+      return fetch(`${this.BaseApi}/repos/${repo}/issues?per_page=100&page=1`, { headers });
+    }));
+
+    this.Issues.List = (await Promise.all(responses.map((res) => res.json() as Promise<Issue[]>))).flatMap(
+      (issues, idx) => {
+        issues.forEach((issue) => {
+          issue.title = `[${repos[idx].split('/').at(1)}] ${issue.title}`.slice(0, 100);
+        });
+        return issues;
+      },
+    );
+
+    const pullResponses = await Promise.all(repos.map((repo) => {
+      return fetch(`${this.BaseApi}/repos/${repo}/pulls?per_page=100&page=1`, { headers });
+    }));
+
+    this.Pulls.List = (await Promise.all(pullResponses.map((res) => res.json() as Promise<Pull[]>))).flatMap(
+      (pulls, idx) => {
+        pulls.forEach((pull) => {
+          pull.title = `[${repos[idx].split('/').at(1)}] ${pull.title}`.slice(0, 100);
+        });
+        return pulls;
+      },
+    );
+
+    const releaseResponses = await Promise.all(reposWithReleases.map((repo) => {
+      return fetch(`${this.BaseApi}/repos/${repo}/releases?per_page=100&page=1`, { headers });
+    }));
+
+    this.Releases.List = (await Promise.all(releaseResponses.map((res) => res.json() as Promise<Release[]>))).flatMap(
+      (releases, idx) => {
+        releases.forEach((release) => {
+          release.name = `[${reposWithReleases[idx].split('/').at(1)}] ${release.name}`.slice(0, 100);
+        });
+        return releases;
+      },
+    );
+
+    const branchResponses = await Promise.all(reposWithBranches.map((repo) => {
+      return fetch(`${this.BaseApi}/repos/${repo}/branches?per_page=100&page=1`, { headers });
+    }));
+
+    this.Branches.List = (await Promise.all(
+      branchResponses.map((res) => res.json() as Promise<(Branch & { id: string; html_url: string })[]>),
+    )).flatMap(
+      (branches, idx) => {
+        branches.forEach((branch) => {
+          branch.id = `${reposWithBranches[idx]}/${branch.name}`;
+          branch.html_url = `https://github.com/${reposWithBranches[idx]}/commits/${branch.name}`;
+          branch.name = `[${repos[idx].split('/').at(1)}] ${branch.name}`.slice(0, 100);
+        });
+        return branches;
+      },
+    );
+
+    log.info('[GitHub] Loaded', this.Issues.List.length, 'issues');
+    log.info('[GitHub] Loaded', this.Pulls.List.length, 'pulls');
+    log.info('[GitHub] Loaded', this.Releases.List.length, 'releases');
+    log.info('[GitHub] Loaded', this.Branches.List.length, 'branches');
+  },
 
   async createIssue(
     options: {
@@ -182,7 +143,7 @@ export const GitHub = {
   ): Promise<Issue> {
     const { owner, repo, issue, token } = options;
 
-    const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
+    const url = `${this.BaseApi}/repos/${owner}/${repo}/issues`;
     const body = JSON.stringify(issue);
 
     log.info(`[POST] ${url} : ${body}`);
