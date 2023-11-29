@@ -15,12 +15,14 @@ export const createAutocompletion = <T, C = undefined>(
     maxItems?: number;
     splitCharacter?: string;
     additionalCheck?: (item: T, query: string) => boolean;
+    customQuery?: (name: string, query: string) => boolean;
   },
 ) => {
   const { items, idKey, nameKey, additionalCheck } = options;
 
   const splitCharacter = options.splitCharacter ?? defaultSplitCharacter;
   const maxItems = options.maxItems ?? defaultMaxItems;
+  const customQuery = options.customQuery;
 
   return (
     { query, isAutocomplete, context }: { query: string; isAutocomplete: boolean; context?: C },
@@ -49,7 +51,11 @@ export const createAutocompletion = <T, C = undefined>(
 
       const name = (item[nameKey] as string).toLowerCase();
 
-      if (
+      if (customQuery) {
+        if (customQuery(name, query)) {
+          results.push(item);
+        }
+      } else if (
         name.startsWith(query) ||
         name.split(splitCharacter).includes(query) ||
         (additionalCheck && additionalCheck(item, query))
