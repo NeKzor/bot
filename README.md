@@ -15,14 +15,17 @@ A preview of each command can be seen on [bot.nekz.me/commands].
 | `/cvars`      | Find a console command.                                 |
 | `/delete`     | Delete specific bot data.                               |
 | `/demo info`  | Get information about a demo.                           |
+| `/gh branch`  | Find GitHub branch.                                     |
+| `/gh issue`   | Find GitHub issue.                                      |
+| `/gh pr`      | Find GitHub pull request.                               |
+| `/gh release` | Find GitHub release.                                    |
 | `/glitch`     | Find an entry about a glitch.                           |
 | `/lb`         | Get the challenge mode leaderboard.                     |
 | `/lp`         | Find the current least portals record.                  |
-| `/manage`     | Manage custom roles and auditor webhook.                |
+| `/manage`     | Manage auditor webhook.                                 |
 | `/news`       | Get the latest news about a Steam game or app.          |
 | `/report bug` | Report a bug to a specific project.                     |
 | `/ris`        | Convert text to regional indicator symbols.             |
-| `/role`       | Get a custom role.                                      |
 | `/update`     | Update specific bot data.                               |
 | `/wr`         | Get a video of the current challenge mode world record. |
 

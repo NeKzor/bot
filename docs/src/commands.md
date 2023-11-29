@@ -44,6 +44,30 @@ Get information about a demo.
 
 ![demo_info.gif](./images/demo_info.gif)
 
+### `/gh branch`
+
+Find GitHub branch.
+
+![glitch.gif](./images/gh_branch.gif)
+
+### `/gh issue`
+
+Find GitHub issue.
+
+![glitch.gif](./images/gh_issue.gif)
+
+### `/gh pr`
+
+Find GitHub pull request.
+
+![glitch.gif](./images/gh_pr.gif)
+
+### `/gh release`
+
+Find GitHub release.
+
+![glitch.gif](./images/gh_release.gif)
+
 ### `/glitch`
 
 Find an entry about a glitch.
@@ -64,7 +88,7 @@ Find the current least portals record.
 
 ### `/manage`
 
-Manage custom roles and auditor webhook.
+Manage auditor webhook.
 
 ![manage.gif](./images/manage.gif)
 
@@ -85,12 +109,6 @@ Report a bug to a specific project.
 Convert text to regional indicator symbols.
 
 ![ris.gif](./images/ris.gif)
-
-### `/role`
-
-Get a custom role.
-
-![role.gif](./images/role.gif)
 
 ### `/update`
 
