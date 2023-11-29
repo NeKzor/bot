@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { log } from '../utils/logger.ts';
+import { logger } from '../utils/logger.ts';
 import { Branch, Issue, Pull, Release } from './github_api.ts';
+
+const log = logger({ name: 'GitHub' });
 
 const repos = [
   'p2sr/SourceAutoRecord',
@@ -29,104 +31,201 @@ const reposWithBranches = [
   'p2sr/SourceAutoRecord',
 ];
 
+export type RepositoryIssue = Issue & { repository: string; project: string; search: string };
+export type RepositoryPull = Pull & { repository: string; project: string; search: string };
+export type RepositoryRelease = Release & { repository: string; project: string; search: string };
+export type RepositoryBranch = Branch & {
+  repository: string;
+  project: string;
+  search: string;
+  id: string;
+  html_url: string;
+};
+
 export const GitHub = {
   ApiVersion: '2022-11-28',
   BaseApi: 'https://api.github.com',
 
   Issues: {
-    List: [] as Issue[],
+    List: [] as RepositoryIssue[],
   },
 
   Pulls: {
-    List: [] as Pull[],
+    List: [] as RepositoryPull[],
   },
 
   Releases: {
-    List: [] as Release[],
+    List: [] as RepositoryRelease[],
   },
 
   Branches: {
-    List: [] as (Branch & { id: string; html_url: string })[],
+    List: [] as RepositoryBranch[],
   },
 
-  async loadAll() {
-    const headers = {
+  Cache: new Map<string, number>(),
+
+  getHeaders(): HeadersInit {
+    return {
       'Accept': 'application/vnd.github+json',
       'Authorization': 'Bearer ' + Deno.env.get('GITHUB_ACCESS_TOKEN')!,
       'X-GitHub-Api-Version': this.ApiVersion,
       'User-Agent': Deno.env.get('USER_AGENT')!,
     };
+  },
 
-    const res = await fetch(`${this.BaseApi}/rate_limit`, { headers });
+  async makeRequest<T>(repos: string[], path: string) {
+    const headers = this.getHeaders();
+
+    const url = `${this.BaseApi}/rate_limit`;
+    log.info(`[GET] ${url}`);
+
+    const res = await fetch(url, { headers });
     const rateLimit = await res.json();
 
-    log.info(`[GitHub] Remaining: ${rateLimit.resources.core.remaining}`);
+    log.info(`Remaining: ${rateLimit.resources.core.remaining}`);
 
     if (rateLimit.resources.core.remaining === 0) {
-      log.info('[GitHub] Rate limited');
+      log.info('Rate limited');
       return;
     }
 
     const responses = await Promise.all(repos.map((repo) => {
-      return fetch(`${this.BaseApi}/repos/${repo}/issues?per_page=100&page=1`, { headers });
+      return fetch(`${this.BaseApi}/repos/${repo}/${path}?per_page=100&page=1`, { headers });
     }));
 
-    this.Issues.List = (await Promise.all(responses.map((res) => res.json() as Promise<Issue[]>))).flatMap(
-      (issues, idx) => {
-        issues.forEach((issue) => {
-          issue.title = `[${repos[idx].split('/').at(1)}] ${issue.title}`.slice(0, 100);
-        });
-        return issues;
-      },
-    );
+    return await Promise.all(responses.map((res) => res.json() as Promise<T>));
+  },
 
-    const pullResponses = await Promise.all(repos.map((repo) => {
-      return fetch(`${this.BaseApi}/repos/${repo}/pulls?per_page=100&page=1`, { headers });
-    }));
+  async fetchIssues() {
+    const cache = this.Cache.get('issues');
+    if (cache && cache > Date.now()) {
+      return;
+    }
 
-    this.Pulls.List = (await Promise.all(pullResponses.map((res) => res.json() as Promise<Pull[]>))).flatMap(
-      (pulls, idx) => {
-        pulls.forEach((pull) => {
-          pull.title = `[${repos[idx].split('/').at(1)}] ${pull.title}`.slice(0, 100);
-        });
-        return pulls;
-      },
-    );
+    this.Cache.set('issues', Date.now() + 60_000);
 
-    const releaseResponses = await Promise.all(reposWithReleases.map((repo) => {
-      return fetch(`${this.BaseApi}/repos/${repo}/releases?per_page=100&page=1`, { headers });
-    }));
+    const issues = await this.makeRequest<RepositoryIssue[]>(repos, 'issues');
+    if (!issues) {
+      return;
+    }
 
-    this.Releases.List = (await Promise.all(releaseResponses.map((res) => res.json() as Promise<Release[]>))).flatMap(
-      (releases, idx) => {
-        releases.forEach((release) => {
-          release.name = `[${reposWithReleases[idx].split('/').at(1)}] ${release.name}`.slice(0, 100);
-        });
-        return releases;
-      },
-    );
+    this.Issues.List = issues
+      .flatMap(
+        (issues, idx) => {
+          const issuesOnly: RepositoryIssue[] = [];
+          issues.forEach((issue) => {
+            if (issue.pull_request) {
+              return;
+            }
+            issue.repository = repos[idx];
+            issue.project = issue.repository.split('/').at(1)!;
+            issue.search = `[${issue.project}] ${issue.title}`.slice(0, 100);
+            issuesOnly.push(issue);
+          });
+          return issuesOnly;
+        },
+      )
+      .sort((a, b) => b.created_at.localeCompare(a.created_at));
 
-    const branchResponses = await Promise.all(reposWithBranches.map((repo) => {
-      return fetch(`${this.BaseApi}/repos/${repo}/branches?per_page=100&page=1`, { headers });
-    }));
+    log.info('Loaded', this.Issues.List.length, 'issues');
+  },
 
-    this.Branches.List = (await Promise.all(
-      branchResponses.map((res) => res.json() as Promise<(Branch & { id: string; html_url: string })[]>),
-    )).flatMap(
-      (branches, idx) => {
-        branches.forEach((branch) => {
-          branch.id = `${reposWithBranches[idx]}/${branch.name}`;
-          branch.html_url = `https://github.com/${reposWithBranches[idx]}/commits/${branch.name}`;
-          branch.name = `[${repos[idx].split('/').at(1)}] ${branch.name}`.slice(0, 100);
-        });
-        return branches;
-      },
-    );
+  async fetchPullRequests() {
+    const cache = this.Cache.get('pulls');
+    if (cache && cache > Date.now()) {
+      return;
+    }
 
-    log.info('[GitHub] Loaded', this.Issues.List.length, 'issues');
-    log.info('[GitHub] Loaded', this.Pulls.List.length, 'pulls');
-    log.info('[GitHub] Loaded', this.Releases.List.length, 'releases');
-    log.info('[GitHub] Loaded', this.Branches.List.length, 'branches');
+    this.Cache.set('pulls', Date.now() + 60_000);
+
+    const pulls = await this.makeRequest<RepositoryPull[]>(repos, 'pulls');
+    if (!pulls) {
+      return;
+    }
+
+    this.Pulls.List = pulls
+      .flatMap(
+        (pulls, idx) => {
+          pulls.forEach((pull) => {
+            pull.repository = repos[idx];
+            pull.project = pull.repository.split('/').at(1)!;
+            pull.search = `[${pull.project}] ${pull.title}`.slice(0, 100);
+          });
+          return pulls;
+        },
+      )
+      .sort((a, b) => b.created_at.localeCompare(a.created_at));
+
+    log.info('Loaded', this.Pulls.List.length, 'pulls');
+  },
+
+  async fetchReleases() {
+    const cache = this.Cache.get('releases');
+    if (cache && cache > Date.now()) {
+      return;
+    }
+
+    this.Cache.set('releases', Date.now() + 60_000);
+
+    const releases = await this.makeRequest<RepositoryRelease[]>(reposWithReleases, 'releases');
+    if (!releases) {
+      return;
+    }
+
+    this.Releases.List = releases
+      .flatMap(
+        (releases, idx) => {
+          releases.forEach((release) => {
+            release.repository = reposWithReleases[idx];
+            release.project = release.repository.split('/').at(1)!;
+            release.search = `[${release.project}] ${release.name.length ? release.name : release.tag_name}`.slice(
+              0,
+              100,
+            );
+          });
+          return releases;
+        },
+      )
+      .sort((a, b) => b.created_at.localeCompare(a.created_at));
+
+    log.info('Loaded', this.Releases.List.length, 'releases');
+  },
+
+  async fetchBranches() {
+    const cache = this.Cache.get('branches');
+    if (cache && cache > Date.now()) {
+      return;
+    }
+
+    this.Cache.set('branches', Date.now() + 60_000);
+
+    const branches = await this.makeRequest<RepositoryBranch[]>(reposWithBranches, 'branches');
+    if (!branches) {
+      return;
+    }
+
+    this.Branches.List = branches
+      .flatMap(
+        (branches, idx) => {
+          branches.forEach((branch) => {
+            branch.repository = reposWithBranches[idx];
+            branch.project = branch.repository.split('/').at(1)!;
+            branch.search = `[${branch.project}] ${branch.name}`.slice(0, 100);
+            branch.id = `${reposWithBranches[idx]}/${branch.name}`;
+            branch.html_url = `https://github.com/${reposWithBranches[idx]}/commits/${branch.name}`;
+          });
+          return branches;
+        },
+      );
+
+    log.info('Loaded', this.Branches.List.length, 'branches');
+  },
+
+  async load() {
+    await this.fetchIssues();
+    await this.fetchPullRequests();
+    await this.fetchReleases();
+    await this.fetchBranches();
   },
 
   async createIssue(

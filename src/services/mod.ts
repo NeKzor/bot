@@ -8,6 +8,7 @@ import { logger } from '../utils/logger.ts';
 import { Campaign } from './campaign.ts';
 import { CVars } from './cvars.ts';
 import { Exploits } from './exploits.ts';
+import { GitHub } from './github.ts';
 import { LP } from './lp.ts';
 import { Piston } from './piston.ts';
 import { SAR } from './sar.ts';
@@ -16,6 +17,8 @@ import { SpeedrunCom } from './speedruncom.ts';
 const SERVICE_DATA_UPDATE_INTERVAL = 15 * 60 * 1_000;
 
 const log = logger({ name: 'Services' });
+
+const isGitHubServiceActive = Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false';
 
 export const services = {
   'CVars': () => CVars.fetch,
@@ -26,6 +29,10 @@ export const services = {
   'Exploits': () => Exploits.load,
 };
 
+if (isGitHubServiceActive) {
+  Object.assign(services, { 'GitHub': () => GitHub.load });
+}
+
 export const loadAllServices = async () => {
   log.info(`Loading all services`);
 
@@ -35,6 +42,10 @@ export const loadAllServices = async () => {
   await SAR.load();
   await Exploits.load();
   await Campaign.load();
+
+  if (isGitHubServiceActive) {
+    await GitHub.load();
+  }
 
   log.info(`Loaded all services`);
 

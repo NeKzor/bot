@@ -39,7 +39,6 @@ await import('./commands/bot.ts');
 await import('./commands/cvars.ts');
 await import('./commands/delete.ts');
 await import('./commands/demo.ts');
-await import('./commands/gh.ts');
 await import('./commands/glitch.ts');
 await import('./commands/lb.ts');
 await import('./commands/lp.ts');
@@ -51,6 +50,7 @@ await import('./commands/update.ts');
 await import('./commands/wr.ts');
 
 if (Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false') {
+  await import('./commands/gh.ts');
   await import('./commands/report.ts');
 }
 
