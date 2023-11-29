@@ -57,7 +57,7 @@ export const LP = {
   },
 
   async fetch() {
-    const url = `${LP.BaseApi}/records`;
+    const url = `${this.BaseApi}/records`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
@@ -73,7 +73,7 @@ export const LP = {
     const records = await res.json() as LpRecordsResponse;
 
     for (const record of records.data.maps) {
-      LP.upsert(record);
+      this.upsert(record);
     }
   },
 };

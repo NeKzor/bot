@@ -37,10 +37,10 @@ export const Piston = {
   Runtimes: [] as Runtime[],
 
   async load() {
-    Piston.Runtimes = (await db.get<Runtime[]>(['piston'])).value ?? [];
+    this.Runtimes = (await db.get<Runtime[]>(['piston'])).value ?? [];
   },
   async fetch() {
-    const url = `https://emkc.org/api/${Piston.Version}/piston/runtimes`;
+    const url = `https://emkc.org/api/${this.Version}/piston/runtimes`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
@@ -53,16 +53,16 @@ export const Piston = {
 
     await db.set(['piston'], await res.json());
 
-    await Piston.load();
+    await this.load();
   },
   findRuntime(language: string) {
-    return Piston.Runtimes.find((runtime) => {
+    return this.Runtimes.find((runtime) => {
       return runtime.language === language ||
         runtime.aliases.includes(language);
     });
   },
   async execute(runtime: Runtime, content: string) {
-    const url = `https://emkc.org/api/${Piston.Version}/piston/execute`;
+    const url = `https://emkc.org/api/${this.Version}/piston/execute`;
     log.info(`[POST] ${url}`);
 
     const res = await fetch(url, {

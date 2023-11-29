@@ -104,7 +104,7 @@ export const CVars = {
       cvars.push(cvar.value);
     }
 
-    CVars.Portal2 = cvars.sort((a, b) => {
+    this.Portal2 = cvars.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
   },
@@ -115,7 +115,7 @@ export const CVars = {
     ];
 
     for (const gameMod of gameMods) {
-      const url = `${CVars.Api.Base}/${gameMod}.json`;
+      const url = `${this.Api.Base}/${gameMod}.json`;
       log.info(`[GET] ${url}`);
 
       const res = await fetch(url, {
@@ -133,7 +133,7 @@ export const CVars = {
       }
     }
 
-    const url = CVars.Api.SAR;
+    const url = this.Api.SAR;
     log.info(`[GET] ${url}`);
 
     const sar = await fetch(url, {
@@ -158,7 +158,7 @@ export const CVars = {
       });
     }
 
-    await CVars.load();
+    await this.load();
   },
 
   *getFlags(cvar: CVar) {

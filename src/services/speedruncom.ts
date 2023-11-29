@@ -202,7 +202,7 @@ export const SpeedrunCom = {
     const key = [
       'speedrun_com',
       'games',
-      SpeedrunCom.Portal2Bhop.Id,
+      this.Portal2Bhop.Id,
       'level',
     ];
 
@@ -212,10 +212,10 @@ export const SpeedrunCom = {
       levels.push(level.value);
     }
 
-    SpeedrunCom.Portal2Bhop.Levels = levels;
+    this.Portal2Bhop.Levels = levels;
   },
   async fetch() {
-    const url = `https://www.speedrun.com/api/v1/games/${SpeedrunCom.Portal2Bhop.Id}/levels`;
+    const url = `https://www.speedrun.com/api/v1/games/${this.Portal2Bhop.Id}/levels`;
 
     log.info(`[GET] ${url}`);
 
@@ -230,7 +230,7 @@ export const SpeedrunCom = {
     const key = [
       'speedrun_com',
       'games',
-      SpeedrunCom.Portal2Bhop.Id,
+      this.Portal2Bhop.Id,
       'level',
     ];
 
@@ -243,7 +243,7 @@ export const SpeedrunCom = {
       await db.set([...key, level.id], level);
     }
 
-    await SpeedrunCom.load();
+    await this.load();
   },
   async getRecords(level: SpeedrunLevel) {
     const link = level.links.find((link) => link.rel === 'records');

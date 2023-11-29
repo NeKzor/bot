@@ -22,7 +22,7 @@ export const RateLimit = {
     tokensToRemove = 1,
   ) {
     try {
-      const bucket = RateLimit.buckets[bucketKey];
+      const bucket = this.buckets[bucketKey];
       await bucket.consume(userId.toString(), tokensToRemove);
       return true;
     } catch {

@@ -722,17 +722,17 @@ export const SAR = {
   } as SarWhitelists,
 
   async load() {
-    SAR.Whitelists.sarWhitelist = (await Deno.readTextFile(sarWhitelistFile))
+    this.Whitelists.sarWhitelist = (await Deno.readTextFile(sarWhitelistFile))
       .trim()
       .split('\n')
       .map((sar) => parseInt(sar.trim(), 16));
 
-    SAR.Whitelists.cmdWhitelist = (await Deno.readTextFile(cmdWhitelistFile))
+    this.Whitelists.cmdWhitelist = (await Deno.readTextFile(cmdWhitelistFile))
       .trim()
       .split('\n')
       .map((cmd) => cmd.trim());
 
-    SAR.Whitelists.cvarWhitelist = (await Deno.readTextFile(cvarWhitelistFile))
+    this.Whitelists.cvarWhitelist = (await Deno.readTextFile(cvarWhitelistFile))
       .trim()
       .split('\n')
       .map((line) => {
@@ -741,7 +741,7 @@ export const SAR = {
       })
       .filter((cvar) => cvar.varName !== '');
 
-    SAR.Whitelists.filesumWhitelist = (await Deno.readTextFile(filesumWhitelistFile))
+    this.Whitelists.filesumWhitelist = (await Deno.readTextFile(filesumWhitelistFile))
       .trim()
       .split('\n')
       .map((line) => {
@@ -769,7 +769,7 @@ export const SAR = {
     //await Deno.writeTextFile(cvarWhitelistFile, "");
     //await Deno.writeTextFile(filesumWhitelistFile, "");
 
-    await SAR.load();
+    await this.load();
   },
 
   async parseDemo(buffer: Uint8Array, output: OutputFunc) {
@@ -777,7 +777,7 @@ export const SAR = {
 
     validateResult(
       result,
-      SAR.Whitelists,
+      this.Whitelists,
       output,
     );
 

@@ -88,7 +88,7 @@ export const Board = {
   BaseApi: 'https://board.portal2.sr',
 
   async getChamber(chamberId: number) {
-    const url = `${Board.BaseApi}/chamber/${chamberId}/json`;
+    const url = `${this.BaseApi}/chamber/${chamberId}/json`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
@@ -105,7 +105,7 @@ export const Board = {
   },
 
   async getAggregated(type: AggregationType) {
-    const url = `${Board.BaseApi}/aggregated/${type}/json`;
+    const url = `${this.BaseApi}/aggregated/${type}/json`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
@@ -135,7 +135,7 @@ export const Board = {
 
     const query = params.toString();
 
-    const url = `${Board.BaseApi}/changelog/json?${query}`;
+    const url = `${this.BaseApi}/changelog/json?${query}`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {

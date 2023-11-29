@@ -60,7 +60,7 @@ export const Steam = {
   } as HtmlToDiscordMarkdownOptions,
 
   async getNewsFeed(appId: SteamAppId | number | string) {
-    const url = `${Steam.BaseApi}/feeds/news/app/${appId}`;
+    const url = `${this.BaseApi}/feeds/news/app/${appId}`;
     log.info(`[GET] ${url}`);
 
     const res = await fetch(url, {
@@ -87,7 +87,7 @@ export const Steam = {
     const rawDescription = entry?.description?.value ?? '';
     const description = htmlToDiscordMarkdown(
       rawDescription,
-      Steam.htmlConvertOptions,
+      this.htmlConvertOptions,
     );
     const link = entry?.links?.at(0)?.href ?? '';
     const author = entry?.author?.name;

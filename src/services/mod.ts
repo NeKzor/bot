@@ -21,16 +21,16 @@ const log = logger({ name: 'Services' });
 const isGitHubServiceActive = Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false';
 
 export const services = {
-  'CVars': () => CVars.fetch,
-  'SpeedrunCom': () => SpeedrunCom.fetch,
-  'Piston': () => Piston.fetch,
-  'SAR': () => SAR.fetch,
-  'LP': () => LP.fetch,
-  'Exploits': () => Exploits.load,
+  'CVars': () => CVars.fetch.bind(CVars),
+  'SpeedrunCom': () => SpeedrunCom.fetch.bind(SpeedrunCom),
+  'Piston': () => Piston.fetch.bind(Piston),
+  'SAR': () => SAR.fetch.bind(SAR),
+  'LP': () => LP.fetch.bind(LP),
+  'Exploits': () => Exploits.load.bind(Exploits),
 };
 
 if (isGitHubServiceActive) {
-  Object.assign(services, { 'GitHub': () => GitHub.load });
+  Object.assign(services, { 'GitHub': () => GitHub.load.bind(GitHub) });
 }
 
 export const loadAllServices = async () => {

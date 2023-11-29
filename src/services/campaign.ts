@@ -24,6 +24,6 @@ export const Campaign = {
     const { map_list } = JSON.parse(
       await Deno.readTextFile('./data/portal2_campaign.json'),
     );
-    Campaign.Portal2.Maps = map_list;
+    this.Portal2.Maps = map_list;
   },
 };
