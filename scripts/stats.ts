@@ -131,6 +131,7 @@ const checkForStats = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'User-Agent': Deno.env.get('USER_AGENT')!,
       },
       body: JSON.stringify({
         embeds: [
