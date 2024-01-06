@@ -1,7 +1,8 @@
 {
   "tasks": {
-    "news": "deno run --unstable --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,store.steampowered.com news.ts",
-    "stats": "deno run --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,board.portal2.sr stats.ts"
+    "news": "deno run --unstable-kv --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,store.steampowered.com news.ts",
+    "stats": "deno run --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,board.portal2.sr stats.ts",
+    "srcom": "deno run --unstable-kv --no-prompt --allow-env --allow-read=.env,.env.defaults,.env.example --allow-net=discord.com,www.speedrun.com srcom.ts"
   },
   "fmt": {
     "useTabs": false,

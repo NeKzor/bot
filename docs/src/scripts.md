@@ -17,3 +17,11 @@ Post weekly speedrun statistics from [board.portal2.sr].
 Run with: `deno task stats`
 
 [board.portal2.sr]: https://board.portal2.sr
+
+## scripts/srcom.ts
+
+Post notifications from [speedrun.com].
+
+Run with: `deno task srcom`
+
+[speedrun.com]: https://speedrun.com
