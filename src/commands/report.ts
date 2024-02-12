@@ -30,9 +30,9 @@ const repositories: SelectOption[] = [
     description: 'The autorender project!',
   },
   {
-    label: 'boards',
-    value: 'p2sr/Portal2Boards',
-    description: 'The Portal 2 Boards project!',
+    label: 'board (cmm)',
+    value: 'NeKzor/board',
+    description: 'The leaderboard project for Challenge Mode Mod!',
   },
   {
     label: 'bot',
