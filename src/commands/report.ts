@@ -25,20 +25,40 @@ import { createCommand } from './mod.ts';
 
 const repositories: SelectOption[] = [
   {
-    label: 'bot',
-    value: 'NeKzBot/bot',
-    description: 'The bot project!',
-  },
-  {
     label: 'autorender',
     value: 'NeKzor/autorender',
     description: 'The autorender project!',
   },
-  // {
-  //     label: "sar",
-  //     value: "p2sr/SourceAutoRecord",
-  //     description: "The SourceAutoRecord project!",
-  // },
+  {
+    label: 'boards',
+    value: 'p2sr/Portal2Boards',
+    description: 'The Portal 2 Boards project!',
+  },
+  {
+    label: 'bot',
+    value: 'NeKzor/bot',
+    description: 'The bot project!',
+  },
+  {
+    label: 'cmm',
+    value: 'NeKzor/cmm',
+    description: 'The Challenge Mode Mod project!',
+  },
+  {
+      label: "sar",
+      value: "p2sr/SourceAutoRecord",
+      description: "The SourceAutoRecord project!",
+  },
+  {
+      label: "speedrunmod",
+      value: "p2sr/Portal2SpeedrunMod",
+      description: "The Portal 2 Speedrun Mod project!",
+  },
+  {
+      label: "srconfigs",
+      value: "p2sr/srconfigs",
+      description: "The srconfigs project!",
+  },
 ];
 
 createCommand({
