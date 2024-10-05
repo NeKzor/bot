@@ -32,7 +32,7 @@
     "proseWrap": "preserve",
     "exclude": [
       "docs/book",
-      "src/data"
+      "data"
     ]
   }
 }
