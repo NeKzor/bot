@@ -31,10 +31,13 @@ A preview of each command can be seen on [bot.nekz.me/commands].
 
 [bot.nekz.me/commands]: https://bot.nekz.me/commands
 
+## Contributing
+
 ### Requirements
 
 - [deno runtime] | [Reference](https://deno.land/manual)
-- [Discord Application] | [Reference](https://discord.com/developers/docs/getting-started)
+- [Discord Application] |
+  [Reference](https://discord.com/developers/docs/getting-started)
 
 [deno runtime]: https://deno.com/runtime
 [Discord Application]: https://discord.com/developers/applications
@@ -59,16 +62,27 @@ A preview of each command can be seen on [bot.nekz.me/commands].
     - `SRCOM_PHPSESSID` - Session cookie of speedrun.com user
 - Start the bot with `deno task dev`
 
-Data of all services can be populated manually with `/bot reload`. This happens automatically every 15 minutes after the
-bot started.
+Data of all services can be populated manually with `/bot reload`. This happens
+automatically every 15 minutes after the bot started.
 
 ## Dependencies
 
-- [discordeno]
-- [sdp]
+| Dependency              | Description                   |
+| ----------------------- | ----------------------------- |
+| [discordeno]            | Discord application framework |
+| [sdp]                   | Demo parser                   |
+| [ed25519]               | SAR data encoding             |
+| [rss]                   | Parsing RSS feed              |
+| [deno-dom]              | Parsing HTML content          |
+| [rate-limiter-flexible] | Rate limiter                  |
 
 [discordeno]: https://github.com/discordeno/discordeno
 [sdp]: https://github.com/NeKzor/sdp
+[ed25519]: https://github.com/paulmillr/noble-ed25519
+[rss]: https://github.com/MikaelPorttila/rss
+[deno-dom]: https://github.com/b-fuze/deno-dom
+[rate-limiter-flexible]: https://github.com/animir/node-rate-limiter-flexible
+[discordeno]: https://github.com/discordeno/discordeno
 
 ## Credits
 
