@@ -59,6 +59,9 @@ A preview of each command can be seen on [bot.nekz.me/commands].
     - `SRCOM_PHPSESSID` - Session cookie of speedrun.com user
 - Start the bot with `deno task dev`
 
+Data of all services can be populated manually with `/bot reload`. This happens automatically every 15 minutes after the
+bot started.
+
 ## Dependencies
 
 - [discordeno]

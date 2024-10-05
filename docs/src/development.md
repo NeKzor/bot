@@ -29,3 +29,6 @@ Steps for developing or self-hosting the bot.
     - `SRCOM_DISCORD_WEBHOOK_URL` -The Webhook URL for posting the notifications
     - `SRCOM_PHPSESSID` - Session cookie of speedrun.com user
 - Start the bot with `deno task dev`
+
+Data of all services can be populated manually with `/bot reload`. This happens automatically every 15 minutes after the
+bot started.
