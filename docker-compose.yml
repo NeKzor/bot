@@ -1,0 +1,9 @@
+services:
+  server:
+    image: 'p2sr-bot'
+    build:
+      context: .
+    container_name: 'p2sr-bot'
+    restart: always
+    volumes:
+      - /var/bot/kv:/app/kv
