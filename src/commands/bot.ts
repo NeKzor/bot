@@ -170,7 +170,7 @@ createCommand({
                     content: [
                       `🤖️ Reloaded bot data.`,
                       results.map((result, index) => {
-                        return `${toReload[index].at(0)}: ${result ? 'success' : 'failed'}`;
+                        return `${toReload[index]!.at(0)}: ${result ? 'success' : 'failed'}`;
                       }).join('\n'),
                     ].join('\n'),
                   },

@@ -1,4 +1,4 @@
-Current Version: 3.0.0 | Last Update: Jul 2023
+Current Version: 4.0.0 | Last Update: Oct 2024
 
 # Introduction
 
@@ -33,22 +33,23 @@ community.
 
 ## Versions
 
-| Version       | Release       |
-| ------------- | ------------- |
-| 3.0.0         | [10 Jul 2023] |
-| 2.0.0         | [8 Oct 2017]  |
-| 1.9.1         | 23 May 2017   |
-| 1.9.0         | 3 May 2017    |
-| 1.7.0         | 25 Mar 2017   |
-| 1.6.0         | 21 Mar 2017   |
-| 1.5.0         | 7 Mar 2017    |
-| 1.4.0         | 26 Feb 2017   |
-| 1.3.0         | 28 Jan 2017   |
-| 1.8.0         | 23 Apr 2017   |
-| 1.2.0         | 17 Jan 2017   |
-| 1.1.0         | 8 Jan 2017    |
-| 1.0.0-selfbot | 29 Sep 2017   |
-| 1.0.0         | 26 Dec 2016   |
+| Version       | Release       | Runtime / Framework         |
+| ------------- | ------------- | --------------------------- |
+| 4.0.0         | 5 Oct 2024    | Deno 2.0 / discordeno       |
+| 3.0.0         | [10 Jul 2023] | Deno 1.x / discordeno       |
+| 2.0.0         | [8 Oct 2017]  | .NET Core / Discord.Net 2.0 |
+| 1.9.1         | 23 May 2017   | .NET Core / Discord.Net 1.0 |
+| 1.9.0         | 3 May 2017    | .NET Core / Discord.Net 1.0 |
+| 1.7.0         | 25 Mar 2017   | .NET Core / Discord.Net 1.0 |
+| 1.6.0         | 21 Mar 2017   | .NET Core / Discord.Net 1.0 |
+| 1.5.0         | 7 Mar 2017    | .NET Core / Discord.Net 1.0 |
+| 1.4.0         | 26 Feb 2017   | .NET Core / Discord.Net 1.0 |
+| 1.3.0         | 28 Jan 2017   | .NET Core / Discord.Net 1.0 |
+| 1.8.0         | 23 Apr 2017   | .NET Core / Discord.Net 1.0 |
+| 1.2.0         | 17 Jan 2017   | .NET Core / Discord.Net 1.0 |
+| 1.1.0         | 8 Jan 2017    | .NET Core / Discord.Net 1.0 |
+| 1.0.0-selfbot | 29 Sep 2017   | .NET Core / Discord.Net 1.0 |
+| 1.0.0         | 26 Dec 2016   | .NET Core / Discord.Net 0.9 |
 
 [10 Jul 2023]: https://github.com/NeKzor/bot/commit/1b3c7c129c7e1467dd3c18fb3192fb48d43cd529
 [8 Oct 2017]: https://github.com/NeKzor/NeKzBot/commit/95c18cf97f3c95485cbf3f621afde819d516f1e2
@@ -61,14 +62,12 @@ community.
 | [sdp]                   | Demo parser                   |
 | [ed25519]               | SAR data encoding             |
 | [rss]                   | Parsing RSS feed              |
-| [deno_dom]              | Parsing HTML content          |
-| [temporal-polyfill]     | Date calculations             |
+| [deno-dom]              | Parsing HTML content          |
 | [rate-limiter-flexible] | Rate limiter                  |
 
 [discordeno]: https://github.com/discordeno/discordeno
 [sdp]: https://github.com/NeKzor/sdp
 [ed25519]: https://github.com/paulmillr/noble-ed25519
 [rss]: https://github.com/MikaelPorttila/rss
-[deno_dom]: https://github.com/b-fuze/deno-dom
-[temporal-polyfill]: https://github.com/js-temporal/temporal-polyfill
+[deno-dom]: https://github.com/b-fuze/deno-dom
 [rate-limiter-flexible]: https://github.com/animir/node-rate-limiter-flexible

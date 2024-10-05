@@ -4,37 +4,27 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'dotenv/load.ts';
-
-import { Portal2Apps, Steam } from '../src/services/steam.ts';
-import { log } from '../src/utils/logger.ts';
-
-const NEWS_UPDATE_INTERVAL = 5 * 60 * 1_000;
-const STEAM_NEWS_DISCORD_WEBHOOK_URL = Deno.env.get(
-  'STEAM_NEWS_DISCORD_WEBHOOK_URL',
-)!;
-const STEAM_NEWS_SEND = Deno.env.get('STEAM_NEWS_SEND') === 'true';
-
-if (!STEAM_NEWS_DISCORD_WEBHOOK_URL) {
-  log.error('Environment variable STEAM_NEWS_DISCORD_WEBHOOK_URL not set!');
-  Deno.exit(1);
-}
-
-if (!STEAM_NEWS_SEND) {
-  log.warn('Running check without sending messages.');
-  log.warn(
-    'Turn on environment variable STEAM_NEWS_SEND once the data is populated in the database.',
-  );
-}
-
-const db = await Deno.openKv();
+import { db } from '../services/db.ts';
+import { Portal2Apps, Steam } from '../services/steam.ts';
+import { log } from '../utils/logger.ts';
 
 const apps = Portal2Apps.filter((app) => app.name === 'Portal 2');
 
-const checkForNews = async () => {
+const appWithoutNews = new Set<string>();
+
+for (const app of apps) {
+  const news = await Array.fromAsync(db.list({ prefix: ['news', app.value] }));
+  if (news.length === 0) {
+    appWithoutNews.add(app.value);
+  }
+}
+
+export const checkForNews = (webhookUrl: string) => async () => {
   for (const app of apps) {
     try {
       log.info(`Checking for ${app.name} news...`);
+
+      const skipFirstUpdate = appWithoutNews.has(app.value);
 
       const news = await Steam.getNewsFeed(app.value);
 
@@ -53,7 +43,7 @@ const checkForNews = async () => {
         if (insert.ok) {
           log.info('Inserted entry', entry.id);
 
-          if (!STEAM_NEWS_SEND) {
+          if (skipFirstUpdate) {
             continue;
           }
 
@@ -80,7 +70,7 @@ const checkForNews = async () => {
             truncated.push(line);
           }
 
-          const webhook = await fetch(STEAM_NEWS_DISCORD_WEBHOOK_URL, {
+          const webhook = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -102,15 +92,10 @@ const checkForNews = async () => {
           break;
         }
       }
+
+      appWithoutNews.delete(app.value);
     } catch (err) {
       console.error(err);
     }
   }
 };
-
-await checkForNews();
-
-if (STEAM_NEWS_SEND) {
-  setInterval(checkForNews, NEWS_UPDATE_INTERVAL);
-  log.info(`Started check interval`);
-}

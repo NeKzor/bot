@@ -117,7 +117,7 @@ export const GitHub = {
             if (issue.pull_request) {
               return;
             }
-            issue.repository = repos[idx];
+            issue.repository = repos[idx]!;
             issue.project = issue.repository.split('/').at(1)!;
             issue.search = `[${issue.project}] ${issue.title}`.slice(0, 100);
             issuesOnly.push(issue);
@@ -147,7 +147,7 @@ export const GitHub = {
       .flatMap(
         (pulls, idx) => {
           pulls.forEach((pull) => {
-            pull.repository = repos[idx];
+            pull.repository = repos[idx]!;
             pull.project = pull.repository.split('/').at(1)!;
             pull.search = `[${pull.project}] ${pull.title}`.slice(0, 100);
           });
@@ -176,7 +176,7 @@ export const GitHub = {
       .flatMap(
         (releases, idx) => {
           releases.forEach((release) => {
-            release.repository = reposWithReleases[idx];
+            release.repository = reposWithReleases[idx]!;
             release.project = release.repository.split('/').at(1)!;
             release.search = `[${release.project}] ${release.name.length ? release.name : release.tag_name}`.slice(
               0,
@@ -208,7 +208,7 @@ export const GitHub = {
       .flatMap(
         (branches, idx) => {
           branches.forEach((branch) => {
-            branch.repository = reposWithBranches[idx];
+            branch.repository = reposWithBranches[idx]!;
             branch.project = branch.repository.split('/').at(1)!;
             branch.search = `[${branch.project}] ${branch.name}`.slice(0, 100);
             branch.id = `${reposWithBranches[idx]}/${branch.name}`;

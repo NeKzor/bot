@@ -1,6 +1,8 @@
+.vim/
 .vscode/
 docs/book/
 log/
+kv/
 
 # Logs
 logs

@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'dotenv/load.ts';
-
 import { loadAllServices } from './services/mod.ts';
 import { logger } from './utils/logger.ts';
 import { updateCommands } from './utils/helpers.ts';
 import { bot } from './bot.ts';
+import { sendWeeklyStats } from './tasks/stats.ts';
+import { checkForNews } from './tasks/news.ts';
+import { checkForNotifications } from './tasks/srcom.ts';
 
 // TODO: file logging
 const log = logger({ name: 'Main' });
@@ -60,6 +61,34 @@ await import('./events/interactionCreate.ts');
 await import('./events/ready.ts');
 
 await updateCommands(bot);
+
+log.info('Starting crons...');
+
+const steamNewsWebhook = Deno.env.get('STEAM_NEWS_DISCORD_WEBHOOK_URL')!;
+const sendSteamNews = Deno.env.get('STEAM_NEWS_ENABLE') === 'true';
+if (sendSteamNews && !steamNewsWebhook) {
+  log.warn('Environment variable STEAM_NEWS_DISCORD_WEBHOOK_URL not set!');
+}
+
+const boardStatsWebhook = Deno.env.get('BOARD_STATS_DISCORD_WEBHOOK_URL')!;
+const sendBoardStats = Deno.env.get('BOARD_STATS_ENABLE') === 'true';
+if (sendBoardStats && !boardStatsWebhook) {
+  log.warn('Environment variable BOARD_STATS_DISCORD_WEBHOOK_URL not set!');
+}
+
+const srcomWebhook = Deno.env.get('SRCOM_DISCORD_WEBHOOK_URL')!;
+const sendSrcomNotification = Deno.env.get('SRCOM_ENABLE') === 'true';
+if (sendSrcomNotification && !srcomWebhook) {
+  log.warn('Environment variable SRCOM_DISCORD_WEBHOOK_URL not set!');
+}
+
+sendSteamNews && Deno.cron('Portal 2 News', { minute: { every: 1 } }, checkForNews(steamNewsWebhook));
+
+sendBoardStats &&
+  Deno.cron('Portal 2 Weekly Stats', { hour: 0, minute: 0, dayOfWeek: 2 }, sendWeeklyStats(boardStatsWebhook));
+
+sendSrcomNotification &&
+  Deno.cron('Portal 2 Speedrun Notifications', { minute: { every: 1 } }, checkForNotifications(srcomWebhook));
 
 log.info('Running bot...');
 

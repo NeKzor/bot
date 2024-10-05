@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { parseFeed } from 'rss/mod.ts';
+import { parseFeed } from '@mikaelporttila/rss';
 import { log } from '../utils/logger.ts';
 import { escapeMarkdown, htmlToDiscordMarkdown, HtmlToDiscordMarkdownOptions } from '../utils/helpers.ts';
 
@@ -90,11 +90,11 @@ export const Steam = {
       this.htmlConvertOptions,
     );
     const link = entry?.links?.at(0)?.href ?? '';
-    const author = entry?.author?.name;
+    //const author = entry?.author?.name;
 
     return [
       newsLink ? `[${entryTitle}](<${newsLink}>)` : entryTitle,
-      `Published by ${author}`,
+      //`Published by ${author}`,
       `### [${title}](<${link}>)`,
       description,
     ].join('\n');

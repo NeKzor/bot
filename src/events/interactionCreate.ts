@@ -66,7 +66,7 @@ events.interactionCreate = async (interaction) => {
       }
 
       const [modalCommand] = interaction.data.customId.split('_');
-      command = commands.get(modalCommand);
+      command = commands.get(modalCommand!);
     } else {
       command = commands.get(interaction.data.name);
     }
@@ -86,7 +86,8 @@ events.interactionCreate = async (interaction) => {
           } else {
             throw '';
           }
-        } catch (err) {
+          // deno-lint-ignore no-explicit-any
+        } catch (err: any) {
           log.error(
             `[Command: ${bgYellow(black(String(source)))} - ${
               bgBlack(red(`Error`))

@@ -4,44 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'dotenv/load.ts';
+import { Board } from '../services/board.ts';
+import { escapeMarkdown, formatCmTime } from '../utils/helpers.ts';
+import { log } from '../utils/logger.ts';
 
-import { Temporal } from '@js-temporal/polyfill';
-import { Board } from '../src/services/board.ts';
-import { escapeMarkdown, formatCmTime } from '../src/utils/helpers.ts';
-import { log } from '../src/utils/logger.ts';
-
-const STATS_UPDATE_INTERVAL = 1 * 60 * 1_000;
-
-const BOARD_STATS_DISCORD_WEBHOOK_URL = Deno.env.get(
-  'BOARD_STATS_DISCORD_WEBHOOK_URL',
-)!;
-const BOARD_STATS_SEND = Deno.env.get('BOARD_STATS_SEND') === 'true';
-
-if (!BOARD_STATS_DISCORD_WEBHOOK_URL) {
-  log.error('Environment variable BOARD_STATS_DISCORD_WEBHOOK_URL not set!');
-  Deno.exit(1);
-}
-
-if (!BOARD_STATS_SEND) {
-  log.warn('Running check without sending messages.');
-  log.warn(
-    'Turn on environment variable BOARD_STATS_SEND once the data is populated in the database.',
-  );
-}
-
-const checkForStats = async () => {
+export const sendWeeklyStats = (webhookUrl: string) => async () => {
   try {
-    log.info(`Checking for update...`);
+    log.info('Sending weekly stats...');
 
     const now = Temporal.Now.plainDateTimeISO();
-    const update = now.dayOfWeek === 1 && now.hour === 0 && now.minute === 0;
-
-    if (!update) {
-      return;
-    }
-
-    log.info('Generating stats...');
 
     const changelog = await Board.getChangelog({
       startDate: now.add({ days: -7 }).toPlainDate().toString(),
@@ -87,7 +58,7 @@ const checkForStats = async () => {
       }, {} as Record<string, number>);
 
       return Object.keys(frequency)
-        .sort((a, b) => frequency[b] - frequency[a])
+        .sort((a, b) => frequency[b]! - frequency[a]!)
         .map((id) => ({
           user: users.find((user) => user.id === id)!,
           count: frequency[id],
@@ -105,7 +76,7 @@ const checkForStats = async () => {
       }, {} as Record<string, number>);
 
       return Object.keys(frequency)
-        .sort((a, b) => frequency[b] - frequency[a])
+        .sort((a, b) => frequency[b]! - frequency[a]!)
         .map((id) => ({
           chamber: chambers.find((user) => user.id === id)!,
           count: frequency[id],
@@ -127,7 +98,7 @@ const checkForStats = async () => {
 
     const fieldValue = (value: string) => (value ? value : 'n/a');
 
-    const webhook = await fetch(BOARD_STATS_DISCORD_WEBHOOK_URL, {
+    const webhook = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -209,10 +180,3 @@ const checkForStats = async () => {
     log.error(err);
   }
 };
-
-await checkForStats();
-
-if (BOARD_STATS_SEND) {
-  setInterval(checkForStats, STATS_UPDATE_INTERVAL);
-  log.info(`Started check interval`);
-}

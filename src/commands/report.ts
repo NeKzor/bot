@@ -45,19 +45,19 @@ const repositories: SelectOption[] = [
     description: 'The Challenge Mode Mod project!',
   },
   {
-      label: "sar",
-      value: "p2sr/SourceAutoRecord",
-      description: "The SourceAutoRecord project!",
+    label: 'sar',
+    value: 'p2sr/SourceAutoRecord',
+    description: 'The SourceAutoRecord project!',
   },
   {
-      label: "speedrunmod",
-      value: "p2sr/Portal2SpeedrunMod",
-      description: "The Portal 2 Speedrun Mod project!",
+    label: 'speedrunmod',
+    value: 'p2sr/Portal2SpeedrunMod',
+    description: 'The Portal 2 Speedrun Mod project!',
   },
   {
-      label: "srconfigs",
-      value: "p2sr/srconfigs",
-      description: "The srconfigs project!",
+    label: 'srconfigs',
+    value: 'p2sr/srconfigs',
+    description: 'The srconfigs project!',
   },
 ];
 
@@ -131,14 +131,11 @@ createCommand({
             try {
               const modal = interaction.data?.components;
 
+              const selected = repositories.find((repo) => repo.value === repository);
               const title = modal?.at(0)?.components?.at(0)?.value;
               const body = modal?.at(1)?.components?.at(0)?.value;
 
-              if (
-                !repositories.find((repo) => repo.value === repository) ||
-                !title ||
-                !body
-              ) {
+              if (!selected || !title || !body) {
                 await bot.helpers.editOriginalInteractionResponse(
                   interaction.token,
                   {
@@ -160,7 +157,7 @@ createCommand({
                 return;
               }
 
-              const [owner, repo] = repository.split('/');
+              const [owner, repo] = selected.value.split('/') as [string, string];
 
               const issue = await GitHub.createIssue({
                 owner,

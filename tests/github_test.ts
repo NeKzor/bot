@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'dotenv/load.ts';
-import { GitHub } from '../services/github.ts';
+import { GitHub } from '../src/services/github.ts';
 
 const token = Deno.env.get('GITHUB_ACCESS_TOKEN')!;
 

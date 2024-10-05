@@ -1,6 +1,6 @@
 [![docs](https://github.com/NeKzor/bot/actions/workflows/docs.yml/badge.svg)](https://github.com/NeKzor/bot/actions/workflows/docs.yml)
 
-# NeKzBot v3
+# NeKzBot v4
 
 ## Commands
 
@@ -31,19 +31,33 @@ A preview of each command can be seen on [bot.nekz.me/commands].
 
 [bot.nekz.me/commands]: https://bot.nekz.me/commands
 
-# TODO
+### Requirements
 
-- ~~Migrate all data into Deno kv~~
-- ~~Fix autocomplete search algorithm~~
-- ~~Add script to auto fetch latest data~~
-- ~~Add script to post latest news~~
-- ~~Add update commands for glitches~~
-- ~~Compare data to mdp~~
-- ~~Fix sdp + parse CM data~~
-- ~~Add rate limiter~~
-- ~~Add permission checks~~
-- Document new commands
-- ~~Migrate discordeno to v19~~
+- [deno runtime] | [Reference](https://deno.land/manual)
+- [Discord Application] | [Reference](https://discord.com/developers/docs/getting-started)
+
+[deno runtime]: https://deno.com/runtime
+[Discord Application]: https://discord.com/developers/applications
+
+### Steps
+
+- Configure `.env` by copying the example file: `cp .env.example .env`
+  - `DISCORD_BOT_TOKEN` - Bot token of the Discord application
+  - `DISCORD_BOT_ID` - Bot ID of the Discord application
+  - `DISCORD_USER_ID` - User ID of the bot owner
+  - Optional GitHub:
+    - `GITHUB_ACCESS_TOKEN` - GitHub Personal Access Token
+  - Optional Portal 2 News:
+    - `STEAM_NEWS_ENABLE` - Enable or disable news
+    - `STEAM_NEWS_DISCORD_WEBHOOK_URL` - The Webhook URL for posting the news
+  - Optional Portal 2 CM Board:
+    - `BOARD_STATS_ENABLE` - Enable or disable stats
+    - `BOARD_STATS_DISCORD_WEBHOOK_URL` -The Webhook URL for posting the stats
+  - Optional Speedrun Notifications:
+    - `SRCOM_ENABLE` - Enable or disable notifications
+    - `SRCOM_DISCORD_WEBHOOK_URL` -The Webhook URL for posting the notifications
+    - `SRCOM_PHPSESSID` - Session cookie of speedrun.com user
+- Start the bot with `deno task dev`
 
 ## Dependencies
 

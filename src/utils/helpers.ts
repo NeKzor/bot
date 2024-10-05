@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Temporal } from '@js-temporal/polyfill';
-import { DOMParser, Element, Node } from 'deno_dom/deno-dom-wasm.ts';
+import { DOMParser, Element, Node } from '@b-fuze/deno-dom';
 import { Bot, CreateApplicationCommand, Guild } from '@discordeno/bot';
 import { logger } from './logger.ts';
 import { commands } from '../commands/mod.ts';

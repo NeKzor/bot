@@ -149,7 +149,7 @@ export const CVars = {
     for (const line of sarMd) {
       const [name, cvarDefault, help] = line.slice(1, -1).split('|');
 
-      await db.set(['cvars', name], {
+      await db.set(['cvars', name!], {
         name,
         default: cvarDefault ?? '',
         flags: 0,
