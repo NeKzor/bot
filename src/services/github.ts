@@ -6,6 +6,7 @@
 
 import { logger } from '../utils/logger.ts';
 import { Branch, Issue, Pull, Release } from './github_api.ts';
+import { createGithubApp } from './github_app.ts';
 
 const log = logger({ name: 'GitHub' });
 
@@ -45,6 +46,8 @@ export type RepositoryBranch = Branch & {
 export const GitHub = {
   ApiVersion: '2022-11-28',
   BaseApi: 'https://api.github.com',
+
+  GitHubApp: {} as Awaited<ReturnType<typeof createGithubApp>>,
 
   Issues: {
     List: [] as RepositoryIssue[],
@@ -228,7 +231,8 @@ export const GitHub = {
     await this.fetchBranches();
   },
 
-  async createIssue(
+  async createIssueByOwner(
+    token: string,
     options: {
       owner: string;
       repo: string;
@@ -237,10 +241,9 @@ export const GitHub = {
         body: string;
         labels?: string[];
       };
-      token: string;
     },
   ): Promise<Issue> {
-    const { owner, repo, issue, token } = options;
+    const { owner, repo, issue } = options;
 
     const url = `${this.BaseApi}/repos/${owner}/${repo}/issues`;
     const body = JSON.stringify(issue);
@@ -269,5 +272,45 @@ export const GitHub = {
     }
 
     return await res.json();
+  },
+
+  async initGitHubApp() {
+    this.GitHubApp = await createGithubApp();
+  },
+
+  async createIssue(
+    options: {
+      owner: string;
+      repo: string;
+      issue: {
+        title: string;
+        body: string;
+        labels?: string[];
+      };
+    },
+  ): Promise<Issue> {
+    const { owner, repo, issue: { title, body, labels } } = options;
+
+    const url = `${this.BaseApi}/repos/${owner}/${repo}/issues`;
+
+    log.info(`[POST] ${url}`);
+
+    const res = await this.GitHubApp.request('POST /repos/{owner}/{repo}/issues', {
+      owner,
+      repo,
+      title,
+      body,
+      labels,
+    });
+
+    log.info(`[POST] ${url} : ${res.status}`);
+
+    if (res.status !== 201) {
+      throw new Error(
+        `Failed to create issue. Status: ${res.status}\n${JSON.stringify(res.data)}`,
+      );
+    }
+
+    return res.data as Issue;
   },
 };

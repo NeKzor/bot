@@ -18,7 +18,7 @@ const SERVICE_DATA_UPDATE_INTERVAL = 15 * 60 * 1_000;
 
 const log = logger({ name: 'Services' });
 
-const isGitHubServiceActive = Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false';
+const isGitHubServiceActive = Deno.env.get('GITHUB_ENABLE') !== 'false';
 
 export const services = {
   'CVars': () => CVars.fetch.bind(CVars),
@@ -31,6 +31,8 @@ export const services = {
 
 if (isGitHubServiceActive) {
   Object.assign(services, { 'GitHub': () => GitHub.load.bind(GitHub) });
+
+  await GitHub.initGitHubApp();
 }
 
 export const loadAllServices = async () => {

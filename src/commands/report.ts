@@ -27,10 +27,15 @@ const repositories: SelectOption[] = [
   {
     label: 'autorender',
     value: 'NeKzor/autorender',
-    description: 'The autorender project!',
+    description: 'The autorender project! (autorender.portal2.sr)',
   },
   {
-    label: 'board (cmm)',
+    label: 'board',
+    value: 'p2sr/Portal2Boards',
+    description: 'The Challenge Mode leaderboard project! (board.portal2.sr)',
+  },
+  {
+    label: 'board-cmm',
     value: 'NeKzor/board',
     description: 'The leaderboard project for Challenge Mode Mod!',
   },
@@ -50,6 +55,11 @@ const repositories: SelectOption[] = [
     description: 'The SourceAutoRecord project!',
   },
   {
+    label: 'sar-autos-splitter',
+    value: 'p2sr/sar-autos-splitter',
+    description: 'The AutoSplitter project!',
+  },
+  {
     label: 'speedrunmod',
     value: 'p2sr/Portal2SpeedrunMod',
     description: 'The Portal 2 Speedrun Mod project!',
@@ -59,6 +69,11 @@ const repositories: SelectOption[] = [
     value: 'p2sr/srconfigs',
     description: 'The srconfigs project!',
   },
+  // {
+  //   label: 'bot-test',
+  //   value: 'p2sr/bot-test',
+  //   description: 'Testing the command!',
+  // },
 ];
 
 createCommand({
@@ -159,7 +174,7 @@ createCommand({
 
               const [owner, repo] = selected.value.split('/') as [string, string];
 
-              const issue = await GitHub.createIssue({
+              const issueData = {
                 owner,
                 repo,
                 issue: {
@@ -170,8 +185,9 @@ createCommand({
                     `> Reported by Discord user ${interaction.user.username}`,
                   ].join('\n'),
                 },
-                token: Deno.env.get('GITHUB_ACCESS_TOKEN')!,
-              });
+              };
+
+              const issue = await GitHub.createIssue(issueData);
 
               await bot.helpers.editOriginalInteractionResponse(
                 interaction.token,

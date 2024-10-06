@@ -7,3 +7,4 @@ services:
     restart: always
     volumes:
       - /var/bot/kv:/app/kv
+      - /var/bot/p2sr.key:/app/p2sr.key

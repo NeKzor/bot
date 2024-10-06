@@ -6,21 +6,31 @@
 
 import { GitHub } from '../src/services/github.ts';
 
-const token = Deno.env.get('GITHUB_ACCESS_TOKEN')!;
+Deno.test.ignore('Create issue by owner', async () => {
+  const token = Deno.env.get('GITHUB_ACCESS_TOKEN')!;
 
-if (token === 'false') {
-  console.log('Skipped GitHub test because GITHUB_ACCESS_TOKEN was not set.');
-  Deno.exit(0);
-}
+  const issue = await GitHub.createIssueByOwner(token, {
+    owner: 'NeKzBot',
+    repo: 'bot',
+    issue: {
+      title: 'Bug111',
+      body: 'haha!',
+    },
+  });
 
-const issue = await GitHub.createIssue({
-  owner: 'NeKzBot',
-  repo: 'bot',
-  issue: {
-    title: 'Bug111',
-    body: 'haha!',
-  },
-  token,
+  console.log(`Created issue ${issue.html_url}!`);
 });
 
-console.log(`Created issue ${issue.html_url}!`);
+Deno.test.ignore('Create issue by app', async () => {
+  const issue = await GitHub.createIssue({
+    owner: 'p2sr',
+    repo: 'bot-test',
+    issue: {
+      title: 'another bug',
+      body: 'bbbbbb',
+      labels: ['new-label'],
+    },
+  });
+
+  console.log(`Created issue ${issue.html_url}!`);
+});

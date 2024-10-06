@@ -60,7 +60,7 @@ community.
 | ----------------------- | ----------------------------- |
 | [discordeno]            | Discord application framework |
 | [sdp]                   | Demo parser                   |
-| [ed25519]               | SAR data encoding             |
+| [ed25519]               | SAR data decoding             |
 | [rss]                   | Parsing RSS feed              |
 | [deno-dom]              | Parsing HTML content          |
 | [rate-limiter-flexible] | Rate limiter                  |

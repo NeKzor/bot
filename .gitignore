@@ -3,6 +3,8 @@
 docs/book/
 log/
 kv/
+*.pem
+*.key
 
 # Logs
 logs

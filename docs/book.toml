@@ -3,7 +3,7 @@ authors = ["NeKz"]
 language = "en"
 multilingual = false
 src = "src"
-title = "NeKzBot"
+title = "p2sr-bot"
 
 [output.html]
 additional-css = ["doc.css"]

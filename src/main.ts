@@ -50,7 +50,7 @@ await import('./commands/run.ts');
 await import('./commands/update.ts');
 await import('./commands/wr.ts');
 
-if (Deno.env.get('GITHUB_ACCESS_TOKEN') !== 'false') {
+if (Deno.env.get('GITHUB_ENABLE') !== 'false') {
   await import('./commands/gh.ts');
   await import('./commands/report.ts');
 }
@@ -82,13 +82,13 @@ if (sendSrcomNotification && !srcomWebhook) {
   log.warn('Environment variable SRCOM_DISCORD_WEBHOOK_URL not set!');
 }
 
-sendSteamNews && Deno.cron('Portal 2 News', { minute: { every: 1 } }, checkForNews(steamNewsWebhook));
+sendSteamNews && Deno.cron('Portal 2 News', { minute: { every: 5 } }, checkForNews(steamNewsWebhook));
 
 sendBoardStats &&
   Deno.cron('Portal 2 Weekly Stats', { hour: 0, minute: 0, dayOfWeek: 2 }, sendWeeklyStats(boardStatsWebhook));
 
 sendSrcomNotification &&
-  Deno.cron('Portal 2 Speedrun Notifications', { minute: { every: 1 } }, checkForNotifications(srcomWebhook));
+  Deno.cron('Portal 2 Speedrun Notifications', { minute: { every: 5 } }, checkForNotifications(srcomWebhook));
 
 log.info('Running bot...');
 

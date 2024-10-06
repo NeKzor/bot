@@ -90,13 +90,13 @@ export const Steam = {
       this.htmlConvertOptions,
     );
     const link = entry?.links?.at(0)?.href ?? '';
-    //const author = entry?.author?.name;
+    const author = entry?.author?.name;
 
     return [
       newsLink ? `[${entryTitle}](<${newsLink}>)` : entryTitle,
-      //`Published by ${author}`,
+      author ? `Published by ${author}` : '',
       `### [${title}](<${link}>)`,
       description,
-    ].join('\n');
+    ].filter((x) => x).join('\n');
   },
 };
